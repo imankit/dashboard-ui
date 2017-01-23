@@ -12,6 +12,10 @@ const server = new http.Server(app);
 
 app.use(Express.static(path.join(__dirname, 'public')));
 
+app.use(function(req,res){
+	res.sendFile('index.html',{root:'./public/'})
+})
+
 server.listen(process.env.PORT || 1440, (err) => {
     if (err) {
         return console.error(err);
