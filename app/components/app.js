@@ -11,8 +11,8 @@ import Dashboardproject from './dashboardproject/dashboardproject.jsx';
 
 const App = ({showOthers}) => (
     <div>
-        <Toolbar />
-        <Dashboardproject id="app-dashproject" className="app-dashproject"/>
+        <Toolbar isDashboardMainPage={true}/>
+        <Dashboardproject id="app-dashproject" className="app-dashproject" />
         <Footer id="app-footer"/>
     </div>
 );

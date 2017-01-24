@@ -100,7 +100,7 @@ body {
   }
 
   .dashproject {
-    margin: 75px 0px 75px 0px;
+    padding: 75px 0px 75px 0px;
 
     .project-head {
       margin-top: 50px;
@@ -232,7 +232,7 @@ body {
   }
 
   .tables {
-    margin: 75px 0px 75px 0px;
+    padding: 75px 0px 75px 0px;
     .tables-head {
       height: 70px;
       p {
@@ -295,8 +295,8 @@ body {
       }
       .table:hover {
         cursor: pointer;
-        -webkit-box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
-        -webkit-transform: translate(0, -4px);
+        // -webkit-box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
+        // -webkit-transform: translate(0, -4px);
       }
       .table:hover .overlay {
         width: 25%;
@@ -940,7 +940,7 @@ body {
   }
 
   .cache{
-    margin: 75px 0px 75px 0px;
+    padding: 75px 0px 75px 0px;
     font-family: 'Open Sans',sans-serif;
     color: #555;
     display: flex;
@@ -1074,4 +1074,7 @@ body {
     .cf { zoom: 1; }
 
   }
+}
+.cp{
+  cursor: pointer
 }

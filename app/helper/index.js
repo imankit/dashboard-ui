@@ -15,7 +15,6 @@ export function getCookie(name) {
 }
 
 export const loadState = () => {
-    console.log("Inside loadState helper function");
     try {
         const serializedState = localStorage.getItem('state');
         if (serializedState === null) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Modal, Button, FormControl} from 'react-bootstrap';
-import {addApp, createRoleTable} from '../../actions';
+import {addApp} from '../../actions';
 import {connect} from 'react-redux';
 
 class Projecthead extends React.Component {
@@ -26,14 +26,7 @@ class Projecthead extends React.Component {
         });
     };
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.newAppCreated)
-            nextProps.createRoleTable(nextProps.appId, nextProps.masterKey);
-    };
-
     render() {
-
-        console.log(this.props);
         return (
             <div className="project-head">
                 <h1 className="dashboard-title pull-left">Apps</h1>
@@ -59,25 +52,4 @@ class Projecthead extends React.Component {
     }
 }
 
-
-const mapStateToProps = (state) => {
-    if (state == null) {
-        return {newAppCreated: false}
-    }
-
-    let newAppCreated = (state.manageApp.newAppCreated ? true : false);
-    return {
-        newAppCreated: newAppCreated,
-        masterKey: state.apps.length > 0 ? state.apps[state.apps.length - 1].keys.master : "",
-        appId: state.apps.length > 0 ? state.apps[state.apps.length - 1].appId : ""
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        dispatch: dispatch,
-        createRoleTable: (appId, masterKey) => dispatch(createRoleTable(appId, masterKey))
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Projecthead);
+export default connect(null, null)(Projecthead);

@@ -37,52 +37,28 @@ class ToolBar extends React.Component {
         }
     }
     redirectTo(where){
-        console.log(where)
         this.context.router.push('/'+where)
     }
     render(){
+        console.log(this.props.isDashboardMainPage)
         return(
             <div id= "nav-dash" style={{backgroundColor: '#FFF'}}>
                 <div className="container">
                     <Toolbar className='toolbar' style={{backgroundColor: '#FFF'}}>
                         <ToolbarGroup>
-                            <img className="icon" src="/assets/images/cblogo.png" alt="cloud"/>
+                            <img className="icon cp" src="/assets/images/cblogo.png" alt="cloud" onClick={ this.redirectTo.bind(this,'') }/>
 
                         </ToolbarGroup>
                         {
-                            this.props.showOthers ? (
+                            !this.props.isDashboardMainPage ? (
                                     <ToolbarGroup>
-                                        <IconMenu iconButtonElement={
-                                            <IconButton touch={true}>
-                                                <Storage style={iconStyles} color={grey500}/>
-                                            </IconButton>
-                                        }/>
-                                        <IconMenu iconButtonElement={
-                                            <IconButton touch={true}>
-                                                <Analytics style={iconStyles} color={grey500}/>
-                                            </IconButton>
-                                        }/>
-                                        <IconMenu iconButtonElement={
-                                            <IconButton touch={true}>
-                                                <Setting style={iconStyles} color={grey500}/>
-                                            </IconButton>
-                                        }/>
+                                        <Storage style={iconStyles} color={grey500} onClick={ this.redirectTo.bind(this,'tables') }/>
+                                        <Analytics style={iconStyles} color={grey500}/>
+                                        <Setting style={iconStyles} color={grey500}/>
                                         <Cache style={iconStyles} color={grey500} onClick={ this.redirectTo.bind(this,'cache') }/>
-                                        <IconMenu iconButtonElement={
-                                            <IconButton touch={true}>
-                                                <Queues style={iconStyles} color={grey500}/>
-                                            </IconButton>
-                                        }/>
-                                        <IconMenu iconButtonElement={
-                                            <IconButton touch={true}>
-                                                <Notifications style={iconStyles} color={grey500}/>
-                                            </IconButton>
-                                        }/>
-                                        <IconMenu iconButtonElement={
-                                            <IconButton touch={true}>
-                                                <Email style={iconStyles} color={grey500}/>
-                                            </IconButton>
-                                        }/>
+                                        <Queues style={iconStyles} color={grey500}/>
+                                        <Notifications style={iconStyles} color={grey500}/>
+                                        <Email style={iconStyles} color={grey500}/>
                                         <ToolbarSeparator />
                                         <ToolbarTitle style={toolbartitle} text=""/>
                                         <ToolbarTitle style={toolbartitle} text="Quickstart"/>

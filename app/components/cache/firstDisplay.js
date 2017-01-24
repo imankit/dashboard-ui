@@ -13,7 +13,7 @@ class FirstDisplay extends React.Component {
             <div className="row">
                 <div className="col-sm-12 col-md-12 col-lg-12 container-cache">
                   <div className="flex-general-column-wrapper-center first-visitto-cache" style={{}}>
-                    <div style={{width: '46%', height: 340, border: '1px solid #C0D0DB', borderRadius: 2, backgroundColor: 'white', padding: 20}}>
+                    <div style={{width: '600px', height: 340, border: '1px solid #C0D0DB', borderRadius: 2, backgroundColor: 'white', padding: 20}}>
                       <div className="cf" style={{height: '25%', width: '100%'}}>
                         <div className="pull-left" style={{width: '60%', height: '100%'}}>
                           <div style={{width: '100%', height: '100%'}} className="flex-general-row-wrapper">

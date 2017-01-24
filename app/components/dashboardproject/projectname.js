@@ -33,7 +33,6 @@ class ProjectName extends React.Component {
         const handleChange = (e) => this.setState({value: e.target.value});
 
         if (this.state.editMode === false) {
-            console.log(this.state.editMode);
             return (
                 <div className="relative-pos">
                     <h3>

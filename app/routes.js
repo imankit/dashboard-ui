@@ -19,7 +19,6 @@ import routesConfig from './routesConfig';
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
 let persistedState = loadState();
-console.log(process.env);
 if (typeof persistedState === 'undefined') {
     persistedState = {
         user: {

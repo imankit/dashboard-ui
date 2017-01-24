@@ -15,13 +15,20 @@ class Cache extends React.Component {
 
         }
     }
-    componentDidMount(){
-        console.log(this.props)
+    static get contextTypes() {
+        return {
+            router: React.PropTypes.object.isRequired,
+        }
+    }
+    componentWillMount(){
+        if(!this.props.appData.viewActive){
+            this.context.router.push('/')
+        }
     }
     render() {
         return (
             <div id= "" style={{backgroundColor: '#FFF'}}>
-                <Toolbar />
+                <Toolbar isDashboardMainPage={false}/>
                 <div className="cache">
                     <FirstDisplay/>
                 </div>

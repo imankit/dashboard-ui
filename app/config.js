@@ -2,8 +2,7 @@
  * Created by Darkstar on 12/4/2016.
  */
 let globals = () => {
-    console.log("value of environment variable NODE_ENV");
-    console.log(process.env["NODE_ENV"]);
+    console.log("value of environment variable NODE_ENV",process.env["NODE_ENV"]);
     if (process.env["NODE_ENV"] === "production") {
         return {
             dashboardAPI: 'https://service.cloudboost.io',
