@@ -2,11 +2,10 @@
  * Created by Darkstar on 12/2/2016.
  */
 
-import * as api from '../fakeAPI';
 import {xhrDashBoardClient, xhrAccountsClient, xhrCBClient} from '../xhrClient';
 import {loadState, deleteAllCookies} from '../helper';
 import {browserHistory} from 'react-router';
-import {twoCheckoutCredentials} from '../config';
+import {twoCheckoutCredentials,cloudBoostAPI} from '../config';
 
 export function fetchApps() {
 
@@ -206,6 +205,8 @@ export const deleteApp = (appId) => {
 
 export const manageApp = (appId, masterKey, name) => {
     return function (dispatch) {
+        // init CloudApp for current application
+        CB.CloudApp.init(SERVER_URL,appId,masterKey)
         dispatch({
             type: 'MANAGE_APP',
             payload: {appId: appId, masterKey: masterKey, name: name}
@@ -510,3 +511,92 @@ export function getAnalyticsData(appIdArray) {
 
     };
 }
+
+export function fetchCache() {
+    return function (dispatch) {
+        CB.CloudCache.getAll().then((data)=>{
+            dispatch({
+                type: 'FETCH_CACHE',
+                payload: data
+            });
+        },(err)=>{
+            console.log("cache fetch error ",err);
+        })
+
+    };
+}
+
+export function createCache(cacheName) {
+    return function (dispatch) {
+        let cache = new CB.CloudCache(cacheName);
+        cache.create().then(()=>{
+            dispatch(fetchCache())
+        },(err)=>{
+            console.log("cache add error ",err);
+        })
+
+    };
+}
+
+export function selectCache(selectedCache) {
+    return function (dispatch) {
+        selectedCache.getAll().then((items)=>{
+            dispatch({
+                type: 'SELECT_CACHE',
+                payload: { selectedCache:selectedCache,items:items }
+            });
+        },(err)=>{
+            console.log("cache select error ",err)
+        })
+    };
+}
+
+export function deleteCache(selectedCache) {
+    return function (dispatch) {
+        selectedCache.delete().then((items)=>{
+            dispatch(fetchCache())
+        },(err)=>{
+            console.log("cache delete error ",err)
+        })
+    };
+}
+
+export function clearCache(selectedCache) {
+    return function (dispatch) {
+        selectedCache.clear().then((items)=>{
+            dispatch(fetchCache())
+        },(err)=>{
+            console.log("cache delete error ",err)
+        })
+    };
+}
+
+export function addItemToCache(selectedCache,item,value) {
+    return function (dispatch) {
+        selectedCache.set(item,value).then(()=>{
+            dispatch(selectCache(selectedCache))
+        },(err)=>{
+            console.log("add item to cahce error ",err)
+        })
+    };
+}
+
+export function deleteItemFromCache(selectedCache,item) {
+    return function (dispatch) {
+        selectedCache.deleteItem(item).then(()=>{
+            dispatch(selectCache(selectedCache))
+        },(err)=>{
+            console.log("delete item from cache error ",err)
+        })
+    };
+}
+
+export function resetCacheState() {
+    return function (dispatch) {
+        dispatch({
+            type: 'RESET'
+        });
+    };
+}
+
+

@@ -6,6 +6,8 @@ import {connect} from 'react-redux';
 import Toolbar from '../toolbar/toolbar.js';
 import Footer from '../footer/footer.jsx';
 import FirstDisplay from './firstDisplay.js'
+import CacheCRUD from './cacheCRUD.js'
+import {fetchCache} from '../../actions';
 
 class Cache extends React.Component {
 
@@ -21,16 +23,23 @@ class Cache extends React.Component {
         }
     }
     componentWillMount(){
+        // redirect if active app not found
         if(!this.props.appData.viewActive){
             this.context.router.push('/')
+        } else {
+            this.props.onLoad()
         }
     }
     render() {
+        let compToDisplay = ''
+        if(this.props.loaded){
+            compToDisplay = this.props.noCacheFound ? <FirstDisplay/> : <CacheCRUD/>
+        }
         return (
             <div id= "" style={{backgroundColor: '#FFF'}}>
                 <Toolbar isDashboardMainPage={false}/>
-                <div className="cache">
-                    <FirstDisplay/>
+                <div className="cache tables">
+                    { compToDisplay }
                 </div>
                 <Footer id="app-footer"/>
             </div>
@@ -40,9 +49,20 @@ class Cache extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+
+    let noCacheFound = state.cache.allCaches.length == 0
     return {
-        appData: state.manageApp
+        appData: state.manageApp,
+        allCache: state.cache.allCaches,
+        noCacheFound:noCacheFound,
+        loaded:state.cache.loaded
     };
 };
 
-export default connect(mapStateToProps, null)(Cache);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onLoad: () => dispatch(fetchCache())
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cache);

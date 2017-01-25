@@ -40,7 +40,6 @@ class ToolBar extends React.Component {
         this.context.router.push('/'+where)
     }
     render(){
-        console.log(this.props.isDashboardMainPage)
         return(
             <div id= "nav-dash" style={{backgroundColor: '#FFF'}}>
                 <div className="container">

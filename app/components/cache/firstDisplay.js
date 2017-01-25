@@ -2,6 +2,7 @@
  * Created by Darkstar on 11/29/2016.
  */
 import React from 'react';
+import CreateCache from './createCache'
 
 class FirstDisplay extends React.Component {
 
@@ -36,8 +37,10 @@ class FirstDisplay extends React.Component {
                         </div>
                         <div className="pull-right" style={{width: '28%', height: '100%'}}>
                           <div style={{width: '100%', height: '100%'}} className="flex-general-row-wrapper">
-                            <div style={{width: '100%', height: '54%', marginTop: 2}}> 
-                              <button style={{width: '100%', height: '100%', backgroundColor: '#1280E0', color: 'white', fontSize: 14, borderRadius: 4,border:"none"}} className="default-inputfield">Create Cache</button>                   
+                            <div style={{width: '100%', height: '54%', marginTop: 2}}>
+                              <CreateCache>
+                                <button style={{width: '100%', height: '40px', backgroundColor: '#1280E0', color: 'white', fontSize: 14, borderRadius: 4,border:"none"}} className="default-inputfield">Create Cache</button>
+                              </CreateCache>                 
                             </div>
                             <div style={{width: '100%'}} className="solo-horizontal-center">
                               <span />
