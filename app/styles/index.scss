@@ -1160,22 +1160,22 @@ body {
     }
     .cachebuttonsdiv{
       float: left;
-      width: 45%;
+      width: 44%;
       height: 100%;
       padding-left: 90px;
     }
     .buttoncachedelete{
-      min-width:45px !important;
+      min-width: 20% !important;
       margin-top: 7px;
-      width: 45px !important;
+      width: 30% !important;
     }
     .buttoncachedelete:hover{
       background-color:red !important;
     }
     .buttoncacheminus{
-      min-width:45px !important;
+      min-width: 20% !important;
       margin-top: 7px;
-      width: 45px !important;
+      width: 30% !important;
     }
     .cacheaddfieldsdiv{
         width: 100%;
@@ -1196,7 +1196,133 @@ body {
     }
 
   }
+  .queue{
+      .addmessgaebuttontop{
+          text-align: center;
+          margin-bottom: 5px;
+      }
+      .queueitemsdiv{
+          border-radius: 4px;
+          min-height: 70px;
+          width: 100%;
+          background-color: #ffffff;
+          text-align: center;
+          box-sizing: border-box;
+          margin-top: 1px;
+          max-height: 150px;
+          margin-bottom: 2px;
+          position:relative;
+          box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+      }
+      .messagequeuemessage{
+          text-align: left;
+          padding: 5px;
+          padding-left: 11px;
+          font-size: 15px;
+          color: #737171;
+          overflow-y: auto;
+          word-wrap: break-word;
+          height: 80px;
+      }
+      .messagemessage{
+        visibility: visible
+      }
+      .messagequeueicons{
+        visibility: visible;
+        position: absolute;
+        right: 6px;
+        bottom: 6px;
+      }
+      .messagequeueprops{
+        position: absolute;
+        bottom: 0;
+      }
+      .messagequediv{
+        visibility: visible;
+        height: 100px;
+      }
+      .buttonquemessage{
+        visibility: visible;
+        width: 20px;
+        min-width: 25px !important;
+        height: 35px;
+        margin-left: 7px;
+      }
+  }
 }
 .cp{
   cursor: pointer
+}
+
+.textareaaddmessage{
+  height: 120px;
+  border: 2px solid #cec9c9;
+  resize: none;
+  border-radius: 5px;
+  padding: 5px
+}
+.jsonmodal{
+  height: 120px !important;
+  border: 2px solid #cec9c9;
+  resize: none;
+  border-radius: 5px;
+}
+.quesmessagtype{
+  color: #b5b4b4;
+  font-size: 12px;
+  font-weight: 500;
+  margin-top: 10px;
+}
+.aclrow{
+    width: 100%;
+    float: left;
+    height: 45px;
+    border-bottom: 1px solid #CCC;
+    padding: 10px;
+    background-color: #F9F9F9;
+}
+.logoaclrow{
+    font-size: 20px !important;
+    margin-top: 2px;
+    float: left;
+}
+.textaclrow{
+    float: left;
+    font-size: 15px;
+    margin-left: 20px;
+}
+.aclrowcheckbox{
+    float: right;
+    width: 40px !important;
+}
+.readwitetext{
+    float: right;
+    margin-left: 0px;
+    margin-right: 10px;
+}
+.cancelaclrow{
+    float: right;
+    font-size: 20px !important;
+    margin-top: 1px;
+    margin-left: 9%;
+    cursor: pointer;
+    margin-right: 7px;
+}
+.selectautoacl{
+        /* text-align: center; */
+    float: left;
+    /* margin-left: 64%; */
+    width: 150% !important;
+}
+.aclrowpublic{
+       width: 100%;
+    float: left;
+    height: 45px;
+    border-bottom: 3px solid #CCC;
+    padding: 10px;
+    background-color: #F9F9F9;
+    font-weight: bold;
+}
+.textinputaddmessage{
+  margin-top: -15px;
 }

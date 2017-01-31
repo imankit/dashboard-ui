@@ -146,7 +146,7 @@ class CacheCRUD extends React.Component {
                                               value={ this.state.value }
                                             />
                                         </TableRowColumn>
-                                        <TableRowColumn><RaisedButton label="Add Item" className="addtocachebtn" onClick={ this.addItem.bind(this) }/></TableRowColumn>
+                                        <TableRowColumn><RaisedButton label="Add Item" className="addtocachebtn" onClick={ this.addItem.bind(this) } disabled={ !this.props.selectedCache.name }/></TableRowColumn>
                                     </TableRow>
                                 {
                                     this.props.selectedCacheItems.map((x,i)=>{

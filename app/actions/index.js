@@ -512,6 +512,8 @@ export function getAnalyticsData(appIdArray) {
     };
 }
 
+
+// cache actions 
 export function fetchCache() {
     return function (dispatch) {
         CB.CloudCache.getAll().then((data)=>{
@@ -592,6 +594,130 @@ export function deleteItemFromCache(selectedCache,item) {
 }
 
 export function resetCacheState() {
+    return function (dispatch) {
+        dispatch({
+            type: 'RESET'
+        });
+    };
+}
+
+// queue actions 
+export function fetchQueue() {
+    return function (dispatch) {
+        CB.CloudQueue.getAll({
+            success : function(list){
+                dispatch({
+                    type: 'FETCH_QUEUE',
+                    payload: list || []
+                });
+            }, error : function(error){
+                console.log("queue fetch error ",error);
+            }
+        })
+    };
+}
+
+export function createQueue(queueName) {
+    return function (dispatch) {
+        let queue = new CB.CloudQueue(queueName);
+        queue.create({
+            success : function(queueObject){
+                dispatch(fetchQueue())
+            }, error : function(error){
+                console.log("queue add error ",error)
+            }
+        })
+    }
+}
+
+export function selectQueue(selectedQueue) {
+    return function (dispatch) {
+        selectedQueue.getAllMessages({
+            success : function(messagesList){
+                dispatch({
+                    type: 'SELECT_QUEUE',
+                    payload: { selectedQueue:selectedQueue,items:messagesList }
+                });
+            }, error : function(error){
+                console.log("Queue select error ",error)
+            }
+        })
+    }
+}
+
+export function deleteQueue(selectedQueue) {
+    return function (dispatch) {
+        selectedQueue.delete({
+            success : function(){
+                dispatch(fetchQueue())
+            }, error : function(error){
+                console.log("queue delete error ",error)
+            }
+        })
+    }
+}
+
+export function updateQueue(selectedQueue) {
+    return function (dispatch) {
+        selectedQueue.update({
+            success : function(){
+                dispatch(fetchQueue())
+            }, error : function(error){
+                console.log("queue update error ",error)
+            }
+        })
+    };
+}
+
+export function addItemToQueue(selectedQueue,message,timeout,delay,expires) {
+    return function (dispatch) {
+
+        let queueMessage = new CB.QueueMessage()
+        queueMessage.message = message
+        if(timeout > 0){
+            queueMessage.timeout = timeout
+        }     
+        if(delay > 0){
+            queueMessage.delay = delay
+        }     
+        if(expires){
+            queueMessage.expires = expires
+        }
+        selectedQueue.addMessage(queueMessage, {
+            success : function(queueMessage){
+                dispatch(selectQueue(selectedQueue))
+            }, error : function(error){
+                console.log("add item to queue error ",error)
+            }
+        })
+    };
+}
+
+export function deleteItemFromQueue(selectedQueue,itemId) {
+    return function (dispatch) {
+        selectedQueue.deleteMessage(itemId, {
+            success : function(){
+                dispatch(selectQueue(selectedQueue))
+            }, error : function(error){
+                console.log("delete item from queue error ",error)
+            }
+        })
+    }
+}
+
+export function updateQueueMessage(selectedQueue,selectedMessage) {
+    return function (dispatch) {
+        selectedQueue.updateMessage(selectedMessage, {
+            success : function(){
+              dispatch(selectQueue(selectedQueue)) 
+            }, error : function(error){
+              console.log("message update error",error)
+            }
+        });
+    }
+}
+
+export function resetQueueState() {
     return function (dispatch) {
         dispatch({
             type: 'RESET'
