@@ -52,12 +52,12 @@ class ToolBar extends React.Component {
                             !this.props.isDashboardMainPage ? (
                                     <ToolbarGroup>
                                         <Storage style={iconStyles} color={grey500} onClick={ this.redirectTo.bind(this,'tables') }/>
-                                        <Analytics style={iconStyles} color={grey500}/>
+                                        <Analytics style={iconStyles} color={grey500} onClick={ this.redirectTo.bind(this,'analytics') }/>
                                         <Setting style={iconStyles} color={grey500}/>
                                         <Cache style={iconStyles} color={grey500} onClick={ this.redirectTo.bind(this,'cache') }/>
                                         <Queues style={iconStyles} color={grey500} onClick={ this.redirectTo.bind(this,'queue') }/>
                                         <Notifications style={iconStyles} color={grey500}/>
-                                        <Email style={iconStyles} color={grey500}/>
+                                        <Email style={iconStyles} color={grey500} onClick={ this.redirectTo.bind(this,'email') }/>
                                         <ToolbarSeparator />
                                         <ToolbarTitle style={toolbartitle} text=""/>
                                         <ToolbarTitle style={toolbartitle} text="Quickstart"/>

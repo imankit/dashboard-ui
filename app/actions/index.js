@@ -6,6 +6,15 @@ import {xhrDashBoardClient, xhrAccountsClient, xhrCBClient} from '../xhrClient';
 import {loadState, deleteAllCookies} from '../helper';
 import {browserHistory} from 'react-router';
 import {twoCheckoutCredentials,cloudBoostAPI} from '../config';
+import Alert from 'react-s-alert';
+
+export function showAlert(type,text){
+    Alert[type](text, {
+        position: 'top-right',
+        effect: 'slide',
+        timeout: 5000
+    });
+}
 
 export function fetchApps() {
 
@@ -725,4 +734,38 @@ export function resetQueueState() {
     };
 }
 
+//campaign actions
+export function sendEmailCampaign(appId,masterKey,emailSubject,emailBody) {
+    let postObject = {
+        key:masterKey,
+        emailBody:emailBody,
+        emailSubject:emailSubject,
+    }
+    return xhrCBClient.post('/email/'+appId+'/campaign',postObject)
+}
 
+
+
+
+//analytics
+export function fetchAnalyticsAPI(appId) {
+    return function (dispatch) {
+        xhrDashBoardClient.get('/analytics/api/'+appId+'/usage')
+        .then(response => {
+            dispatch({
+                type: 'ANALYTICS_API',
+                payload: response.data
+            });
+        },err => {
+            console.log(err)
+        })
+    }
+}
+
+export function resetAnalytics() {
+    return function (dispatch) {
+        dispatch({
+            type: 'RESET'
+        });
+    };
+}

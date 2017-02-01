@@ -31,10 +31,12 @@ class CacheCRUD extends React.Component {
     componentWillMount(){
 
     }
-    deleteCache(selectedCache){
+    deleteCache(selectedCache,e){
+        e.stopPropagation()
         this.props.deleteCache(selectedCache)
     }
-    clearCache(selectedCache){
+    clearCache(selectedCache,e){
+        e.stopPropagation()
         this.props.clearCache(selectedCache)
     }
     addItem(){
@@ -53,9 +55,6 @@ class CacheCRUD extends React.Component {
     }
     changeHandlerSearch(e){
         this.setState({searchCache:e.target.value})
-    }
-    componentWillUnmount(){
-        this.props.resetCacheState()
     }
     render() {
         let caches = this.props.allCache
@@ -182,8 +181,7 @@ const mapDispatchToProps = (dispatch) => {
         addItemToCache: (selectedCache,item,value) => dispatch(addItemToCache(selectedCache,item,value)),
         deleteItemFromCache: (selectedCache,item) => dispatch(deleteItemFromCache(selectedCache,item)),
         deleteCache: (selectedCache) => dispatch(deleteCache(selectedCache)),
-        clearCache: (selectedCache) => dispatch(clearCache(selectedCache)),
-        resetCacheState: () => dispatch(resetCacheState())        
+        clearCache: (selectedCache) => dispatch(clearCache(selectedCache))     
     }
 };
 

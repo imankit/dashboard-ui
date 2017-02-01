@@ -7,7 +7,7 @@ import Toolbar from '../toolbar/toolbar.js';
 import Footer from '../footer/footer.jsx';
 import FirstDisplay from './firstDisplay.js'
 import CacheCRUD from './cacheCRUD.js'
-import {fetchCache} from '../../actions';
+import {fetchCache,resetCacheState} from '../../actions';
 
 class Cache extends React.Component {
 
@@ -29,6 +29,9 @@ class Cache extends React.Component {
         } else {
             this.props.onLoad()
         }
+    }
+    componentWillUnmount(){
+        this.props.resetCacheState()
     }
     render() {
         let compToDisplay = ''
@@ -61,7 +64,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onLoad: () => dispatch(fetchCache())
+        onLoad: () => dispatch(fetchCache()),
+        resetCacheState: () => dispatch(resetCacheState())
     }
 };
 

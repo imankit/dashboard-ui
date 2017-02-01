@@ -17,8 +17,8 @@ const Progressbar = (props) => (
 
 const mapStateToProps = (state, selfProps) => {
 
-    let apiUsed = state.analytics.api ? state.analytics.api.filter((app) => (app.appId === selfProps.appId))[0].monthlyApiCount : 0;
-    let storageUsed = state.analytics.storage ? state.analytics.storage.filter((app) => (app.appId === selfProps.appId))[0].size : 0;
+    let apiUsed = state.analytics.bulkAnalytics.api ? state.analytics.bulkAnalytics.api.filter((app) => (app.appId === selfProps.appId))[0].monthlyApiCount : 0;
+    let storageUsed = state.analytics.bulkAnalytics.storage ? state.analytics.bulkAnalytics.storage.filter((app) => (app.appId === selfProps.appId))[0].size : 0;
     let maxAPI = plans.plans[selfProps.planId - 1].apiCalls;
     let maxStorage = plans.plans[selfProps.planId - 1].storage + plans.plans[selfProps.planId].storageUnit;
     let numMaxAPI = plans.plans[selfProps.planId - 1].numApiCalls;

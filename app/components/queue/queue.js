@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import Toolbar from '../toolbar/toolbar.js';
 import Footer from '../footer/footer.jsx';
 import FirstDisplay from './firstDisplay.js'
-import {fetchQueue} from '../../actions';
+import {fetchQueue,resetQueueState} from '../../actions';
 import QueueCRUD from './queueCRUD.js'
 
 class Queue extends React.Component {
@@ -26,6 +26,9 @@ class Queue extends React.Component {
         } else {
             this.props.onLoad()
         }
+    }
+    componentWillUnmount(){
+        this.props.resetQueueState()
     }
     render() {
         let compToDisplay = ''
@@ -57,7 +60,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onLoad: () => dispatch(fetchQueue())
+        onLoad: () => dispatch(fetchQueue()),
+        resetQueueState: () => dispatch(resetQueueState())
     }
 };
 

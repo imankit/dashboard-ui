@@ -14,6 +14,9 @@ import reducers from './reducers';
 import {getCookie, saveState, loadState} from './helper';
 import throttle from 'lodash/throttle';
 import {accountsURL} from './config';
+import Alert from 'react-s-alert';
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/slide.css';
 
 import routesConfig from './routesConfig';
 
@@ -49,7 +52,10 @@ class Routes extends React.Component {
     render() {
         return (
             <Provider store={store}>
-                <Router history={browserHistory} routes={routesConfig}/>
+                <div>
+                    <Router history={browserHistory} routes={routesConfig}/>
+                    <Alert stack={{limit: 3}} offset={75}/>
+                </div>
             </Provider>);
     }
 }

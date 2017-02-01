@@ -67,9 +67,6 @@ class QueueCRUD extends React.Component {
         if(date)
             return new Date(date).toISOString().slice(0,10).replace(/-/g,"/") + ", " + new Date(date).getHours()+":"+new Date(date).getMinutes()
     }
-    componentWillUnmount(){
-        this.props.resetQueueState()
-    }
     render() {
         let queues = this.props.allQueues
         .filter((x)=>{
@@ -188,8 +185,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         selectQueue: (selectedQueue) => dispatch(selectQueue(selectedQueue)),
         deleteQueue: (selectedQueue) => dispatch(deleteQueue(selectedQueue)),
-        deleteItemFromQueue: (selectedQueue,itemId) => dispatch(deleteItemFromQueue(selectedQueue,itemId)),
-        resetQueueState: () => dispatch(resetQueueState())
+        deleteItemFromQueue: (selectedQueue,itemId) => dispatch(deleteItemFromQueue(selectedQueue,itemId))
     }
 };
 
