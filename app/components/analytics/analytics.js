@@ -8,8 +8,9 @@ import FlatButton from 'material-ui/FlatButton';
 import StorageIcon from 'material-ui/svg-icons/device/sd-storage';
 import APIIcon from 'material-ui/svg-icons/action/compare-arrows';
 import Footer from '../footer/footer.jsx'
-import {fetchAnalyticsAPI,resetAnalytics} from '../../actions';
+import {fetchAnalyticsAPI,resetAnalytics,fetchAnalyticsStorage} from '../../actions';
 import APIAnalytics from './apiAnalytics'
+import StorageAnalytics from './storageAnalytics'
 
 class Analytics extends React.Component {
 
@@ -30,6 +31,7 @@ class Analytics extends React.Component {
             this.context.router.push('/')
         } else {
             this.props.fetchAnalyticsAPI(this.props.appData.appId)
+            this.props.fetchAnalyticsStorage(this.props.appData.appId)
         }
     }
     selectType(which){
@@ -39,6 +41,10 @@ class Analytics extends React.Component {
         this.props.resetAnalytics()
     }
     render() {
+        let componentToRender = ''
+        if(this.state.selected == 'api' && this.props.analyticsApi.totalApiCount) componentToRender = <APIAnalytics analyticsApi={this.props.analyticsApi}/>
+        if(this.state.selected == 'storage' && this.props.analyticsStorage.totalStorage) componentToRender = <StorageAnalytics analyticsStorage={this.props.analyticsStorage}/>
+
         return (
             <div id= "" style={{backgroundColor: '#FFF'}}>
                 <Toolbar isDashboardMainPage={false}/>
@@ -66,9 +72,7 @@ class Analytics extends React.Component {
                         />                    
                     </div>
                     <div className="chartcontainer">
-                        {   
-                            this.props.analyticsApi.totalApiCount ? <APIAnalytics analyticsApi={this.props.analyticsApi}/> : ''
-                        }
+                        { componentToRender }
                     </div>
                 </div>
                 <Footer id="app-footer"/>
@@ -81,13 +85,15 @@ class Analytics extends React.Component {
 const mapStateToProps = (state) => {
     return {
         appData: state.manageApp,
-        analyticsApi: state.analytics.analyticsApi
+        analyticsApi: state.analytics.analyticsApi,
+        analyticsStorage: state.analytics.analyticsStorage
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         fetchAnalyticsAPI: (appId) => dispatch(fetchAnalyticsAPI(appId)),
+        fetchAnalyticsStorage: (appId) => dispatch(fetchAnalyticsStorage(appId)),
         resetAnalytics: () => dispatch(resetAnalytics())
     }
 };

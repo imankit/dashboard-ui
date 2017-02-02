@@ -762,6 +762,20 @@ export function fetchAnalyticsAPI(appId) {
     }
 }
 
+export function fetchAnalyticsStorage(appId) {
+    return function (dispatch) {
+        xhrDashBoardClient.get('/analytics/storage/'+appId+'/usage')
+        .then(response => {
+            dispatch({
+                type: 'ANALYTICS_STORAGE',
+                payload: response.data
+            });
+        },err => {
+            console.log(err)
+        })
+    }
+}
+
 export function resetAnalytics() {
     return function (dispatch) {
         dispatch({

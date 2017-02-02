@@ -1346,7 +1346,13 @@ body {
 .textinputaddmessage{
   margin-top: -15px;
 }
-#chart_div{
+#chart_div_api{
+        height: 500px !important;
+    width: 80% !important;
+    margin-left: 10%;
+    margin-top: 3%;
+}
+#chart_div_storage{
         height: 500px !important;
     width: 80% !important;
     margin-left: 10%;

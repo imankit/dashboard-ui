@@ -4,7 +4,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-class APIAnalytics extends React.Component {
+class StorageAnalytics extends React.Component {
 
     constructor(props){
         super(props)
@@ -13,9 +13,8 @@ class APIAnalytics extends React.Component {
         }
     }
     componentDidMount(){
-        
-        let APIdata = this.props.analyticsApi.usage.map((x)=>{
-            return [new Date(x.timeStamp).toDateString(), x.dayApiCount]
+        let StorageData = this.props.analyticsStorage.usage.map((x)=>{
+            return [new Date(x.timeStamp).toDateString(), x.size]
         })
         setTimeout(()=>{
           google.charts.load('current', {'packages':['corechart']});
@@ -23,15 +22,15 @@ class APIAnalytics extends React.Component {
 
           function drawChart() {
               let data = google.visualization.arrayToDataTable([
-                ['Date', 'API Count'],
+                ['Date', 'Storage Used'],
                 ['0',0],
-                ...APIdata
+                ...StorageData
               ])
 
               let options = {
                 title: 'API Analytics',
                 hAxis: {title: 'Date',  titleTextStyle: {color: '#333'}},
-                vAxis: {minValue: 0,title: 'API Count',  titleTextStyle: {color: '#333'}},
+                vAxis: {minValue: 0,title: 'Storage Used (MB)',  titleTextStyle: {color: '#333'}},
                 backgroundColor:"#eff1f5",
                 animation:{
                   duration:2000,
@@ -41,7 +40,7 @@ class APIAnalytics extends React.Component {
                 explorer: {}
               }
 
-              let chart = new google.visualization.AreaChart(document.getElementById('chart_div_api'))
+              let chart = new google.visualization.AreaChart(document.getElementById('chart_div_storage'))
               chart.draw(data, options)
           }
           window.addEventListener('resize', function(event){
@@ -51,7 +50,7 @@ class APIAnalytics extends React.Component {
     }
     render() {
         return (
-            <div id="chart_div_api"></div>
+            <div id="chart_div_storage"></div>
         );
     }
 
@@ -69,4 +68,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(APIAnalytics);
+export default connect(mapStateToProps, mapDispatchToProps)(StorageAnalytics);
