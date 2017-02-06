@@ -56,7 +56,7 @@ class ToolBar extends React.Component {
                                         <Setting style={iconStyles} color={grey500}/>
                                         <Cache style={iconStyles} color={grey500} onClick={ this.redirectTo.bind(this,'cache') }/>
                                         <Queues style={iconStyles} color={grey500} onClick={ this.redirectTo.bind(this,'queue') }/>
-                                        <Notifications style={iconStyles} color={grey500}/>
+                                        <Notifications style={iconStyles} color={grey500} onClick={ this.redirectTo.bind(this,'push') }/>
                                         <Email style={iconStyles} color={grey500} onClick={ this.redirectTo.bind(this,'email') }/>
                                         <ToolbarSeparator />
                                         <ToolbarTitle style={toolbartitle} text=""/>

@@ -40,9 +40,11 @@ class APIAnalytics extends React.Component {
                 crosshair: { trigger: 'both' },
                 explorer: {}
               }
-
-              let chart = new google.visualization.AreaChart(document.getElementById('chart_div_api'))
-              chart.draw(data, options)
+              let chartDiv = document.getElementById('chart_div_api')
+              if(chartDiv){
+                let chart = new google.visualization.AreaChart(document.getElementById('chart_div_api'))
+                chart.draw(data, options)
+              }
           }
           window.addEventListener('resize', function(event){
             drawChart()

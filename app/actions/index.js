@@ -744,6 +744,12 @@ export function sendEmailCampaign(appId,masterKey,emailSubject,emailBody) {
     return xhrCBClient.post('/email/'+appId+'/campaign',postObject)
 }
 
+export function sendPushCampaign(messageObject,query) {
+    if(query){
+        return CB.CloudPush.send(messageObject,query)
+    } else return CB.CloudPush.send(messageObject)
+}
+
 
 
 
