@@ -37,6 +37,58 @@ export function fetchApps() {
     };
 }
 
+export function fetchUser() {
+
+    return function (dispatch) {
+        xhrDashBoardClient.get('/user')
+            .then(response => {
+                dispatch({
+                    type: 'FETCH_USER',
+                    payload: response.data
+                });
+            })
+            .catch(error => {
+                console.log('fetch user error');
+                console.log(error);
+            });
+
+    };
+}
+
+export function saveUserImage(file) {
+
+    return function (dispatch) {
+        let fd = new FormData()
+        fd.append('file', file)
+        xhrDashBoardClient.post('/file',fd).then((data)=>{
+            dispatch(fetchUser())
+        },(err)=>{
+            console.log(err)
+        })
+    }
+}
+
+export function deleteUserImage(fileId) {
+
+    return function (dispatch) {
+        xhrDashBoardClient.delete('/file/'+fileId).then((data)=>{
+            dispatch(fetchUser())
+        },(err)=>{
+            console.log(err)
+        })
+    }
+}
+
+export function updateUser(name,oldPassword,newPassword) {
+
+    let newData={}
+    newData.name = name
+    newData.oldPassword = oldPassword
+    newData.newPassword = newPassword
+    return xhrDashBoardClient.post('/user/update',newData,{timeout: 2000})
+    
+}
+
 export const addApp = (name) => {
     return function (dispatch) {
         xhrDashBoardClient.post('/app/create', {"name": name})
@@ -79,7 +131,6 @@ export const logOut = () => {
     return function (dispatch) {
         xhrAccountsClient.post('/user/logout')
             .then(response => {
-                console.log(response);
                 localStorage.removeItem('state');
                 deleteAllCookies();
                 dispatch({

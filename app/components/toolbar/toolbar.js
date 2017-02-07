@@ -7,7 +7,7 @@ import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
 import MenuItem from 'material-ui/MenuItem';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
-import {logOut} from '../../actions';
+import {logOut,fetchUser} from '../../actions';
 import Storage from 'material-ui/svg-icons/device/storage';
 import Analytics from 'material-ui/svg-icons/editor/insert-chart';
 import Setting from 'material-ui/svg-icons/action/settings';
@@ -34,6 +34,11 @@ class ToolBar extends React.Component {
     static get contextTypes() {
         return {
             router: React.PropTypes.object.isRequired,
+        }
+    }
+    componentWillMount(){
+        if(!this.props.currentUser.user){
+            this.props.fetchUser()
         }
     }
     redirectTo(where){
@@ -72,7 +77,7 @@ class ToolBar extends React.Component {
                                                 </IconButton>
                                             }
                                         >
-                                            <MenuItem primaryText="My Profile"/>
+                                            <MenuItem primaryText="My Profile" onClick={ this.redirectTo.bind(this,'profile') }/>
                                             <MenuItem primaryText="Billing"/>
                                             <MenuItem primaryText="Logout" onClick={() => onLogoutClick()}/>
                                         </IconMenu>
@@ -88,7 +93,7 @@ class ToolBar extends React.Component {
                                             </IconButton>
                                         }
                                     >
-                                        <MenuItem primaryText="My Profile"/>
+                                        <MenuItem primaryText="My Profile" onClick={ this.redirectTo.bind(this,'profile') }/>
                                         <MenuItem primaryText="Billing"/>
                                         <MenuItem primaryText="Logout" onClick={() => this.props.onLogoutClick()}/>
                                     </IconMenu></ToolbarGroup>
@@ -103,8 +108,9 @@ class ToolBar extends React.Component {
 const mapStateToProps = (state) => {
     return {
         showOthers: state.manageApp.viewActive,
-        currentApp: state.manageApp.appId
-    };
+        currentApp: state.manageApp.appId,
+        currentUser: state.user
+    }
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -112,6 +118,7 @@ const mapDispatchToProps = (dispatch) => {
         onLogoutClick: () => {
             dispatch(logOut());
         },
+        fetchUser: () => dispatch(fetchUser())
     };
 };
 

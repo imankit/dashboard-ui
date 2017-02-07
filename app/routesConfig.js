@@ -10,6 +10,7 @@ import Queue from './components/queue/queue';
 import EmailCampaign from './components/campaign/email';
 import Analytics from './components/analytics/analytics';
 import PushCampaign from './components/campaign/push';
+import Profile from './components/profile/profile';
 
 const routesConfig = [
     {path: '/', component: App},
@@ -19,6 +20,7 @@ const routesConfig = [
     {path: '/queue', component: Queue},
     {path: '/email', component: EmailCampaign},
     {path: '/analytics', component: Analytics},
-    {path: '/push', component: PushCampaign}
+    {path: '/push', component: PushCampaign},
+    {path: '/profile', component: Profile}
 ];
 export default routesConfig;
