@@ -5,6 +5,7 @@ import Footer from '../footer/footer.jsx';
 import FirstDisplay from './firstDisplay.js'
 import {fetchQueue,resetQueueState} from '../../actions';
 import QueueCRUD from './queueCRUD.js'
+import RefreshIndicator from 'material-ui/RefreshIndicator';
 
 class Queue extends React.Component {
 
@@ -31,7 +32,13 @@ class Queue extends React.Component {
         this.props.resetQueueState()
     }
     render() {
-        let compToDisplay = ''
+        let compToDisplay = <RefreshIndicator
+                                size={50}
+                                left={70}
+                                top={0}
+                                status="loading"
+                                className="loadermain"
+                            />
         if(this.props.loaded){
             compToDisplay = this.props.noQueueFound ? <FirstDisplay/> : <QueueCRUD/>
         }

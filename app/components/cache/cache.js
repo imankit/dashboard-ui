@@ -8,6 +8,7 @@ import Footer from '../footer/footer.jsx';
 import FirstDisplay from './firstDisplay.js'
 import CacheCRUD from './cacheCRUD.js'
 import {fetchCache,resetCacheState} from '../../actions';
+import RefreshIndicator from 'material-ui/RefreshIndicator';
 
 class Cache extends React.Component {
 
@@ -34,7 +35,13 @@ class Cache extends React.Component {
         this.props.resetCacheState()
     }
     render() {
-        let compToDisplay = ''
+        let compToDisplay = <RefreshIndicator
+                                size={50}
+                                left={70}
+                                top={0}
+                                status="loading"
+                                className="loadermain"
+                            />
         if(this.props.loaded){
             compToDisplay = this.props.noCacheFound ? <FirstDisplay/> : <CacheCRUD/>
         }

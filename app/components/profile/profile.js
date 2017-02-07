@@ -9,6 +9,7 @@ import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import Divider from 'material-ui/Divider';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import RefreshIndicator from 'material-ui/RefreshIndicator';
 
 class Profile extends React.Component {
 
@@ -75,8 +76,18 @@ class Profile extends React.Component {
                 <div className="profile tables">
                     <div className="profilediv">
                         <div className="imagediv">
-                            <img src={ userImage } className="userimage"/>
+                            <img src={ userImage } className="userimage" style={{ opacity:( this.props.loading ? "0.3" : "1.0") }}/>
                             <div className="btndivimage">
+                                {
+                                    this.props.loading ? 
+                                        <RefreshIndicator
+                                            size={50}
+                                            left={70}
+                                            top={0}
+                                            status="loading"
+                                            className="loaderimageuser"
+                                        /> : ''
+                                }
                                 <input type="file" style={{display:"none"}} onChange={ this.changeFile.bind(this) } id="fileBox"/>
                                 <IconButton tooltip="Edit Image" touch={true} tooltipPosition="bottom-right" className="iconbtns" onClick={ this.openChangeFile.bind(this) }>
                                     <EditIcon />
@@ -134,7 +145,8 @@ class Profile extends React.Component {
 const mapStateToProps = (state) => {
 
     return {
-        currentUser: state.user
+        currentUser: state.user,
+        loading: state.loader.loading
     }
 }
 
@@ -142,7 +154,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         saveUserImage:(file) => dispatch(saveUserImage(file)),
         deleteUserImage:(fileId) => dispatch(deleteUserImage(fileId)),
-        fetchUser:() => dispatch(fetchUser())
+        fetchUser:() => dispatch(fetchUser()),
     }
 }
 

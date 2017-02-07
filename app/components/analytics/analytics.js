@@ -11,6 +11,7 @@ import Footer from '../footer/footer.jsx'
 import {fetchAnalyticsAPI,resetAnalytics,fetchAnalyticsStorage} from '../../actions';
 import APIAnalytics from './apiAnalytics'
 import StorageAnalytics from './storageAnalytics'
+import RefreshIndicator from 'material-ui/RefreshIndicator';
 
 class Analytics extends React.Component {
 
@@ -41,7 +42,13 @@ class Analytics extends React.Component {
         this.props.resetAnalytics()
     }
     render() {
-        let componentToRender = ''
+        let componentToRender = <RefreshIndicator
+                                    size={50}
+                                    left={70}
+                                    top={0}
+                                    status="loading"
+                                    className="loadermain"
+                                />
         if(this.state.selected == 'api' && this.props.analyticsApi.totalApiCount) componentToRender = <APIAnalytics analyticsApi={this.props.analyticsApi}/>
         if(this.state.selected == 'storage' && this.props.analyticsStorage.totalStorage) componentToRender = <StorageAnalytics analyticsStorage={this.props.analyticsStorage}/>
 

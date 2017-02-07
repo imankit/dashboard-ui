@@ -46,7 +46,8 @@ export function fetchUser() {
                 dispatch({
                     type: 'FETCH_USER',
                     payload: response.data
-                });
+                })
+                dispatch({type:'STOP_LOADING'})
             })
             .catch(error => {
                 console.log('fetch user error');
@@ -59,6 +60,7 @@ export function fetchUser() {
 export function saveUserImage(file) {
 
     return function (dispatch) {
+        dispatch({type:'START_LOADING'})
         let fd = new FormData()
         fd.append('file', file)
         xhrDashBoardClient.post('/file',fd).then((data)=>{
@@ -72,6 +74,7 @@ export function saveUserImage(file) {
 export function deleteUserImage(fileId) {
 
     return function (dispatch) {
+        dispatch({type:'START_LOADING'})
         xhrDashBoardClient.delete('/file/'+fileId).then((data)=>{
             dispatch(fetchUser())
         },(err)=>{

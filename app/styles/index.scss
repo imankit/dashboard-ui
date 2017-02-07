@@ -1377,6 +1377,7 @@ body {
     .btndivimage{
       float: right;
       margin-top: -50px;
+      position: relative;
     }
     .iconbtns{
       visibility: visible;
@@ -1634,4 +1635,8 @@ body {
 }
 .show-grid{
   position: relative !important;
+}
+.loaderimageuser{
+    margin-left: -135px !important;
+    margin-top: -125px;
 }
