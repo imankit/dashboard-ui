@@ -28,6 +28,7 @@ export function fetchApps() {
 
                 let appIdArray = response.data.map((app) => app.appId);
                 dispatch(getAnalyticsData(appIdArray));
+                dispatch({type:'STOP_LOADING'})
             })
             .catch(error => {
                 console.log('inside fetch Apps error catch error: ');
@@ -90,14 +91,16 @@ export function updateUser(name,oldPassword,newPassword) {
 }
 
 export const addApp = (name) => {
+    
     return function (dispatch) {
+        dispatch({type:'START_LOADING'})
         xhrDashBoardClient.post('/app/create', {"name": name})
             .then(response => {
-                console.log(response);
                 dispatch({
                     type: 'ADD_APP',
                     payload: response.data
                 });
+                dispatch({type:'STOP_LOADING'})
             })
             .catch(error => {
                 console.log('inside fetch Apps error catch error: ');
@@ -248,13 +251,16 @@ export const genClientKey = (appId) => {
 };
 
 export const deleteApp = (appId) => {
+    
     return function (dispatch) {
+        dispatch({type:'START_LOADING'})
         xhrDashBoardClient.delete('/app/' + appId)
             .then(response => {
                 dispatch({
                     type: 'DELETE_APP',
                     payload: {appId: appId}
                 });
+                dispatch({type:'STOP_LOADING'})
             })
             .catch(error => {
                 console.log('inside delete app error catch error: ');
@@ -278,13 +284,16 @@ export const manageApp = (appId, masterKey, name) => {
 export function fetchTables(appId, masterKey) {
 
     return function (dispatch) {
+        dispatch({type:'START_LOADING'})
         xhrCBClient.post('/app/' + appId + '/_getAll', {key: masterKey})
             .then(response => {
-                if (response.data)
+                if (response.data){
                     dispatch({
                         type: 'FETCH_TABLES',
                         payload: {appId: appId, tables: response.data}
                     });
+                }
+                dispatch({type:'STOP_LOADING'})
             })
             .catch(error => {
                 console.log('inside fetch Tables error catch error: ');

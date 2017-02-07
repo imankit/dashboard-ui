@@ -20,10 +20,12 @@ class Projecthead extends React.Component {
     handleChange = (e) => this.setState({value: e.target.value});
 
     createApp = () => {
-        this.props.dispatch(addApp(this.state.value));
-        this.setState({
-            showModal: false, value: ''
-        });
+        if(this.state.value){
+            this.props.dispatch(addApp(this.state.value));
+            this.setState({
+                showModal: false, value: ''
+            });
+        }
     };
 
     render() {
@@ -40,6 +42,7 @@ class Projecthead extends React.Component {
                                      value={this.state.value}
                                      placeholder="Pick a good name"
                                      onChange={this.handleChange}
+                                     required={true}
                         />
                     </Modal.Body>
                     <Modal.Footer>

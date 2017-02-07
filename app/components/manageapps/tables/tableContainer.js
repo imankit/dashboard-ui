@@ -11,6 +11,7 @@ import IconDelete from 'material-ui/svg-icons/action/delete';
 import RoleIcon from 'material-ui/svg-icons/hardware/security';
 import UserIcon from 'material-ui/svg-icons/social/people';
 import DeviceIcon from 'material-ui/svg-icons/hardware/smartphone';
+import RefreshIndicator from 'material-ui/RefreshIndicator';
 
 const iconStyles = {
     marginTop: 14,
@@ -68,35 +69,44 @@ class TableContainer extends React.Component {
                 <Grid className="tables-container">
                     <Row className="show-grid">
                         {
-                            this.props.tables.map((table) => (
-                                <Col sm={12} md={6} lg={4} key={table.id}>
-                                    <div className="table">
-                                        { this.getIcon(table.type)}
-                                        <p>{table.name}</p>
-                                        {
-                                            (table.type !== 'custom') ?
-                                                (<div className="overlay">
-                                                    <PowerOn style={iconStyles3} color={grey50}
-                                                             onClick={() => this.props.onEditTable(table.id)}/>
-                                                </div>)
-                                                :
-                                                (<div className="overlay">
-                                                    <PowerOn style={iconStyles2} color={grey50}
-                                                             onClick={() => this.props.onEditTable(table.id)}/>
-                                                    <div className="bordertop"></div>
-                                                    <IconDelete style={iconStyles2}
-                                                                color={grey50}
-                                                                onClick={
-                                                                    () => this.props.deleteTable(
-                                                                        this.props.activeAppId,
-                                                                        this.props.masterKey,
-                                                                        table.name)
-                                                                }
-                                                    />
-                                                </div>)
-                                        }
-                                    </div>
-                                </Col>))
+                            this.props.loading ?
+                                <RefreshIndicator
+                                    size={50}
+                                    left={70}
+                                    top={0}
+                                    status="loading"
+                                    className="loadermain"
+                                />
+                                :
+                                this.props.tables.map((table) => (
+                                    <Col sm={12} md={6} lg={4} key={table.id}>
+                                        <div className="table">
+                                            { this.getIcon(table.type)}
+                                            <p>{table.name}</p>
+                                            {
+                                                (table.type !== 'custom') ?
+                                                    (<div className="overlay">
+                                                        <PowerOn style={iconStyles3} color={grey50}
+                                                                onClick={() => this.props.onEditTable(table.id)}/>
+                                                    </div>)
+                                                    :
+                                                    (<div className="overlay">
+                                                        <PowerOn style={iconStyles2} color={grey50}
+                                                                onClick={() => this.props.onEditTable(table.id)}/>
+                                                        <div className="bordertop"></div>
+                                                        <IconDelete style={iconStyles2}
+                                                                    color={grey50}
+                                                                    onClick={
+                                                                        () => this.props.deleteTable(
+                                                                            this.props.activeAppId,
+                                                                            this.props.masterKey,
+                                                                            table.name)
+                                                                    }
+                                                        />
+                                                    </div>)
+                                            }
+                                        </div>
+                                    </Col>))
                         }
                     </Row>
                 </Grid>
@@ -109,6 +119,7 @@ const mapStateToProps = (state) => {
     let tables = state.apps.filter(app => (app.appId === state.manageApp.appId))[0].tables;
     return {
         activeAppId: state.manageApp.appId,
+        loading: state.loader.loading,
         masterKey: state.manageApp.masterKey,
         tables: tables ? tables.filter(t => t.name.toLowerCase().search(state.manageApp.tableFilter ? state.manageApp.tableFilter : '') >= 0) : []
     };
