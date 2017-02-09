@@ -65,6 +65,7 @@ export function saveUserImage(file) {
         fd.append('file', file)
         xhrDashBoardClient.post('/file',fd).then((data)=>{
             dispatch(fetchUser())
+            showAlert('success',"User image updated.")
         },(err)=>{
             console.log(err)
         })
@@ -104,6 +105,7 @@ export const addApp = (name) => {
                     payload: response.data
                 });
                 dispatch({type:'STOP_LOADING'})
+                showAlert('success',"App added.")
             })
             .catch(error => {
                 console.log('inside fetch Apps error catch error: ');
@@ -826,7 +828,7 @@ export function fetchAnalyticsAPI(appId) {
                 payload: response.data
             });
         },err => {
-            console.log(err)
+            showAlert('error',"Error fetching API analytics data.")
         })
     }
 }
@@ -840,7 +842,7 @@ export function fetchAnalyticsStorage(appId) {
                 payload: response.data
             });
         },err => {
-            console.log(err)
+            showAlert('error',"Error fetching Storage analytics data.")
         })
     }
 }

@@ -102,8 +102,13 @@ class SelectAudience extends React.Component {
                   onClick={this.open}
                 />
                 <Modal show={this.state.showModal} onHide={this.close} dialogClassName="custom-modal">
-                    <Modal.Header closeButton>
+                    <Modal.Header>
                         <Modal.Title>Select Audience</Modal.Title>
+                        <div className="modalicon" style={{paddingRight: 8, height: 56, width: 56, borderRadius: 50, backgroundColor: '#0F6DA6'}}>
+                            <div className="flex-general-column-wrapper-center" style={{height: 56, width: 56}}>          
+                            <i className="fa fa-bell-o" style={{fontSize: 30, color: 'white'}} />
+                            </div>
+                        </div>
                     </Modal.Header>
                     <Modal.Body>
                         <div style={{width: '100%', backgroundColor: 'white',height:"150px"}} className="audcontdivs">

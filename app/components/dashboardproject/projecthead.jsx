@@ -34,8 +34,13 @@ class Projecthead extends React.Component {
                 <h1 className="dashboard-title pull-left">Apps</h1>
                 <div className="btn" onClick={this.open}>+ New App</div>
                 <Modal show={this.state.showModal} onHide={this.close} dialogClassName="custom-modal">
-                    <Modal.Header closeButton>
-                        <Modal.Title>New App</Modal.Title>
+                    <Modal.Header>
+                        <Modal.Title>Create New App</Modal.Title>
+                        <div className="modalicon" style={{paddingRight: 8, height: 56, width: 56, borderRadius: 50, backgroundColor: '#0F6DA6'}}>
+                            <div className="flex-general-column-wrapper-center" style={{height: 56, width: 56}}>          
+                            <i className="fa fa-cloud" style={{fontSize: 30, color: 'white'}} />
+                            </div>
+                        </div>
                     </Modal.Header>
                     <Modal.Body>
                         <FormControl type="text"

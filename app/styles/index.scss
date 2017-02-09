@@ -346,11 +346,12 @@ body {
       border: none;
       background-color: #549afc;
       color: white;
-      padding: 25px;
+      height: 80px;
+      padding: 21px;
     }
 
     .modal-footer {
-      padding: 10px 40px 40px 40px;
+      background-color: #FBFBFB;
     }
 
     .modal-header button.close, .modal-body button.close, .modal-footer button.close {
@@ -361,7 +362,12 @@ body {
 
     .modal-title {
       font-weight: normal;
-      font-size: 28px;
+      font-size: 25px;
+      float: left;
+    }
+    .modalicon{
+        float: right;
+        margin-top: -10px;
     }
 
     .modal-body {

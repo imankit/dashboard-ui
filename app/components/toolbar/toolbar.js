@@ -45,6 +45,10 @@ class ToolBar extends React.Component {
         this.context.router.push('/'+where)
     }
     render(){
+        let userImage = "/assets/images/user-default-image.jpg"
+        if(this.props.currentUser.file){
+            userImage = this.props.currentUser.file.document.url
+        }
         return(
             <div id= "nav-dash" style={{backgroundColor: '#FFF'}}>
                 <div className="container">
@@ -72,7 +76,7 @@ class ToolBar extends React.Component {
                                             iconButtonElement={
                                                 <IconButton touch={true}>
                                                     <img className="userhead"
-                                                         src="/assets/images/user-default-image.jpg"
+                                                         src={ userImage }
                                                          alt=""/>
                                                 </IconButton>
                                             }
@@ -88,7 +92,7 @@ class ToolBar extends React.Component {
                                         iconButtonElement={
                                             <IconButton touch={true}>
                                                 <img className="userhead"
-                                                     src="/assets/images/user-default-image.jpg"
+                                                     src={ userImage }
                                                      alt=""/>
                                             </IconButton>
                                         }

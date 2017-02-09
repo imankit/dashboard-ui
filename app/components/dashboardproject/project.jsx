@@ -3,7 +3,7 @@
 import React, {PropTypes} from 'react';
 import ProjectName from './projectname.js';
 import Progressbar from './progressbar.jsx';
-import {Modal} from 'react-bootstrap';
+import {Modal,Button} from 'react-bootstrap';
 import OptionsModal from './optionsModal';
 
 import IconDelete from 'material-ui/svg-icons/action/delete';
@@ -91,8 +91,13 @@ const Project = React.createClass({
                     </div>
                     <Modal show={this.state.showModal} bsSize={ (this.state.selectedTab === 'upgrade') ? 'large' : null}
                            onHide={this.close} dialogClassName='options-modal'>
-                        <Modal.Header closeButton>
+                        <Modal.Header>
                             <Modal.Title>{ this.state.displayText}</Modal.Title>
+                            <div className="modalicon" style={{paddingRight: 8, height: 56, width: 56, borderRadius: 50, backgroundColor: '#0F6DA6'}}>
+                                <div className="flex-general-column-wrapper-center" style={{height: 56, width: 56}}>          
+                                <i className="fa fa-cog" style={{fontSize: 30, color: 'white'}} />
+                                </div>
+                            </div>
                         </Modal.Header>
                         <Modal.Body>
                             <OptionsModal id={this.props._id}

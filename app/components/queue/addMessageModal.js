@@ -66,8 +66,13 @@ class AddMessage extends React.Component {
             <div>
                 <RaisedButton label="Add Message" className="addmessgaebuttontop" onClick={ this.open } disabled={ !this.props.selectedQueue.name }/>
                 <Modal show={this.state.showModal} onHide={ this.close } dialogClassName="custom-modal">
-                    <Modal.Header closeButton>
+                    <Modal.Header>
                         <Modal.Title>Add Message</Modal.Title>
+                        <div className="modalicon" style={{paddingRight: 8, height: 56, width: 56, borderRadius: 50, backgroundColor: '#0F6DA6'}}>
+                            <div className="flex-general-column-wrapper-center" style={{height: 56, width: 56}}>          
+                            <i className="fa fa-exchange" style={{fontSize: 30, color: 'white'}} />
+                            </div>
+                        </div>
                     </Modal.Header>
                     <Modal.Body>
                             <SelectField

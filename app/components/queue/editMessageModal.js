@@ -76,8 +76,13 @@ class EditMessage extends React.Component {
     render() {
         return (
             <Modal show={this.props.showEditMessageModal} onHide={ this.close } dialogClassName="custom-modal">
-                <Modal.Header closeButton>
+                <Modal.Header>
                     <Modal.Title>Edit Message</Modal.Title>
+                    <div className="modalicon" style={{paddingRight: 8, height: 56, width: 56, borderRadius: 50, backgroundColor: '#0F6DA6'}}>
+                        <div className="flex-general-column-wrapper-center" style={{height: 56, width: 56}}>          
+                        <i className="fa fa-exchange" style={{fontSize: 30, color: 'white'}} />
+                        </div>
+                    </div>
                 </Modal.Header>
                 <Modal.Body>
                         <SelectField
