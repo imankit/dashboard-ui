@@ -47,6 +47,7 @@ export function fetchUser() {
                     type: 'FETCH_USER',
                     payload: response.data
                 })
+                dispatch(getNotifications())
                 dispatch({type:'STOP_LOADING'})
             })
             .catch(error => {
@@ -153,8 +154,6 @@ export const logOut = () => {
 };
 
 export const fetchDevDetails = (IdArray) => {
-    console.log("fetchDevDetails");
-    console.log(IdArray);
     return function (dispatch) {
         xhrAccountsClient.post('user/list', {IdArray: IdArray})
             .then(response => {
@@ -171,8 +170,6 @@ export const fetchDevDetails = (IdArray) => {
 };
 
 export const sendInvitation = (appId, email) => {
-    console.log("inviting:");
-    console.log(appId + " " + email);
     return function (dispatch) {
         xhrDashBoardClient.post('/app/' + appId + '/invite', {"email": email})
             .then(response => {
@@ -207,6 +204,35 @@ export const deleteDev = (appId, userId) => {
     };
 };
 
+export const addDeveloper = (appId, email) => {
+    return function (dispatch) {
+        xhrDashBoardClient.get('/app/' + appId + '/adddeveloper/'+ email)
+            .then(response => {
+                dispatch(fetchApps())
+                dispatch(getNotifications())
+            })
+            .catch(error => {
+                console.log('add dev error : ');
+                console.log(error);
+            });
+    };
+};
+
+export const changeDeveloperRole = (appId,userId,role) => {
+    return function (dispatch) {
+        xhrDashBoardClient.get('/app/'+appId+'/changerole/'+userId+'/'+role)
+            .then(response => {
+                dispatch(fetchApps())
+                showAlert('success',"Developer role updated.")
+            })
+            .catch(error => {
+                showAlert('error',"Error Updating Developer role.")
+                console.log('change role error : ');
+                console.log(error);
+            });
+    };
+};
+
 export const deleteInvite = (appId, email) => {
     return function (dispatch) {
         xhrDashBoardClient.post('/app/' + appId + '/removeinvitee', {email: email})
@@ -214,7 +240,8 @@ export const deleteInvite = (appId, email) => {
                 dispatch({
                     type: 'DELETE_INVITE',
                     payload: {appId: appId, invited: response.data.invited}
-                });
+                })
+                dispatch(getNotifications())
             })
             .catch(error => {
                 console.log('inside delete invite error catch error: ');
@@ -576,14 +603,41 @@ export function getAnalyticsData(appIdArray) {
                 });
             })
             .catch(error => {
-                console.log('inside getAnalyticsData Apps error catch error: ');
                 console.log(error);
-                /* dispatch({
-                 type: 'LOGOUT'
-                 }); */
             });
 
     };
+}
+
+export function getNotifications() {
+    return function (dispatch) {
+        xhrDashBoardClient
+            .get('/notification/0/10')
+            .then(response => {
+                dispatch({
+                    type: 'FETCH_NOTIFICATIONS',
+                    payload: response.data
+                })
+            })
+            .catch(error => {
+                console.log(error);
+            })
+
+    }
+}
+
+export function updateNotificationsSeen() {
+    return function (dispatch) {
+        xhrDashBoardClient
+            .get('/notification/seen')
+            .then(response => {
+                dispatch(getNotifications())
+            })
+            .catch(error => {
+                console.log(error);
+            })
+
+    }
 }
 
 

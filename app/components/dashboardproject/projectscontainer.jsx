@@ -40,7 +40,7 @@ class Projectscontainer extends React.Component {
                                 this.props.apps.map(app =>
                                     <Col xs={8} sm={6} md={4} lg={4} key={app._id} className="project-grid">
                                         <Project key={app._id} {...app}
-                                                onProjectClick={this.props.onProjectClick}/>
+                                                onProjectClick={this.props.onProjectClick} currentUser={this.props.currentUser}/>
                                     </Col>
                                 )
                         }
@@ -54,7 +54,8 @@ class Projectscontainer extends React.Component {
 const mapStateToProps = (state) => {
     return {
         apps: state.apps || [],
-        loading: state.loader.loading
+        loading: state.loader.loading,
+        currentUser: state.user
     };
 };
 

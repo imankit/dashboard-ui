@@ -12,7 +12,7 @@ import Key from 'material-ui/svg-icons/communication/vpn-key';
 import PersonAdd from 'material-ui/svg-icons/social/person-add';
 import Icon from 'material-ui/svg-icons/file/cloud';
 import ManageApp from 'material-ui/svg-icons/navigation/apps';
-import {grey500, blue500} from 'material-ui/styles/colors';
+import {grey500, blue500, grey300} from 'material-ui/styles/colors';
 
 const iconStyles = {
     marginRight: 12,
@@ -54,9 +54,14 @@ const Project = React.createClass({
     delete(){
         this.setState({showModal: true, selectedTab: "delete", displayText: "Delete App"});
     },
-
+    isAppAdmin(){
+        if(this.props.currentUser.user){
+            return this.props.developers.filter((x)=> x.userId == this.props.currentUser.user._id && x.role === 'Admin').length
+        } else return false
+    },
 
     render: function () {
+        
         let planName = "";
         if (this.props.planId == 1)
             planName = "Free Plan";
@@ -76,10 +81,23 @@ const Project = React.createClass({
                 </div>
                 <div className="project-option">
                     <div >
-                        <PersonAdd style={iconStyles} color={grey500} onClick={this.open1}/>
-                        <Key style={iconStyles} color={grey500} onClick={this.open2}/>
-                        <FileCloudUpload style={iconStyles} color={grey500} onClick={this.open3}/>
-                        <IconDelete style={iconStyles} color={grey500} onClick={this.delete}/>
+                    {
+                        this.isAppAdmin() ?
+                            <div style={{display:'inline'}}>
+                                <PersonAdd style={iconStyles} color={grey500} onClick={this.open1}/>
+                                <Key style={iconStyles} color={grey500} onClick={this.open2}/>
+                                <FileCloudUpload style={iconStyles} color={grey500} onClick={this.open3}/>
+                                <IconDelete style={iconStyles} color={grey500} onClick={this.delete}/>
+                            </div>
+                            :
+                            <div style={{display:'inline'}}>
+                                <PersonAdd style={iconStyles} color={grey300}/>
+                                <Key style={iconStyles} color={grey500} onClick={this.open2}/>
+                                <FileCloudUpload style={iconStyles} color={grey300}/>
+                                <IconDelete style={iconStyles} color={grey300}/>
+                            </div>
+                    }
+
                         <ManageApp style={iconStyles}
                                    color={grey500}
                                    onClick={() => this.props.onProjectClick(
@@ -105,6 +123,7 @@ const Project = React.createClass({
                                         masterKey={this.props.keys.master}
                                         clientKey={this.props.keys.js}
                                         planId={this.props.planId}
+                                        developers={this.props.developers}
                                         invited={this.props.invited}
                                         selectedTab={this.state.selectedTab}
                             />

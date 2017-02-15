@@ -57,10 +57,7 @@ const app = (state, action) => {
 export default function (state = [], action) {
     switch (action.type) {
         case 'FETCH_APPS': {
-            let newApps = action.payload.filter((app) => {
-                return !doesExists(app._id, state);
-            });
-            return [...state, ...newApps];
+            return action.payload
         }
 
         case 'ADD_APP': {

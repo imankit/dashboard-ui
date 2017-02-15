@@ -17,7 +17,7 @@ const OptionsModal = (props) => {
     return (
         <div>
             { (props.selectedTab === 'addDev') ?
-                <UserAccess id={props.id} appId={props.appId} invited={props.invited}/> : <div></div>
+                <UserAccess id={props.id} appId={props.appId} invited={props.invited} developers={props.developers}/> : <div></div>
             }
             { (props.selectedTab === 'keys') ?
                 <Keys id={props.id}

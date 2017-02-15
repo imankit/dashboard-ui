@@ -5,27 +5,29 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import  {Table} from 'react-bootstrap';
 import Close from 'material-ui/svg-icons/navigation/close';
-import {grey500} from 'material-ui/styles/colors';
-import {sendInvitation, fetchDevDetails, deleteDev, deleteInvite} from '../../actions/index';
+import {grey500,grey300} from 'material-ui/styles/colors';
+import {sendInvitation, fetchDevDetails, deleteDev, deleteInvite,changeDeveloperRole,fetchApps} from '../../actions/index';
 import {FormGroup, InputGroup, FormControl, Button, Clearfix} from 'react-bootstrap';
 
 const iconStyles = {
     marginLeft: 20,
-};
-const getAppDevs = (state, id) => {
-    console.log("getAppDevs " + id);
-    for (let i = 0; i < state.apps.length; i++) {
-        if (state.apps[i]._id === id) {
-            return state.apps[i].developers.map((dev) => dev.userId);
-        }
-    }
-};
+    cursor:'pointer'
+}
+const iconStylesDisabled = {
+    marginLeft: 20,
+    cursor:'no-drop'
+}
 
 class UserAccess extends Component {
 
     componentWillMount() {
-        if (this.props.newIds.length > 0)
-            this.props.fetchDevDetails(this.props.newIds);
+        this.props.fetchDevDetails(this.props.devIdArray)
+    }
+    componentWillUnmount(){
+        this.props.fetchApps()
+    }
+    changeDevRole(userId,e){
+        this.props.changeDeveloperRole(this.props.appId,userId,e.target.value)
     }
 
     constructor(props) {
@@ -36,9 +38,6 @@ class UserAccess extends Component {
     }
 
     render() {
-        console.log("inside useraccess props.invited:");
-        console.log(this.props.invited);
-
         const handleChange = (e) => this.setState({email: e.target.value});
         const onSend = () => {
             this.setState({email: ""});
@@ -67,15 +66,27 @@ class UserAccess extends Component {
                     </tr>
                     </thead>
                     <tbody>
-                    { this.props.objUserList.map((user) =>
+                    { this.props.developerList.map((user) =>
                         <tr key={user._id}>
                             <td>{user.email}</td>
-                            <td>{user.isAdmin ? "Admin" : "User"}</td>
+                            <td>
+                                <select className={ this.props.currentUser.user._id ==  user._id ? 'roleselectdevdisabled' : 'roleselectdev' } defaultValue={user.role} disabled={ this.props.currentUser.user._id ==  user._id} onChange={ this.changeDevRole.bind(this,user._id) }>
+                                    <option value="Admin">Admin</option>
+                                    <option value="User">User</option>
+                                </select>
+                            </td>
                             <td>Accepted</td>
                             <td>
-                                <Close style={iconStyles}
-                                       color={grey500}
-                                       onClick={() => this.props.onDeleteDev(this.props.appId, user._id)}/>
+                                {
+                                this.props.currentUser.user._id !=  user._id ?
+                                    <Close style={iconStyles}
+                                        color={grey500}
+                                        onClick={() => this.props.onDeleteDev(this.props.appId, user._id)}/>
+                                        :
+                                    <Close style={iconStylesDisabled}
+                                        color={grey300}
+                                        />
+                                }
                             </td>
                         </tr>)
                     }
@@ -96,22 +107,36 @@ class UserAccess extends Component {
 }
 
 const mapStateToProps = (state, selfProps) => {
-    let IdArray = getAppDevs(state, selfProps.id);
-    let newIds = IdArray.filter((id) => (typeof state.userList[id] === 'undefined'));
-    let oldIds = IdArray.filter((id) => (typeof state.userList[id] !== 'undefined'));
-    let objUserList = oldIds.map((id) => state.userList[id]);
+    let devIdArray = selfProps.developers.map(x => x.userId)
+    let developerList = []
+    let isUserListFetched = false
+    if(Object.keys(state.userList).length){
+        isUserListFetched = Object.keys(state.userList).filter((x)=>{
+                                return devIdArray.filter((y) => x == y).length
+                            }).length >= devIdArray.length
+    }
+    if(isUserListFetched){
+        developerList = selfProps.developers.map((dev) => {
+            let devObj = state.userList[dev.userId]
+            devObj.role = dev.role
+            return devObj
+        })
+    }
     return {
-        objUserList: objUserList,
-        newIds: newIds
+        developerList: developerList,
+        devIdArray: devIdArray,
+        currentUser: state.user
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         invite: (appId, email) => dispatch(sendInvitation(appId, email)),
-        fetchDevDetails: (IdArray) => dispatch(fetchDevDetails(IdArray)),
+        fetchDevDetails: (devIdArray) => dispatch(fetchDevDetails(devIdArray)),
         onDeleteDev: (appId, userId) => dispatch(deleteDev(appId, userId)),
-        onDeleteInvite: (appId, email) => dispatch(deleteInvite(appId, email))
+        onDeleteInvite: (appId, email) => dispatch(deleteInvite(appId, email)),
+        changeDeveloperRole: (appId,userId,role) => dispatch(changeDeveloperRole(appId,userId,role)),
+        fetchApps: () => dispatch(fetchApps())
     };
 };
 

@@ -16,6 +16,7 @@ import Queues from 'material-ui/svg-icons/action/compare-arrows';
 import Notifications from 'material-ui/svg-icons/alert/add-alert';
 import Email from 'material-ui/svg-icons/communication/email';
 import {grey500} from 'material-ui/styles/colors';
+import NotificationsModal from './notification'
 
 const toolbartitle = {
     fontSize: 18
@@ -50,7 +51,7 @@ class ToolBar extends React.Component {
             userImage = this.props.currentUser.file.document.url
         }
         return(
-            <div id= "nav-dash" style={{backgroundColor: '#FFF'}}>
+            <div id= "nav-dash" style={{backgroundColor: '#FFF',paddingTop: 2}}>
                 <div className="container">
                     <Toolbar className='toolbar' style={{backgroundColor: '#FFF'}}>
                         <ToolbarGroup>
@@ -70,7 +71,7 @@ class ToolBar extends React.Component {
                                         <ToolbarSeparator />
                                         <ToolbarTitle style={toolbartitle} text=""/>
                                         <ToolbarTitle style={toolbartitle} text="Quickstart"/>
-                                        <ToolbarTitle style={toolbartitle} text="Notifications"/>
+                                        <NotificationsModal/>
                                         <ToolbarSeparator />
                                         <IconMenu
                                             iconButtonElement={
@@ -86,7 +87,7 @@ class ToolBar extends React.Component {
                                             <MenuItem primaryText="Logout" onClick={() => onLogoutClick()}/>
                                         </IconMenu>
                                     </ToolbarGroup>) : <ToolbarGroup><ToolbarTitle style={toolbartitle} text="Quickstart"/>
-                                    <ToolbarTitle style={toolbartitle} text="Notifications"/>
+                                    <NotificationsModal/>
                                     <ToolbarSeparator />
                                     <IconMenu
                                         iconButtonElement={
