@@ -1437,6 +1437,46 @@ body {
       margin-right: 25%;
     }
   }
+  .settings{
+    background-color: #eff1f5;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+
+    .leftnav{
+      flex: 1;
+      padding: 40px;
+    }
+    .content{
+      flex: 3;
+      padding: 40px;
+      margin-top: -20px;
+    }
+    .contentsubdiv{
+      width: 800px;
+    }
+    .smallp{
+      color: rgb(179, 179, 183);
+      font-size: 13px;
+      font-weight: 600;
+      display: block;
+    }
+    .togglegeneral{
+      width: 200px;
+    }
+    .addfile{
+      font-size: 17px;
+      color: #9E9E9E;
+      cursor:pointer;
+    }
+    .sidenavselected{
+      background-color: #efefef !important;
+      /* color: #443939; */
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 3px;
+      transform: scale(1.05,1.05);
+    }
+
+  }
 }
 .cp{
   cursor: pointer
@@ -1724,4 +1764,7 @@ body {
     padding: 0px 12px !important;
     background-color: #c5c5c5 !important;
     cursor: no-drop;
+}
+.hide{
+  display: none;
 }

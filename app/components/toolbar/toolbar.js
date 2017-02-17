@@ -63,7 +63,7 @@ class ToolBar extends React.Component {
                                     <ToolbarGroup>
                                         <Storage style={iconStyles} color={grey500} onClick={ this.redirectTo.bind(this,'tables') }/>
                                         <Analytics style={iconStyles} color={grey500} onClick={ this.redirectTo.bind(this,'analytics') }/>
-                                        <Setting style={iconStyles} color={grey500}/>
+                                        <Setting style={iconStyles} color={grey500} onClick={ this.redirectTo.bind(this,'settings') }/>
                                         <Cache style={iconStyles} color={grey500} onClick={ this.redirectTo.bind(this,'cache') }/>
                                         <Queues style={iconStyles} color={grey500} onClick={ this.redirectTo.bind(this,'queue') }/>
                                         <Notifications style={iconStyles} color={grey500} onClick={ this.redirectTo.bind(this,'push') }/>
