@@ -1475,6 +1475,17 @@ body {
       box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 3px;
       transform: scale(1.05,1.05);
     }
+    .appIcon{
+      width: 60px;
+      height: 60px;
+      margin-right: 20px;
+      font-size: 60px;
+    }
+    .buttondeleteicon{
+      min-width: 5% !important;
+      width: 7% !important;
+      color: red !important;
+    }
 
   }
 }

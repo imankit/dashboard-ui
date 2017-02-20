@@ -6,6 +6,7 @@ import manageApp from './manageApp';
 import cache from './cache';
 import queue from './queue';
 import analytics from './analytics';
+import settings from './settings';
 import loader from './loader';
 import {reducer as formReducer} from 'redux-form';
 
@@ -18,6 +19,7 @@ const todoApp = combineReducers({
     cache,
     queue,
     loader,
+    settings,
     form: formReducer
 });
 

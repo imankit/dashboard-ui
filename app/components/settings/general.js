@@ -3,11 +3,12 @@
  */
 import React from 'react';
 import {connect} from 'react-redux';
-import {} from '../../actions';
+import {upsertAppSettingsFile,showAlert,updateSettings} from '../../actions';
 
 //mui
 import RaisedButton from 'material-ui/RaisedButton';
 import Toggle from 'material-ui/Toggle';
+import Delete from 'material-ui/svg-icons/action/delete';
 
 
 class General extends React.Component {
@@ -15,11 +16,43 @@ class General extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-
+            appIcon:null,
+            appInProduction:false,
+            appName:null
         }
     }
     componentWillMount(){
-
+        if(this.props.generalSettings){
+            this.setState({ ...this.props.generalSettings.settings })
+        }
+    }
+    textChangeHandler(which,e){
+        this.state[which] = e.target.value
+        this.setState(this.state)
+    }
+    toggleChangeHandler(which,e,val){
+        this.state[which] = val
+        this.setState(this.state)
+    }
+    changeFile(e){
+        let file = e.target.files[0]
+        if(file.type.includes('/png')){
+            this.props.upsertAppSettingsFile(this.props.appData.appId,this.props.appData.masterKey,file,'general',{ ...this.state })
+        } else {
+            showAlert('error','Only .png type images are allowed.')
+        }
+    }
+    openChangeFile(){
+        document.getElementById("fileBox").click()
+    }
+    deleteFile(fileId){
+        this.setState({appIcon:null})
+        setTimeout(() => {
+            this.updateSettings()
+        }, 0)
+    }
+    updateSettings(){
+        this.props.updateSettings(this.props.appData.appId,this.props.appData.masterKey,'general',{ ...this.state })
     }
     render() {
 
@@ -37,7 +70,7 @@ class General extends React.Component {
                             <span className="smallp">The name of your app</span>
                         </div>
                         <div className="solo-vertical-center" style={{width: '60%', height: '100%', backgroundColor: 'white', padding: 10}}>
-                            <input type="text" className="emailinputcampaign" placeholder="Enter App Name" style={{width: '100%', height: 40, fontSize: 16, paddingLeft: 4}} />
+                            <input type="text" value={ this.state.appName || '' } onChange={ this.textChangeHandler.bind(this,'appName') } className="emailinputcampaign" placeholder="Enter App Name" style={{width: '100%', height: 40, fontSize: 16, paddingLeft: 4}} />
                         </div>
                         </div>
                     </div>
@@ -49,7 +82,14 @@ class General extends React.Component {
                             <span className="smallp">Your app icon</span>
                         </div>
                         <div className="solo-vertical-center" style={{width: '60%', height: '100%', backgroundColor: 'white', padding: 10}}>
-                            <p className="addfile">+ Add Icon</p>
+                            <img src={ this.state.appIcon ? this.state.appIcon : '' } className={ this.state.appIcon ? 'appIcon' : 'hide' }/>
+                            <p onClick={ this.openChangeFile.bind(this) } className={ this.state.appIcon ? "hide" : "addfile" }>+ Add Icon</p>
+                            <input type="file" style={{display:"none"}} onChange={ this.changeFile.bind(this) } id="fileBox"/>
+                            <RaisedButton
+                              className={ this.state.appIcon ? "buttondeleteicon" : "hide" }
+                              icon={<Delete />}
+                              onClick={ this.deleteFile.bind(this) }
+                            />
                         </div>
                         </div>
                     </div>
@@ -63,6 +103,8 @@ class General extends React.Component {
                         <div className="solo-vertical-center" style={{width: '60%', height: '100%', backgroundColor: 'white', padding: 10}}>
                             <Toggle
                                 className="togglegeneral"
+                                onToggle={ this.toggleChangeHandler.bind(this,'appInProduction') }
+                                toggled={ this.state.appInProduction }
                             />
                         </div>
                         </div>
@@ -77,6 +119,7 @@ class General extends React.Component {
                             labelPosition="before"
                             primary={true}
                             className="emailcampbtn"
+                            onClick={ this.updateSettings.bind(this) }
                         />
                     </div>
                     </div>
@@ -88,16 +131,22 @@ class General extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+    let generalSettings = null
+    if(state.settings.length){
+        generalSettings = state.settings.filter(x => x.category == 'general')[0]
+    }
 
     return {
-        
+        appData: state.manageApp,
+        generalSettings:generalSettings
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        
+        upsertAppSettingsFile: (appId,masterKey,fileObj,category,settingsObject) => dispatch(upsertAppSettingsFile(appId,masterKey,fileObj,category,settingsObject)),
+        updateSettings: (appId,masterKey,categoryName,settingsObject) => dispatch(updateSettings(appId,masterKey,categoryName,settingsObject)),
     }
-};
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(General);

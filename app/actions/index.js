@@ -5,7 +5,7 @@
 import {xhrDashBoardClient, xhrAccountsClient, xhrCBClient} from '../xhrClient';
 import {loadState, deleteAllCookies} from '../helper';
 import {browserHistory} from 'react-router';
-import {twoCheckoutCredentials,cloudBoostAPI} from '../config';
+import {twoCheckoutCredentials,cloudBoostAPI,appSettings} from '../config';
 import Alert from 'react-s-alert';
 
 export function showAlert(type,text){
@@ -869,9 +869,6 @@ export function sendPushCampaign(messageObject,query) {
     } else return CB.CloudPush.send(messageObject)
 }
 
-
-
-
 //analytics
 export function fetchAnalyticsAPI(appId) {
     return function (dispatch) {
@@ -905,6 +902,92 @@ export function resetAnalytics() {
     return function (dispatch) {
         dispatch({
             type: 'RESET'
+        });
+    };
+}
+
+//app settings
+export function fetchAppSettings(appId,masterKey) {
+    return function (dispatch) {
+        dispatch({type:'START_LOADING'})
+        let postObject = {}
+        postObject.key = masterKey
+        xhrCBClient.post('/settings/'+appId,postObject)
+        .then(response => {
+            if(response.data.length == 0){
+                let putAllSettings = [
+                    xhrCBClient.put('/settings/'+appId+'/general',{key:masterKey,settings:appSettings.generalSettings.settings}),
+                    xhrCBClient.put('/settings/'+appId+'/email',{key:masterKey,settings:appSettings.emailSettings.settings}),
+                    xhrCBClient.put('/settings/'+appId+'/push',{key:masterKey,settings:appSettings.pushSettings.settings}),
+                    xhrCBClient.put('/settings/'+appId+'/auth',{key:masterKey,settings:appSettings.authSettings.settings})
+                ]
+                Promise.all(putAllSettings).then((res)=>{
+                    dispatch(fetchAppSettings(appId,masterKey))
+                },(err)=>{
+                    showAlert('error',"Error fetching App settings.")
+                    dispatch({type:'STOP_LOADING'})
+                })
+                
+            } else {
+                dispatch({
+                    type: 'FETCH_APP_SETTINGS',
+                    payload: response.data
+                })
+                dispatch({type:'STOP_LOADING'})
+            }
+        },err => {
+            showAlert('error',"Error fetching App settings.")
+        })
+    }
+}
+
+export function updateSettings(appId,masterKey,categoryName,settingsObject) {
+    return function (dispatch) {
+        dispatch({type:'START_LOADING'})
+        let postObject = {}
+        postObject.key = masterKey
+        postObject.settings = settingsObject
+
+        xhrCBClient.put('/settings/'+appId+'/'+categoryName,postObject)
+        .then(response => {
+            showAlert('success',"Settings Updated.")
+            dispatch(fetchAppSettings(appId,masterKey))
+        },err => {
+            showAlert('error',"Error Updating App settings.")
+            dispatch({type:'STOP_LOADING'})
+        })
+    }
+}
+
+export function upsertAppSettingsFile(appId,masterKey,fileObj,category,settingsObject) {
+    return function (dispatch) {
+        dispatch({type:'START_LOADING'})
+        let postObject = new FormData()   
+        postObject.append('file', fileObj)      
+        postObject.append('key', masterKey)
+
+        xhrCBClient.put('/settings/'+appId+'/file/'+category,postObject)
+        .then(response => {
+            showAlert('success',"Image Update Success.")
+            if(category == 'general'){
+                settingsObject.appIcon = response.data
+            }
+            if(category == 'push'){
+                if(settingsObject.apple.certificates.length) settingsObject.apple.certificates[0] = response.data
+                    else settingsObject.apple.certificates.push(response.data)
+            }
+            dispatch(updateSettings(appId,masterKey,category,settingsObject))
+        },err => {
+            showAlert('error',"Error Updating File.")
+            dispatch({type:'STOP_LOADING'})
+        })
+    }
+}
+
+export function resetAppSettings() {
+    return function (dispatch) {
+        dispatch({
+            type: 'RESET_APP_SETTINGS'
         });
     };
 }

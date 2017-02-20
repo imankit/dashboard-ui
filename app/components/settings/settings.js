@@ -5,7 +5,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Toolbar from '../toolbar/toolbar.js';
 import Footer from '../footer/footer.jsx';
-import {} from '../../actions';
+import {fetchAppSettings,resetAppSettings} from '../../actions';
+import RefreshIndicator from 'material-ui/RefreshIndicator';
 
 // icons and mui comps
 import {List, ListItem} from 'material-ui/List';
@@ -46,10 +47,13 @@ class Settings extends React.Component {
     componentWillMount(){
         // redirect if active app not found
         if(!this.props.appData.viewActive){
-            // this.context.router.push('/')
+            this.context.router.push('/')
         } else {
-            
+            this.props.onLoad(this.props.appData.appId,this.props.appData.masterKey)
         }
+    }
+    componentWillUnmount(){
+        this.props.resetAppSettings()
     }
     selectTab(whichTab){
         this.setState({selected:whichTab})
@@ -83,7 +87,16 @@ class Settings extends React.Component {
                         
                     </div>
                     <div className="content">
-                        { this.getCompToRender() }
+                        { 
+                            this.props.loading ?
+                                <RefreshIndicator
+                                    size={50}
+                                    left={70}
+                                    top={0}
+                                    status="loading"
+                                    className="loadermain"
+                                /> : this.getCompToRender() 
+                        }
                     </div>
                 </div>
                 <Footer id="app-footer"/>
@@ -96,13 +109,15 @@ class Settings extends React.Component {
 const mapStateToProps = (state) => {
 
     return {
-        appData: state.manageApp
+        appData: state.manageApp,
+        loading: state.loader.loading
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        
+        onLoad: (appId,masterKey) => dispatch(fetchAppSettings(appId,masterKey)),
+        resetAppSettings: () => dispatch(resetAppSettings()),
     }
 };
 
