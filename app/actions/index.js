@@ -984,6 +984,51 @@ export function upsertAppSettingsFile(appId,masterKey,fileObj,category,settingsO
     }
 }
 
+export function exportDatabase(appId,masterKey) {
+    return function (dispatch) {
+        dispatch({type:'START_LOADING'})
+        let postObject = new FormData()    
+        postObject.append('key', masterKey)
+
+        xhrCBClient.post("/backup/"+appId+"/exportdb",postObject)
+        .then(response => {
+            dispatch({type:'STOP_LOADING'})
+            showAlert('success',"Database Export Success.")
+            let blob = new Blob([JSON.stringify(response.data)], {type: "text/plain;charset=utf-8"})
+            saveAs(blob, "dump.json")
+        },err => {
+            showAlert('error',"Error Exporting Database.")
+            dispatch({type:'STOP_LOADING'})
+        })
+    }
+}
+
+export function importDatabase(appId,masterKey,fileObj) {
+    return function (dispatch) {
+        dispatch({type:'START_LOADING'})
+        let postObject = new FormData()    
+        postObject.append('key', masterKey)
+        postObject.append('file', fileObj)
+
+        xhrCBClient.post("/backup/"+appId+"/importdb",postObject)
+        .then(response => {
+            dispatch({type:'STOP_LOADING'})
+            showAlert('success',"Database Imported Success.")
+        },err => {
+            showAlert('error',"Error Importing Database.")
+            dispatch({type:'STOP_LOADING'})
+        })
+    }
+}
+
+export function getAccessURL(appId) {
+    return xhrDashBoardClient.post("/dbaccess/get/"+appId,{})
+}
+
+export function enableMongoAccess(appId) {
+    return xhrDashBoardClient.post("/dbaccess/enable/"+appId,{})
+}
+
 export function resetAppSettings() {
     return function (dispatch) {
         dispatch({

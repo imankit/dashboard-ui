@@ -45,3 +45,15 @@ export function deleteAllCookies() {
         document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
     }
 }
+
+export  function makeUrlFromData(data){
+            return "mongo mongodb://"+data.data.username+":"+data.data.password+"@"+data.url+"/"+data.data.appId
+        }
+
+export  function makeConnectionStringFromData(data){
+            return "mongodb://"+data.data.username+":"+data.data.password+"@"+data.url+"/"+data.data.appId
+        }
+
+export  function makeServerUrlFromData(data){
+            return data.url
+        }

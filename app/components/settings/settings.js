@@ -22,6 +22,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import General from './general'
 import Email from './email'
 import Push from './push'
+import ImportExport from './import'
+import MongoAccess from './mongo'
 
 const navStyles = {
     backgroundColor:'white',
@@ -64,8 +66,8 @@ class Settings extends React.Component {
             case 'email' : return <Email/>
             case 'push' : return <Push/>
             case 'auth' : return <General/>
-            case 'import' : return <General/>
-            case 'mongo' : return <General/>
+            case 'import' : return <ImportExport/>
+            case 'mongo' : return <MongoAccess/>
         }
     }
     render() {

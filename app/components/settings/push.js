@@ -52,7 +52,6 @@ class Push extends React.Component {
     }
     changeFile(e){
         let file = e.target.files[0]
-        console.log(file)
         if(file.type.includes('/x-pkcs12')){
             this.props.upsertAppSettingsFile(this.props.appData.appId,this.props.appData.masterKey,file,'push',{ ...this.state })
         } else {
