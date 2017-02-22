@@ -7,6 +7,7 @@ import {loadState, deleteAllCookies} from '../helper';
 import {browserHistory} from 'react-router';
 import {twoCheckoutCredentials,cloudBoostAPI,appSettings} from '../config';
 import Alert from 'react-s-alert';
+import Axios from 'axios'
 
 export function showAlert(type,text){
     Alert[type](text, {
@@ -1027,6 +1028,10 @@ export function getAccessURL(appId) {
 
 export function enableMongoAccess(appId) {
     return xhrDashBoardClient.post("/dbaccess/enable/"+appId,{})
+}
+
+export function getDefaultTemplate(templateName) {
+    return Axios.get("/" + templateName + ".html")
 }
 
 export function resetAppSettings() {

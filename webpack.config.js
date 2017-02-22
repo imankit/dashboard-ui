@@ -1,5 +1,4 @@
-var webpack = require('webpack')
-var plugins = []
+// var webpack = require('webpack')
 console.log(process.env['CLOUDBOOST_HOSTED'])
 
 var config = {
@@ -22,7 +21,7 @@ var config = {
           {
             test: /\.jsx?$/,
             exclude: /node_modules/,
-            loader: 'babel',
+            loader: 'babel-loader',
             query: {
               cacheDirectory: true,
               plugins: ['transform-decorators-legacy',"transform-class-properties"],
@@ -32,7 +31,7 @@ var config = {
           {
             test: /\.js?$/,
             exclude: /node_modules/,
-            loader: 'babel',
+            loader: 'babel-loader',
             query: {
               cacheDirectory: true,
               plugins: ['transform-decorators-legacy',"transform-class-properties"],

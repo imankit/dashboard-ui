@@ -24,6 +24,7 @@ import Email from './email'
 import Push from './push'
 import ImportExport from './import'
 import MongoAccess from './mongo'
+import Auth from './auth'
 
 const navStyles = {
     backgroundColor:'white',
@@ -65,7 +66,7 @@ class Settings extends React.Component {
             case 'general' : return <General/>
             case 'email' : return <Email/>
             case 'push' : return <Push/>
-            case 'auth' : return <General/>
+            case 'auth' : return <Auth/>
             case 'import' : return <ImportExport/>
             case 'mongo' : return <MongoAccess/>
         }
