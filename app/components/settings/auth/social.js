@@ -34,6 +34,20 @@ class Social extends React.Component {
         this.setState(this.state)
         this.update()
     }
+    attributePermissionTooglesHandler(socialType,type,whichAttr,e,val){
+        if(type == 'attributes'){
+            this.state[socialType][type][whichAttr] = val
+        } else {
+            this.state[socialType][type][whichAttr].enabled = val
+        }
+        this.setState(this.state)
+        this.update()
+    }
+    linkedInPermissiosHandler(which,e,val){
+        this.state['linkedIn']['permissions'][which] = val
+        this.setState(this.state)
+        this.update()
+    }
     update(){
         setTimeout(()=>{
             this.props.updateSettingsFromChildComps(this.state)
@@ -100,6 +114,50 @@ class Social extends React.Component {
                                 </div>
                             </div>
                         </div>
+                        <div style={{width: '100%', height: 300, backgroundColor: '#F7F7F7'}}>
+                            <div style={{width: '100%', height: '100%'}} className="flex-general-row-wrapper">
+                                <div style={{width: '60%', height: '100%', padding: 35}}>
+                                    <span style={{color: '#353446', fontSize: 16, fontWeight: 700}}>Attributes</span>
+                                    <span className="smallp">This is listed under the "Authentication" section of the Facebook Developers.</span>
+                                </div>
+                                <div className="solo-vertical-center" style={{width: '40%', height: '95%', backgroundColor: 'white', padding: 10,overflow:'auto',overflowX:'auto'}}>
+                                    {
+                                        Object.keys(this.state['facebook'].attributes).map((attr,i)=>{
+                                            return  <Toggle
+                                                        key = { i }
+                                                        label= { attr }
+                                                        labelPosition="right"
+                                                        toggled={ this.state['facebook'].attributes[attr] }
+                                                        className={ 'attrtoggles' }
+                                                        onToggle={ this.attributePermissionTooglesHandler.bind(this,'facebook','attributes',attr) }
+                                                    />
+                                        })
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div style={{width: '100%', height: 300, backgroundColor: '#F7F7F7'}}>
+                            <div style={{width: '100%', height: '100%'}} className="flex-general-row-wrapper">
+                                <div style={{width: '60%', height: '100%', padding: 35}}>
+                                    <span style={{color: '#353446', fontSize: 16, fontWeight: 700}}>Permission</span>
+                                    <span className="smallp">This is listed under the "Authentication" section of the Facebook Developers.</span>
+                                </div>
+                                <div className="solo-vertical-center" style={{width: '40%', height: '95%', backgroundColor: 'white', padding: 10,overflow:'auto',overflowX:'auto'}}>
+                                    {
+                                        Object.keys(this.state['facebook'].permissions).map((attr,i)=>{
+                                            return  <Toggle
+                                                        key = { i }
+                                                        label= { attr }
+                                                        labelPosition="right"
+                                                        toggled={ this.state['facebook'].permissions[attr].enabled }
+                                                        className={ 'attrtoggles' }
+                                                        onToggle={ this.attributePermissionTooglesHandler.bind(this,'facebook','permissions',attr) }
+                                                    />
+                                        })
+                                    }
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                     {/*only if enabled ============ END =================*/}
@@ -150,6 +208,50 @@ class Social extends React.Component {
                                     <span style={{color: '#353446', fontSize: 16, fontWeight: 700}}>Callback URL</span>
                                     <span className="smallp">You need to paste this URL in "Authorized redirect URIs" field in the Authentication section of the Google API console</span>
                                     <span className="smallp" style={{color: '#006eff'}}>{ googleCallbackURL }</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style={{width: '100%', height: 100, backgroundColor: '#F7F7F7'}}>
+                            <div style={{width: '100%', height: '100%'}} className="flex-general-row-wrapper">
+                                <div style={{width: '60%', height: '100%', padding: 35}}>
+                                    <span style={{color: '#353446', fontSize: 16, fontWeight: 700}}>Attributes</span>
+                                    <span className="smallp">This is listed under the "Authentication" section of the Google API console.</span>
+                                </div>
+                                <div className="solo-vertical-center" style={{width: '40%', height: '95%', backgroundColor: 'white', padding: 10,overflow:'auto',overflowX:'auto'}}>
+                                    <Toggle
+                                        label= { 'Basic profile' }
+                                        labelPosition="right"
+                                        toggled={ true }
+                                        className={ 'attrtoggles' }
+                                    />
+                                    <Toggle
+                                        label= { 'Extended profile' }
+                                        labelPosition="right"
+                                        toggled={ true }
+                                        className={ 'attrtoggles' }
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div style={{width: '100%', height: 300, backgroundColor: '#F7F7F7'}}>
+                            <div style={{width: '100%', height: '100%'}} className="flex-general-row-wrapper">
+                                <div style={{width: '60%', height: '100%', padding: 35}}>
+                                    <span style={{color: '#353446', fontSize: 16, fontWeight: 700}}>Permission</span>
+                                    <span className="smallp">This is listed under the "Authentication" section of the Google API console.</span>
+                                </div>
+                                <div className="solo-vertical-center" style={{width: '40%', height: '95%', backgroundColor: 'white', padding: 10,overflow:'auto',overflowX:'auto'}}>
+                                    {
+                                        Object.keys(this.state['google'].permissions).map((attr,i)=>{
+                                            return  <Toggle
+                                                        key = { i }
+                                                        label= { attr }
+                                                        labelPosition="right"
+                                                        toggled={ this.state['google'].permissions[attr].enabled }
+                                                        className={ 'attrtoggles' }
+                                                        onToggle={ this.attributePermissionTooglesHandler.bind(this,'google','permissions',attr) }
+                                                    />
+                                        })
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -259,6 +361,28 @@ class Social extends React.Component {
                                 </div>
                             </div>
                         </div>
+                        <div style={{width: '100%', height: 150, backgroundColor: '#F7F7F7'}}>
+                            <div style={{width: '100%', height: '100%'}} className="flex-general-row-wrapper">
+                                <div style={{width: '60%', height: '100%', padding: 35}}>
+                                    <span style={{color: '#353446', fontSize: 16, fontWeight: 700}}>Attributes</span>
+                                    <span className="smallp">This is listed under the Linkedin Developers App Sections.</span>
+                                </div>
+                                <div className="solo-vertical-center" style={{width: '40%', height: '95%', backgroundColor: 'white', padding: 10,overflow:'auto',overflowX:'auto'}}>
+                                    {
+                                        Object.keys(this.state['linkedIn'].permissions).map((attr,i)=>{
+                                            return  <Toggle
+                                                        key = { i }
+                                                        label= { attr }
+                                                        labelPosition="right"
+                                                        toggled={ this.state['linkedIn'].permissions[attr] }
+                                                        className={ 'attrtoggles' }
+                                                        onToggle={ this.linkedInPermissiosHandler.bind(this,attr) }
+                                                    />
+                                        })
+                                    }
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                     {/*only if enabled ============ END =================*/}
@@ -309,6 +433,28 @@ class Social extends React.Component {
                                     <span style={{color: '#353446', fontSize: 16, fontWeight: 700}}>Callback URL</span>
                                     <span className="smallp">You need to paste this URL in "Authorization callback URL" field in Github Developers App Section</span>
                                     <span className="smallp" style={{color: '#006eff'}}>{ githubCallbackURL }</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style={{width: '100%', height: 300, backgroundColor: '#F7F7F7'}}>
+                            <div style={{width: '100%', height: '100%'}} className="flex-general-row-wrapper">
+                                <div style={{width: '60%', height: '100%', padding: 35}}>
+                                    <span style={{color: '#353446', fontSize: 16, fontWeight: 700}}>Permission</span>
+                                    <span className="smallp">This is listed under the Github Developers App Section.</span>
+                                </div>
+                                <div className="solo-vertical-center" style={{width: '40%', height: '95%', backgroundColor: 'white', padding: 10,overflow:'auto',overflowX:'auto'}}>
+                                    {
+                                        Object.keys(this.state['github'].permissions).map((attr,i)=>{
+                                            return  <Toggle
+                                                        key = { i }
+                                                        label= { attr }
+                                                        labelPosition="right"
+                                                        toggled={ this.state['github'].permissions[attr].enabled }
+                                                        className={ 'attrtoggles' }
+                                                        onToggle={ this.attributePermissionTooglesHandler.bind(this,'github','permissions',attr) }
+                                                    />
+                                        })
+                                    }
                                 </div>
                             </div>
                         </div>

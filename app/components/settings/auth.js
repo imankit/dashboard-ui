@@ -66,6 +66,14 @@ class AuthSettings extends React.Component {
                 <General
                     generalSettings={ { ...this.state.general } }
                     appData={ this.props.appData }
+                    updateSettingsFromChildComps={this.updateSettingsFromChildComps.bind(this)  }
+                    appName={ this.props.generalSettings.appName }
+                    appIcon={ this.props.generalSettings.appIcon }
+                    isfacebookEnabled = { this.state.facebook.enabled }
+                    isgoogleEnabled = { this.state.google.enabled }
+                    isgithubEnabled = { this.state.github.enabled }
+                    istwitterEnabled = { this.state.twitter.enabled }
+                    islinkedInEnabled = { this.state.linkedIn.enabled }
                 
                 />
 
@@ -139,13 +147,17 @@ class AuthSettings extends React.Component {
 
 const mapStateToProps = (state) => {
     let authSettings = null
+    let generalSettings = null
     if(state.settings.length){
         authSettings = state.settings.filter(x => x.category == 'auth')[0]
     }
-
+    if(state.settings.length){
+        generalSettings = state.settings.filter(x => x.category == 'general')[0]
+    }
     return {
         appData: state.manageApp,
-        authSettings:authSettings
+        authSettings:authSettings,
+        generalSettings:generalSettings.settings
     }
 }
 

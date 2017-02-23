@@ -1511,6 +1511,84 @@ body {
     .socialimages{
       height: 38px;
     }
+    .attrtoggles{
+      background-color: #eff1f5;
+      margin-top: 3px;
+      padding: 3px;
+    }
+    .default-inputfield{
+        border:none;
+    }
+    .default-inputfield:focus{
+        outline: none;
+    }
+    .login-btn{
+        border-top-left-radius:3px; 
+        border-bottom-left-radius:3px; 
+        width:100px;
+        height:30px;
+        color:white;
+        background-color: #5c666f;
+        border: 1px solid #5c666f;
+        font-size: 12px;
+    } 
+    .sinup-btn{
+        border-top-right-radius:3px; 
+        border-bottom-right-radius:3px;
+        width:100px;
+        height:30px;
+        color:#5c666f; 
+        background-color: white; 
+        border: 1px solid #5c666f;
+        font-size: 12px;      
+    }
+    .input-field{
+        width: 100%;
+        border:1px solid #f1f1f1;
+        margin-top: 10px;
+    }
+    .input-field:first-child{
+        margin-top: 0px;
+    }
+    .final-btn{
+        background-color: blue;
+        padding: 15px;
+        cursor: pointer;
+    }
+    .social-btns{
+        width: 40px;
+        height: 40px;        
+        margin-left: 10px;
+        margin-top: 15px;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    .facebook{
+        background-color: #4863ae;
+        color:white;
+        font-size: 18px;
+    }
+    .twitter{
+        background-color: #46c0fb;
+        color:white;
+        font-size: 18px;
+    }
+    .github{
+        background-color: #eeeeee;
+        color:black;
+        font-size: 18px;
+    }
+    .google{
+        background-color: #4285f4;
+        color:white;
+        font-size: 18px;
+    }
+
+    .linkedin{
+        background-color: #0177B5;
+        color:white;
+        font-size: 18px;
+    }
 
   }
 }
