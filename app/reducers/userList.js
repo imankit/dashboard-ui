@@ -8,7 +8,10 @@ export default function (state = {}, action) {
             for (let i = 0; i < action.payload.length; i++) {
                 userObj[action.payload[i]._id] = action.payload[i];
             }
-            return {...state, ...userObj};
+            return {...userObj};
+        }
+        case 'RESET_USER_LIST': {
+            return {}
         }
 
         default:

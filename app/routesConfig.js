@@ -11,6 +11,7 @@ import Analytics from './components/analytics/analytics';
 import PushCampaign from './components/campaign/push';
 import Profile from './components/profile/profile';
 import Settings from './components/settings/settings';
+import Admin from './components/admin/admin';
 
 const routesConfig = [
     {path: '/', component: App},
@@ -21,6 +22,7 @@ const routesConfig = [
     {path: '/analytics', component: Analytics},
     {path: '/push', component: PushCampaign},
     {path: '/profile', component: Profile},
-    {path: '/settings', component: Settings}
+    {path: '/settings', component: Settings},
+    {path: '/admin', component: Admin}
 ];
 export default routesConfig;

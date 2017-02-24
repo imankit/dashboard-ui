@@ -28,7 +28,7 @@ export function fetchApps() {
                 });
 
                 let appIdArray = response.data.map((app) => app.appId);
-                dispatch(getAnalyticsData(appIdArray));
+                dispatch(getAnalyticsData(appIdArray))
                 dispatch({type:'STOP_LOADING'})
             })
             .catch(error => {
@@ -154,6 +154,24 @@ export const logOut = () => {
     };
 };
 
+export const getServerSettings = () => {
+    return xhrDashBoardClient.get('/server')
+};
+
+export const upsertAPI_URL = (apiURL) => {
+    return function (dispatch) {
+        xhrDashBoardClient.post('/server/url',{apiURL:apiURL})
+            .then(response => {
+                showAlert('success',"URL Updated")
+            })
+            .catch(error => {
+                showAlert('error',"URL Update Error")
+                console.log('update url error : ');
+                console.log(error);
+            });
+    };
+}; 
+
 export const fetchDevDetails = (IdArray) => {
     return function (dispatch) {
         xhrAccountsClient.post('user/list', {IdArray: IdArray})
@@ -170,6 +188,84 @@ export const fetchDevDetails = (IdArray) => {
     };
 };
 
+export const getUsersBySkipLimit = (skip,limit,skipUserIds) => {
+    return function (dispatch) {
+        dispatch({type:'START_LOADING'})
+        dispatch({type:'RESET_USER_LIST'})
+        xhrDashBoardClient.put('/user/list/'+skip+'/'+limit,{skipUserIds:skipUserIds})
+            .then(response => {
+                dispatch({
+                    type: 'RECEIVE_USERS',
+                    payload: response.data
+                });
+                dispatch({type:'STOP_LOADING'})
+            })
+            .catch(error => {
+                console.log('inside fetchusers catch error: ');
+                console.log(error);
+            });
+    };
+};
+
+export const updateUserActive = (userId,isActive) => {
+    return function (dispatch) {
+        xhrDashBoardClient.get('/user/active/'+userId+'/'+isActive)
+            .then(response => {
+                dispatch(getUsersBySkipLimit(0,20,[]))
+                showAlert('success',"User Updated")
+            })
+            .catch(error => {
+                showAlert('error',"Error Updating User")
+                console.log('update user error : ');
+                console.log(error);
+            });
+    };
+};
+
+export const updateUserRole = (userId,isAdmin) => {
+    return function (dispatch) {
+        xhrDashBoardClient.get('/user/changerole/'+userId+'/'+isAdmin)
+            .then(response => {
+                dispatch(getUsersBySkipLimit(0,20,[]))
+                showAlert('success',"User Updated")
+            })
+            .catch(error => {
+                showAlert('error',"Error Updating User")
+                console.log('update user error : ');
+                console.log(error);
+            });
+    };
+};  
+
+export const deleteUser = (userId) => {
+    return function (dispatch) {
+        xhrDashBoardClient.delete('/user/'+userId)
+            .then(response => {
+                dispatch(getUsersBySkipLimit(0,20,[]))
+            })
+            .catch(error => {
+                showAlert('error',"Error Deleting User")
+                console.log('delete user error : ');
+                console.log(error);
+            });
+    };
+};
+
+export const addUser = (name,email,password,isAdmin) => {
+    return function (dispatch) {
+        xhrDashBoardClient.post('/user/signup', {name:name,email:email,password:password,isAdmin:isAdmin})
+            .then(response => {
+                dispatch(getUsersBySkipLimit(0,20,[]))
+                showAlert('success',"User Added")
+            })
+            .catch(error => {
+                showAlert('error',"Error Adding User")
+                console.log('add user error : ');
+                console.log(error);
+            });
+    };
+};       
+    
 export const sendInvitation = (appId, email) => {
     return function (dispatch) {
         xhrDashBoardClient.post('/app/' + appId + '/invite', {"email": email})
@@ -464,17 +560,6 @@ export const setTableSearchFilter = (filter) => {
     };
 };
 
-export const editTableNavigate = (tableId) => {
-    return function (dispatch) {
-        dispatch({
-            type: 'TABLE_EDIT',
-            payload: {tableId: tableId}
-        });
-
-        browserHistory.push('/appmanager');
-    };
-};
-
 export const editTable = (tableId) => {
     return function (dispatch) {
         dispatch({
@@ -483,64 +568,6 @@ export const editTable = (tableId) => {
         });
     };
 };
-
-export function fetchCount(appId, tableName, masterKey) {
-
-    return function (dispatch) {
-        xhrCBClient
-            .post('/data/' + appId + '/' + tableName + '/count',
-                {
-                    "query": {"$include": [], "$includeList": []},
-                    "limit": 9999,
-                    "skip": 0,
-                    "key": masterKey
-                })
-            .then(response => {
-                if (response.data !== 0) {
-                    dispatch({
-                        type: 'FETCH_COUNT',
-                        payload: {rowCount: response.data}
-                    });
-
-                    dispatch(fetchRows(appId, tableName, masterKey));
-                }
-            })
-            .catch(error => {
-                console.log('inside fetch Rows error catch error: ');
-                console.log(error);
-            });
-
-    };
-}
-
-export function fetchRows(appId, tableName, masterKey) {
-
-    return function (dispatch) {
-        xhrCBClient
-            .post('/data/' + appId + '/' + tableName + '/find',
-                {
-                    "query": {"$include": [], "$includeList": []},
-                    "select": {},
-                    "sort": {"createdAt": -1},
-                    "limit": 50,
-                    "skip": 0,
-                    "key": masterKey
-                }
-            )
-            .then(response => {
-                if (response.data.length > 0)
-                    dispatch({
-                        type: 'FETCH_ROWS',
-                        payload: {rows: response.data}
-                    });
-            })
-            .catch(error => {
-                console.log('inside fetch Rows error catch error: ');
-                console.log(error);
-            });
-
-    };
-}
 
 export const createSale = (appId, cardDetails, planId) => {
     return function (dispatch) {

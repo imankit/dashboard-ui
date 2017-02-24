@@ -15,6 +15,7 @@ import Cache from 'material-ui/svg-icons/image/flash-on';
 import Queues from 'material-ui/svg-icons/action/compare-arrows';
 import Notifications from 'material-ui/svg-icons/alert/add-alert';
 import Email from 'material-ui/svg-icons/communication/email';
+import People from 'material-ui/svg-icons/social/people';
 import {grey500} from 'material-ui/styles/colors';
 import NotificationsModal from './notification'
 
@@ -72,6 +73,7 @@ class ToolBar extends React.Component {
                                         <ToolbarTitle style={toolbartitle} text=""/>
                                         <ToolbarTitle style={toolbartitle} text="Quickstart"/>
                                         <NotificationsModal/>
+                                        <People style={iconStyles} onClick={ this.redirectTo.bind(this,'admin') }/>
                                         <ToolbarSeparator />
                                         <IconMenu
                                             iconButtonElement={
@@ -88,6 +90,7 @@ class ToolBar extends React.Component {
                                         </IconMenu>
                                     </ToolbarGroup>) : <ToolbarGroup><ToolbarTitle style={toolbartitle} text="Quickstart"/>
                                     <NotificationsModal/>
+                                    <People style={iconStyles} onClick={ this.redirectTo.bind(this,'admin') }/>
                                     <ToolbarSeparator />
                                     <IconMenu
                                         iconButtonElement={
