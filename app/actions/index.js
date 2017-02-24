@@ -405,8 +405,9 @@ export const manageApp = (appId, masterKey, name) => {
         dispatch({
             type: 'MANAGE_APP',
             payload: {appId: appId, masterKey: masterKey, name: name}
-        });
-        browserHistory.push('/tables');
+        })
+        browserHistory.push('/tables')
+        markAppActive(appId)
     };
 };
 
@@ -666,6 +667,17 @@ export function updateNotificationsSeen() {
             })
 
     }
+}
+
+export function markAppActive(appId) {
+    xhrDashBoardClient
+        .post('/app/active/'+appId,{})
+        .then(response => {
+
+        })
+        .catch(error => {
+            console.log('mark active error',error);
+        })
 }
 
 
