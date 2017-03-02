@@ -488,131 +488,6 @@ body {
         td {
           align: center;
         }
-
-        //payment start
-        .error {
-          min-height: 25px;
-          width: 100%;
-          margin-bottom: 10px;
-          background-color: #F14D54;
-          padding: 2px 5px;
-          color: #fff;
-          border-radius: 3px;
-        }
-
-        .payment-row {
-          margin-left: 0;
-          margin-right: 0;
-        }
-
-        .payment-col {
-          padding-left: 0;
-        }
-
-        .payment-box {
-          padding: 15px 15px;
-          border: 1px solid #DBDEE4;
-          border-radius: 2px;
-          margin-bottom: 20px;
-
-          .form-control, .form-control:last-child {
-            margin: 11px 0 11px 0;
-            font-size: 14px;
-            height: 48px;
-            font-weight: 400;
-            border-radius: 4px;
-          }
-
-          .input-group {
-            margin: 11px 0 11px 0;
-            .form-control {
-              margin: 0;
-              border-top-left-radius: 0;
-              border-bottom-left-radius: 0;
-            }
-          }
-          .expiry {
-            .form-control {
-              margin: 11px 0 11px 0;
-              display: inline-block;
-              width: 48%;
-            }
-            .form-control:last-child {
-              margin-left: 3%;
-            }
-          }
-        }
-        .goback {
-          padding-top: 22px;
-          height: 90px;
-          text-align: center;
-          a {
-            text-decoration: none;
-            cursor: pointer;
-          }
-          .payment-button {
-            height: 45px;
-          }
-        }
-
-        //Price plan start
-
-        #expiry {
-          margin-top: 27%;
-        }
-
-        #CVV {
-          margin: 0 !important;
-        }
-
-        .panel-pricing {
-          height: 100%;
-          font-size: 12px;
-          margin-bottom: 0;
-          -moz-transition: all .3s ease;
-          -o-transition: all .3s ease;
-          -webkit-transition: all .3s ease;
-        }
-        .panel-pricing .panel-heading {
-          text-align: center;
-          padding: 10px 0 10px 5px;
-          font-size: 25px;
-          h1 {
-            font-size: 35px;
-            margin: 0;
-            list-style: none;
-            a {
-              color: #3c763d;
-              text-decoration: none;
-            }
-          }
-        }
-        .panel-pricing .list-group-item {
-          height: 39px;
-          color: #777777;
-          border-bottom: 1px solid rgba(250, 250, 250, 0.5);
-          vertical-align: middle;
-        }
-        .panel-pricing .list-group-item:last-child {
-          border-bottom-right-radius: 0px;
-          border-bottom-left-radius: 0px;
-        }
-        .panel-pricing .list-group-item:first-child {
-          border-top-right-radius: 0px;
-          border-top-left-radius: 0px;
-        }
-        .panel-pricing .panel-body {
-          background-color: #f0f0f0;
-          font-size: 20px;
-          color: #777777;
-          padding: 10px;
-          margin: 0px;
-          p {
-            margin: 0;
-          }
-        }
-
-        //Price plan stop
       }
     }
   }
@@ -1958,4 +1833,236 @@ body {
 }
 .hide{
   display: none;
+}
+
+.payment{
+
+  display: flex;
+  min-height: 350px;
+  position: relative;
+  .cards{
+    flex: 2;
+    background-color: #F2F3F7;
+    position: relative;
+    .cardnotfound{
+        font-size: 80px;
+        margin-top: -10px;
+        color: #a0a0a0;
+    }
+  }
+  .plans{
+    flex: 1;
+    .planname{
+        width: 100%;
+        height: 105px;
+        background-color: white;
+        padding: 25px;
+        cursor: pointer;
+      .type{
+        font-size: 19px;
+       display: block;
+      }
+      .value{
+        font-size: 13px;
+      }
+      .arrow{
+        float: right;
+        color: #71767C;
+        font-size: 35px;
+        margin-top: -26px;
+        margin-right: 15px;
+      }
+    }
+    .divlabel{
+      clear: both;
+      padding: 5px;
+      height: 30px;
+      width: 100%;
+      background-color: #f2f3f7;
+      padding-left: 11px;
+      font-size: 14px;
+      color: #9AA7BA;
+      font-weight: 500;
+    }
+    .divdetail{
+      width: 100%;
+      clear: both;
+      .type{
+        visibility: visible;
+        width: 50%;
+        float: left;
+        padding-left: 20px;
+        color: #626c7b;
+        font-size: 12px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+      }
+      .value{
+        width: 50%;
+        float: left;
+        padding-left: 20px;
+        color: #000000;
+        font-size: 13px;
+        font-weight: 500;
+        padding-top: 4px;
+      }
+    }
+  }
+  .subheading{
+    color: black;
+  }
+  .cardadded{
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+    background-color: white;
+    width: 90%;
+    margin-left: 5%;
+    display: flex;
+    margin-bottom: 2px;
+    cursor: pointer;
+    .cardimage{
+        height: 50px;
+        flex: 1
+    }
+    .cardnumber{
+      flex: 3;
+      padding: 13px;
+    }
+    .cardname{
+      flex: 3;
+      padding: 13px;
+    }
+    .cardcvv{
+      flex: 1;
+      padding: 5px;
+      margin-right: 3px;
+      height: 40px;
+      margin-top: 5px;
+      border: 2px solid #c1c1c1;
+    }
+    .cardcvv:focus{
+      outline: none ;
+    }
+  }
+  .buttons{
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      padding: 10px;
+    .purchase{
+      height: 41px;
+      width: 50%;
+      border-radius: 2px;
+      background-color: #19b698;
+      color: white;
+      font-size: 14px;
+      font-weight: 500;
+      border: none;
+    }
+    .addcard{
+      height: 41px;
+      width: 39%;
+      border-radius: 2px;
+      background-color: #a0a0a0;
+      color: white;
+      font-size: 14px;
+      font-weight: 500;
+      border: none;
+      margin-left: 40px;
+    }
+  }
+  .heading{
+    width: 100%;
+    padding: 10px;
+    .main{
+      color: #71767C;
+      font-size: 20px;
+      display: block;
+    }
+    .sub{
+      font-size: 12px;
+      color: #555;
+    }
+  }
+  .fields{	
+      width: 86%;
+      display: flex;
+      background-color: white;
+      margin-left: 7%;
+      margin-top: 10px;
+    .field{
+      flex: 5;
+      border: none;
+      padding: 5px;
+    }
+    .field:focus{
+      outline: none;
+    }
+    .labels{
+      flex: 1;
+      padding-top: 14px;
+      text-align: center;
+      color: #adadad;
+    }
+  }
+  .fieldssmall{
+    width: 24% !important;
+    display: flex;
+    background-color: white;
+    margin-left: 7%;
+    float: left;
+    margin-top: 10px;
+    .field{
+      flex: 5;
+      border: none;
+      padding: 5px;
+    }
+    .field:focus{
+      outline: none;
+    }
+    .labels{
+      flex: 6;
+      padding-top: 14px;
+      text-align: center;
+      color: #adadad;
+    }
+  }
+  .selectedcard{
+    border: 1px solid #bbbbbb;
+    background-color: gainsboro;
+    transform: scale(1.05,1.05);
+  }
+  .billing{
+    padding-top: 15px;
+  }
+}
+
+.plannamepop{
+  width: 244px;
+  height: 80px;
+  background-color: white;
+  padding: 20px;
+  cursor: pointer;
+  .type{
+    font-size: 19px;
+    display: block;
+  }
+  .value{
+    font-size: 13px;
+  }
+  .arrow{
+    float: right;
+    color: #71767C;
+    font-size: 35px;
+    margin-top: -26px;
+    margin-right: 15px;
+  }
+}
+.plannamepop:hover{
+  background-color: #e6e6e6;
+}
+.loadermodal{
+  visibility: visible;
+    position: fixed !important;
+    margin-left: 23%;
+    margin-top: 18%;
 }

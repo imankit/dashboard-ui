@@ -8,6 +8,7 @@ import queue from './queue';
 import analytics from './analytics';
 import settings from './settings';
 import loader from './loader';
+import cards from './cards';
 import {reducer as formReducer} from 'redux-form';
 
 const todoApp = combineReducers({
@@ -18,6 +19,7 @@ const todoApp = combineReducers({
     analytics,
     cache,
     queue,
+    cards,
     loader,
     settings,
     form: formReducer

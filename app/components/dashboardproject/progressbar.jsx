@@ -33,10 +33,10 @@ const mapStateToProps = (state, selfProps) => {
             }
         }
     }
-    let maxAPI = plans.plans[selfProps.planId - 1].apiCalls;
-    let maxStorage = plans.plans[selfProps.planId - 1].storage + plans.plans[selfProps.planId].storageUnit;
-    let numMaxAPI = plans.plans[selfProps.planId - 1].numApiCalls;
-    let numMaxStorage = plans.plans[selfProps.planId - 1].numStorage;
+    let maxAPI = plans[selfProps.planId - 1].usage[0].features[0].limit.label;
+    let maxStorage = plans[selfProps.planId - 1].usage[0].features[1].limit.label;
+    let numMaxAPI = plans[selfProps.planId - 1].usage[0].features[0].limit.value;
+    let numMaxStorage = plans[selfProps.planId - 1].usage[0].features[1].limit.value;
 
     return {
         apiUsed: Math.ceil(apiUsed ? (apiUsed / numMaxAPI) * 100 : 0),

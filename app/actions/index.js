@@ -572,50 +572,20 @@ export const editTable = (tableId) => {
 
 export const createSale = (appId, cardDetails, planId) => {
     return function (dispatch) {
-
-        let args = {
-            sellerId: twoCheckoutCredentials.sellerId,
-            publishableKey: twoCheckoutCredentials.publishableKey,
-            ccNo: cardDetails.number,
-            cvv: cardDetails.cvc,
-            expMonth: cardDetails.expMonth,
-            expYear: cardDetails.expYear,
+        dispatch({type:'START_LOADING_MODAL'})
+        let reqObj = {
+            cardDetails: cardDetails,
+            planId: planId
         };
-        //TCO is a global variable defined outside in an externally linked JS and hence produces linting error,
-        // which leads to issues in watching styles the way gulp tasks is configured and hence this empty object only for developement
-        let TCO = TCO ? TCO : {};
-        TCO.loadPubKey(twoCheckoutCredentials.mode, function () {
-
-            TCO.requestToken(
-                function (data) {
-                    if (!data) {
-                        console.log("Create Token failed,try again..");
-                    } else {
-                        let reqObj = {
-                            token: data.response.token.token,
-                            billingAddr: cardDetails.billing,
-                            planId: planId
-                        };
-                        xhrDashBoardClient.post('/' + appId + '/sale', reqObj)
-                            .then(response => {
-                                console.log(response);
-                            })
-                            .catch(error => {
-                                console.log('inside createSale error catch error: ');
-                                console.log(error);
-                            });
-                    }
-                },
-                function (data) {
-                    if (data.errorCode === 200) {
-                        console.log("Opps! Something went wrong, Try again.");
-                    } else {
-                        console.log(data.errorMsg);
-                    }
-                },
-                args
-            );
-        });
+        xhrDashBoardClient.post('/' + appId + '/sale', reqObj)
+            .then(response => {
+                dispatch({type:'STOP_LOADING_MODAL'})
+            })
+            .catch(error => {
+                dispatch({type:'STOP_LOADING_MODAL'})
+                console.log('inside createSale error catch error: ');
+                console.log(error);
+            });
     };
 };
 
@@ -679,6 +649,45 @@ export function markAppActive(appId) {
             console.log('mark active error',error);
         })
 }
+
+export function getCards() {
+    return function (dispatch) {
+        dispatch({type:'START_LOADING_MODAL'})
+        xhrDashBoardClient
+            .get('/cards')
+            .then(response => {
+                dispatch({
+                    type: 'FETCH_CARDS',
+                    payload: response.data
+                })
+                dispatch({type:'STOP_LOADING_MODAL'})
+            })
+            .catch(error => {
+                dispatch({type:'STOP_LOADING_MODAL'})
+                console.log('get cards error',error);
+            })
+    }
+}
+
+export function addCard(name,number,expMonth,expYear) {
+    return function (dispatch) {
+        dispatch({type:'START_LOADING_MODAL'})
+        let postObject = {}
+        postObject.name = name
+        postObject.number = number
+        postObject.expMonth = expMonth
+        postObject.expYear = expYear
+
+        xhrDashBoardClient.post('/card',postObject)
+        .then(response => {
+            dispatch(getCards())
+        },err => {
+            showAlert('error',"Error Adding card.")
+            dispatch({type:'STOP_LOADING_MODAL'})
+        })
+    }
+}
+
 
 
 // cache actions 

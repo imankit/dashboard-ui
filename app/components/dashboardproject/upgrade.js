@@ -3,420 +3,318 @@
  */
 import React from 'react';
 import {connect} from 'react-redux';
-import {Row, Col, Clearfix, NavDropdown, MenuItem} from 'react-bootstrap';
 import Check from 'material-ui/svg-icons/navigation/check';
-import {FormControl, InputGroup, FormGroup, ControlLabel, Button} from 'react-bootstrap';
 import CreditCard from 'material-ui/svg-icons/action/credit-card';
 import {grey500} from 'material-ui/styles/colors';
 import planList from '../../fakeAPI/plans';
-import {createSale} from '../../actions';
+import {createSale,getCards,addCard} from '../../actions';
 import {paymentCountries} from '../../config';
+import CardReactFormContainer from 'card-react';
+import Popover from 'material-ui/Popover';
+import RefreshIndicator from 'material-ui/RefreshIndicator';
+var valid = require('card-validator');
 
 class Upgrade extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            plan: planList.plans[parseInt(this.props.planId)],
+            selectedPlan: planList[0],
             cardDetails: {
-                number: "", cvc: "", expMonth: "", expYear: "",
+                number: "", expMonth: "", expYear: "",name:"",
                 billing: {
                     name: "",
                     addrLine1: "",
                     addrLine2: "",
                     city: "",
                     state: "",
-                    zipCode: ""
+                    zipCode: "",
+                    country:""
                 }
             },
-            upgradeClicked: false,
-            error: this.props.error ? this.props.error : null
+            addCardToggled:false,
+            billingToggled:false,
+            error:null,
+            selectedCard:{number: "", expMonth: "", expYear: "",name:"",cardId:""},
+            openPlanSelector:false
         };
+    }
+    componentWillMount(){
+        this.props.getCards()
+        try{
+            this.setState({selectedPlan:planList[this.props.planId]})
+        } catch(e){
+            this.setState({selectedPlan:planList[0]})
+        }
+    }
+    purchaseButton(){
+        if(this.state.selectedCard.cardId){
+            let cvv = this.refs[this.state.selectedCard.cardId].value
+            if(valid.cvv(cvv).isValid){
+                $(this.refs[this.state.selectedCard.cardId]).css('border','none')
+                this.toggleBilling(true)
+            } else {
+                $(this.refs[this.state.selectedCard.cardId]).css('border','2px solid red')
+            }
+        }
+    }
+    purchase(e){
+        e.preventDefault()
+        return;
+        // actual create sale call 
+        this.props.createSale(this.props.appId,this.state.cardDetails,selectedPlan.id)
+    }
+    addCardButton(){
+        let { number,name,expMonth,expYear } = this.state.cardDetails
+        if(!name) {
+            this.showError('name',true);
+            return false;
+        } else this.showError('name',false);
+        if(!valid.number(number).isValid){
+            this.showError('number',true);
+            return false;
+        } else this.showError('number',false);
+        if(!valid.expirationYear(expYear).isValid){
+            this.showError('year',true);
+            return false;
+        } else this.showError('year',false);
+        if(!valid.expirationMonth(expMonth).isValid){
+            this.showError('month',true);
+            return false;
+        } else this.showError('month',false);
+
+        this.props.addCard(name,number,expMonth,expYear)
+        this.toggleAddcard(false)
+    }
+    toggleAddcard(what){
+        this.setState({addCardToggled:what})
+    }
+    toggleBilling(what){
+        this.setState({billingToggled:what})
+    }
+    cardDetailChangeHandler(which,e){
+        this.state.cardDetails[which] = e.target.value
+        this.setState(this.state)
+    }
+    billingChangeHandler(which,e){
+        this.state.cardDetails.billing[which] = e.target.value
+        this.setState(this.state)
+    }
+    showError(which,show){
+        if(show) $('.'+which).css('border','2px solid red')
+            else $('.'+which).css('border','none')
+    }
+    getCardType(number){
+        let type = 'visa'
+        let card = valid.number(number).card
+        if(card){
+            if(card.type != 'visa') type = 'mastercard'
+        }
+        return type
+    }
+    selectCard(card){
+        this.setState({ selectedCard:card })
+    }
+    handleTouchTap = (event) => {
+        event.preventDefault();
+        this.setState({
+            openPlanSelector: true,
+            anchorEl: event.currentTarget,
+        })
+    }
+
+    handleRequestClose = () => {
+        this.setState({
+            openPlanSelector: false,
+        })
+    }
+    selectPlan(plan){
+        this.setState({selectedPlan:plan})
+        this.handleRequestClose()
     }
 
     render() {
-
-        const handleSelect = (eventKey) => this.setState({
-            plan: planList.plans[eventKey - 1]
-        });
-
-        const handleSubmit = (event) => {
-            event.preventDefault();
-
-            let error = null;
-            if (this.state.upgradeClicked === false) {
-                error = validateCardMainDetails(this.state.cardDetails);
-                if (error !== null) {
-                    return this.setState({error: error});
-                }
-
-                return this.setState({upgradeClicked: true});
-            }
-
-            error = validateBillingDetails(this.state.cardDetails);
-            if (error !== null && typeof error !== "undefined") {
-                return this.setState({error: error});
-            }
-
-            error = fieldsRequiredForCountries(this.state.cardDetails.billing.country);
-            if (error === true) {
-                return this.setState({error: "Please select only from listed countries"});
-            }
-
-            this.props.purchase(this.props.appId, this.state.cardDetails, this.state.plan.id);
-
-            this.setState({error: null});
-        };
-
-        const handleGoBack = (event) => {
-            event.preventDefault();
-            this.setState({upgradeClicked: false, error: null});
-        };
-
-        const handleChange = (e) => {
-            this.setState({error: null});
-            switch (e.target.name) {
-                case 'expYear' :
-                    this.setState({cardDetails: {...this.state.cardDetails, expYear: e.target.value}});
-                    break;
-                case 'expMonth' :
-                    this.setState({cardDetails: {...this.state.cardDetails, expMonth: e.target.value}});
-                    break;
-                case 'cvc' :
-                    this.setState({cardDetails: {...this.state.cardDetails, cvc: e.target.value}});
-                    break;
-                case 'number' :
-                    this.setState({cardDetails: {...this.state.cardDetails, number: e.target.value}});
-                    break;
-                case 'addrLine1' :
-                    this.setState({
-                        cardDetails: {
-                            ...this.state.cardDetails,
-                            billing: {...this.state.cardDetails.billing, addrLine1: e.target.value}
-                        }
-                    });
-                    break;
-                case 'addrLine2' :
-                    this.setState({
-                        cardDetails: {
-                            ...this.state.cardDetails,
-                            billing: {...this.state.cardDetails.billing, addrLine2: e.target.value}
-                        }
-                    });
-                    break;
-                case 'city' :
-                    this.setState({
-                        cardDetails: {
-                            ...this.state.cardDetails,
-                            billing: {...this.state.cardDetails.billing, city: e.target.value}
-                        }
-                    });
-                    break;
-                case 'country' :
-                    this.setState({
-                        cardDetails: {
-                            ...this.state.cardDetails,
-                            billing: {...this.state.cardDetails.billing, country: e.target.value}
-                        }
-                    });
-                    break;
-                case 'name' :
-                    this.setState({
-                        cardDetails: {
-                            ...this.state.cardDetails,
-                            billing: {...this.state.cardDetails.billing, name: e.target.value}
-                        }
-                    });
-                    break;
-                case 'state' :
-                    this.setState({
-                        cardDetails: {
-                            ...this.state.cardDetails,
-                            billing: {...this.state.cardDetails.billing, state: e.target.value}
-                        }
-                    });
-                    break;
-                case 'zipCode' :
-                    this.setState({
-                        cardDetails: {
-                            ...this.state.cardDetails,
-                            billing: {...this.state.cardDetails.billing, zipCode: e.target.value}
-                        }
-                    });
-                    break;
-            }
-        };
-
-        function validateCardMainDetails(cardDetails) {
-            let errorMsg = null;
-            if (!cardDetails.billing.name) {
-                return "Card holder's name is required";
-            }
-            if (cardDetails.billing.name && cardDetails.billing.name.length >= 129) {
-                return "Card holder's name shoudn't exceed 128 Chars";
-            }
-
-            if (!cardDetails.number || cardDetails.number.length !== 16) {
-                return "Invalid Card";
-            }
-
-            let cardNumber = parseInt(cardDetails.number);
-            if (isNaN(cardNumber)) {
-                return "Invalid Card, Only 16 digits allowed";
-            }
-
-            if (!cardDetails.expMonth || cardDetails.expMonth === "0" || cardDetails.expMonth.length > 2) {
-                return "Invalid Exp Month";
-            }
-
-            if (!cardDetails.expYear || cardDetails.expYear === "0" || cardDetails.expYear.length > 4) {
-                return "Invalid Exp Year";
-            }
-
-            if (!cardDetails.cvc || cardDetails.cvc.length !== 3) {
-                return "Invalid CVC";
-            }
-
-            let cardCVC = parseInt(cardDetails.cvc);
-            if (isNaN(cardCVC)) {
-                return "Invalid CVC, Only 3 digits allowed";
-            }
-
-            return errorMsg;
-        }
-
-        function validateBillingDetails(cardDetails) {
-            let errorMsg = null;
-            if (!cardDetails.billing.addrLine1) {
-                return "Address1 cannot be null";
-            }
-
-            if (cardDetails.billing.addrLine1 && cardDetails.billing.addrLine1.length > 64) {
-                return "Address1 should not exceed 64 Chars";
-            }
-
-            if (!cardDetails.billing.city) {
-                return "City cannot be null";
-            }
-
-            if (cardDetails.billing.city && cardDetails.billing.city.length > 64) {
-                return "City should not exceed 64 Chars";
-            }
-
-            if (!cardDetails.billing.state && cardDetails.billing.country && fieldsRequiredForCountries(cardDetails.billing.country)) {
-                return "State cannot be null for selected country";
-            }
-
-            if (cardDetails.billing.state && cardDetails.billing.state.length > 64) {
-                return "State should not exceed 64 Chars";
-            }
-
-            if (!cardDetails.billing.zipCode && cardDetails.billing.country && fieldsRequiredForCountries(cardDetails.billing.country)) {
-                return "Zipcode cannot be null for selected country";
-            }
-
-            if (cardDetails.billing.zipCode && cardDetails.billing.zipCode.length > 16) {
-                return "Zipcode should not exceed 16 Chars";
-            }
-
-            if (!cardDetails.billing.country || cardDetails.billing.country === "0") {
-                return "Country cannot be null";
-            }
-
-            if (cardDetails.billing.country && cardDetails.billing.country.length > 64) {
-                return "Country should not exceed 64 Chars";
-            }
-
-            if (!cardDetails.billing.addrLine2 && cardDetails.billing.country && (cardDetails.billing.country === "CHN" || cardDetails.billing.country === "JPN" || cardDetails.billing.country === "RUS")) {
-                return "Address2 cannot be null for selected country.";
-            }
-        }
-
-        function fieldsRequiredForCountries(country) {
-            country = country.trim();
-            if (country === "ARG" || country === "AUS" || country === "BGR" || country === "CAN" || country === "CHN" || country === "CYP" || country === "EGY" || country === "FRA" || country === "IND" || country === "IDN" || country === "ITA" || country === "JPN" || country === "MYS" || country === "MEX" || country === "NLD" || country === "PAN" || country === "PHL" || country === "POL" || country === "ROU" || country === "RUS" || country === "SRB" || country === "SGP" || country === "ZAF" || country === "ESP" || country === "SWE" || country === "THA" || country === "TUR" || country === "GBR" || country === "USA") {
-                return false;
-            }
-            return true;
-        }
-
-        const renderCardDetail = () => <div>
-
-            <div style={{height: 45}}>
-                100% money back guarantee for the first 30 days on paid plans.
-            </div>
-            < Row>
-                < Col xs={8}>
-                    < FormGroup >
-                        < ControlLabel > Card number</ControlLabel>
-                        <InputGroup>
-                            <InputGroup.Addon><CreditCard color={grey500}/></InputGroup.Addon>
-                            <FormControl type="text" name="number" value={this.state.cardDetails.number}
-                                         placeholder="•••• •••• •••• ••••"
-                                         onChange={handleChange}/>
-                        </InputGroup>
-                    </FormGroup>
-                </Col>
-                <Col xs={4}>
-                    <FormGroup>
-                        <ControlLabel>Security Code</ControlLabel>
-                        <FormControl type="text" placeholder="123" name="cvc" value={this.state.cardDetails.cvc}
-                                     onChange={handleChange}/>
-                    </FormGroup>
-                </Col>
-            </Row>
-            <Row>
-                <Col xs={8}>
-                    <FormGroup>
-                        <ControlLabel>Name on Card</ControlLabel>
-                        <FormControl type="text" name="name" placeholder="Firstname Lastname"
-                                     onChange={handleChange} value={this.state.cardDetails.billing.name}/>
-                    </FormGroup>
-                </Col>
-                <Col xs={4}>
-                    <FormGroup className="expiry">
-                        <ControlLabel >Expires</ControlLabel>
-                        <div className="expiry">
-                            <FormControl type="text" placeholder="MM" name="expMonth"
-                                         onChange={handleChange} value={this.state.cardDetails.expMonth}/>
-                            <FormControl type="text" placeholder="YYYY" name="expYear"
-                                         onChange={handleChange} value={this.state.cardDetails.expYear}/>
-                        </div>
-                    </FormGroup>
-                </Col>
-            </Row>
-        </div>;
-
-        const renderBillingAddress = () => <div>
-            < ControlLabel >Address</ControlLabel>
-            < Row>
-                < Col xs={12}>
-                    <FormControl type="text" name="addrLine1" placeholder="address line 1" onChange={handleChange}
-                                 value={this.state.cardDetails.billing.addrLine1}/>
-                </Col>
-            </Row>
-            < Row>
-                < Col xs={12}>
-                    <FormControl type="text" name="addrLine2" placeholder="address line 2" onChange={handleChange}
-                                 value={this.state.cardDetails.billing.addrLine2}/>
-                </Col>
-            </Row>
-            <Row>
-                <Col xs={6}>
-                    <FormControl type="text" placeholder="city" name="city" onChange={handleChange}
-                                 value={this.state.cardDetails.billing.city}/>
-                </Col>
-                <Col xs={6}>
-                    <FormControl type="text" placeholder="state" name="state" onChange={handleChange}
-                                 value={this.state.cardDetails.billing.state}/>
-                </Col>
-            </Row>
-            <Row>
-                <Col xs={6}>
-                    <FormControl type="text" placeholder="zip code" name="zipCode" onChange={handleChange}
-                                 value={this.state.cardDetails.billing.zipCode}/>
-                </Col>
-                <Col xs={6}>
-                    <FormControl componentClass="select"
-                                 defaultValue={this.state.cardDetails.billing.country}
-                                 placeholder="select"
-                                 name="country"
-                                 onChange={handleChange}>
-                        {
-                            paymentCountries.map((country) => {
-                                return <option key={country.code} value={country.code}> {country.label}</option>;
-                            })
-                        }
-                    </FormControl>
-                </Col>
-            </Row>
-        </div>;
-
+        let selectPlanisSame = this.state.selectedPlan.id == this.props.planId
+        let downgradePlan = this.state.selectedPlan.id < this.props.planId
         return (
-            <form onSubmit={handleSubmit} className="tab-content">
-                { (this.state.error ) ?
-                    <Row className="payment-row clearfix">
-                        <div className="error">
-                            {this.state.error}
-                        </div>
-                    </Row> : <div style={{height: 35}}></div>
-                }
-                <Row className="payment-row">
-                    <Col xs={8} className="payment-col">
-                        <div className="payment-box clearfix">
-                            {
-                                !this.state.upgradeClicked ? renderCardDetail() : renderBillingAddress()
-                            }
-                        </div>
-                    </Col>
-                    <Col xs={4} className="panel-pricing">
-                        <Row>
-                            <div className="panel panel-success panel-pricing">
-                                <div className="panel-heading">
-                                    <h1>
-                                        <NavDropdown title={this.state.plan.name} id="planName"
-                                                     onSelect={handleSelect}>
-                                            <MenuItem eventKey={1}>{planList.plans[0].name}</MenuItem>
-                                            <MenuItem eventKey={2}>{planList.plans[1].name}</MenuItem>
-                                            <MenuItem eventKey={3}>{planList.plans[2].name}</MenuItem>
-                                            <MenuItem eventKey={4}>{planList.plans[3].name}</MenuItem>
-                                            <MenuItem eventKey={5}>{planList.plans[4].name}</MenuItem>
-                                        </NavDropdown>
-                                    </h1>
-                                </div>
-                                <div className="panel-body text-center">
-                                    <p><strong>${this.state.plan.cost} / Month</strong></p>
-                                </div>
-                                <ul className="list-group text-center">
-                                    <li className="list-group-item">DB(API Calls/Storage):
-                                        <strong> {this.state.plan.apiCalls}/{this.state.plan.storage}{this.state.plan.storageUnit}</strong>
-                                    </li>
-                                    <li className="list-group-item">Connections:
-                                        <strong> {this.state.plan.connections}</strong></li>
-                                    <li className="list-group-item">Mongo DB:
-                                        {this.state.plan.mongoDbAccess ?
-                                            <Check viewBox="0 0 24 16" style={{width: 18, height: 16}}/> : " -"}</li>
-                                </ul>
-                                <div className="panel-footer">
+            <div className="payment">
+                {   this.props.loading ?
+                        <div className="cards">
+                            <RefreshIndicator
+                                size={50}
+                                left={70}
+                                top={0}
+                                status="loading"
+                                className="loadermain"
+                            />
+                        </div> :
+                        <div className="cards">
+
+                            <div className={ this.state.billingToggled ? 'hide' : 'heading' }>
+                                <span className="main">Payment Information</span>
+                                <span className="sub">100% money back guarantee for the first 30 days on paid plans.</span>
+                            </div>
 
 
-                                    {this.state.upgradeClicked ? <div className="goback">
-                                            <Button className="btn btn-lg btn-block btn-success payment-button"
-                                                    type="submit"
-                                                    value="Submit">Pay</Button>
-                                            <Clearfix />
-                                            <a onClick={handleGoBack}>Go Back</a>
-                                        </div>
-
-                                        : <div>
-                                            < Button className="btn btn-lg btn-block btn-success" type="submit"
-                                                     disabled={this.state.error !== null}
-                                                     value="Submit">BUY NOW!</Button>
-                                            <Clearfix />
-                                        </div>
-                                    }
+                            {/*select card modal*/}
+                            <div className={ this.state.addCardToggled || this.state.billingToggled || selectPlanisSame ? 'hide' : '' }>
+                                {
+                                    this.props.cards.length ? this.props.cards.map((card,i)=>{
+                                        return <div className={ this.state.selectedCard.cardId == card.cardId ? "cardadded selectedcard" : "cardadded" } key={ i } onClick={ this.selectCard.bind(this,card) }>
+                                                    <img src={ "/assets/images/" + this.getCardType(card.number) + ".png" } className="cardimage"/>
+                                                    <span className="cardnumber">{ card.number }</span>
+                                                    <span className="cardname">{ card.name }</span>
+                                                    <input type="text" className="cardcvv" placeholder="CVV" ref={ card.cardId }/>
+                                                </div>
+                                    }) :    <div style={{padding:68,textAlign:'center'}}>
+                                                <i className="fa fa-credit-card cardnotfound" aria-hidden="true"></i>
+                                                <p className="addacardmessage">Please add a card to make a payment.</p>
+                                            </div>
+                                }
+                            </div>
+                            <div className={ this.state.addCardToggled || this.state.billingToggled || selectPlanisSame  ? 'hide' : 'buttons' }>
+                                <button className="purchase" onClick={ this.purchaseButton.bind(this) }>{ downgradePlan ? "DOWNGRADE PLAN" : "PURCHASE PLAN" }</button>
+                                <button className="addcard" onClick={ this.toggleAddcard.bind(this,true) }>ADD CARD</button>
+                            </div>
+                            <div className={ selectPlanisSame ? '' : 'hide' }>
+                                <div style={{padding:68,textAlign:'center'}}>
+                                    <i className="fa fa-thumbs-o-up cardnotfound" aria-hidden="true"></i>
+                                    <p className="addacardmessage">You are already on this plan.</p>
                                 </div>
                             </div>
-                        </Row>
-                    </Col>
-                </Row>
-            </form >
-        );
+                            {/*select card modal ==========END==============*/}
+
+                            {/*addcard modal*/}
+                            <div className={ this.state.addCardToggled ? '' : 'hide' }>
+                                <div className="fields name">
+                                    <span className="labels">Name</span>
+                                    <input type="text" value={ this.state.cardDetails.name } onChange={ this.cardDetailChangeHandler.bind(this,'name') } placeholder="Card holder name." className="field"/>
+                                </div>
+                                <div className="fields number">
+                                    <span className="labels">card#</span>
+                                    <input type="text" value={ this.state.cardDetails.number } onChange={ this.cardDetailChangeHandler.bind(this,'number') } placeholder="1234 5678 9326 7352" className="field"/>
+                                </div>
+                                <div className="fieldssmall year">
+                                    <span className="labels">ex.Year</span>
+                                    <input type="text" placeholder="YYYY" value={ this.state.cardDetails.expYear } onChange={ this.cardDetailChangeHandler.bind(this,'expYear') } className="field"/>
+                                </div>
+                                <div className="fieldssmall month">
+                                    <span className="labels">ex.Month</span>
+                                    <input type="text" placeholder="MM" value={ this.state.cardDetails.expMonth } onChange={ this.cardDetailChangeHandler.bind(this,'expMonth') } className="field"/>
+                                </div>
+                            </div>
+                            <div className={ this.state.addCardToggled ? 'buttons' : 'hide' }>
+                                <button className="purchase" onClick={ this.addCardButton.bind(this) }>ADD CARD</button>
+                                <button className="addcard" onClick={ this.toggleAddcard.bind(this,false) }>BACK</button>
+                            </div>
+                            {/*addcard modal ======END============== */}
+
+                            {/*billing modal and purchase*/}
+                            <form onSubmit={ this.purchase.bind(this) }>
+                                <div className={ this.state.billingToggled ? 'billing' : 'hide' }>
+                                    <div className="fields">
+                                        <span className="labels">Addr1</span>
+                                        <input type="text" value={ this.state.cardDetails.addrLine1 } onChange={ this.billingChangeHandler.bind(this,'addrLine1') } placeholder="Street address 1" className="field" required/>
+                                    </div>
+                                    <div className="fields">
+                                        <span className="labels">Addr2</span>
+                                        <input type="text" value={ this.state.cardDetails.addrLine2 } onChange={ this.billingChangeHandler.bind(this,'addrLine2') } placeholder="Street address 2" className="field"/>
+                                    </div>
+                                    <div className="fieldssmall">
+                                        <span className="labels">City</span>
+                                        <input type="text" placeholder="City" value={ this.state.cardDetails.city } onChange={ this.billingChangeHandler.bind(this,'city') } className="field" required/>
+                                    </div>
+                                    <div className="fieldssmall">
+                                        <span className="labels">State</span>
+                                        <input type="text" placeholder="State" value={ this.state.cardDetails.state } onChange={ this.billingChangeHandler.bind(this,'state') } className="field" required/>
+                                    </div>
+                                    <div className="fieldssmall">
+                                        <span className="labels">Zip</span>
+                                        <input type="text" placeholder="Zipcode" value={ this.state.cardDetails.zipCode } onChange={ this.billingChangeHandler.bind(this,'zipCode') } className="field" required/>
+                                    </div>
+                                    <div className="fieldssmall">
+                                        <span className="labels">Country</span>
+                                        <select className="field" value={ this.state.cardDetails.country } onChange={ this.billingChangeHandler.bind(this,'country') } required>
+                                            <option value="">Select</option>
+                                            {
+                                                paymentCountries.map((country,i) => {
+                                                    return <option value={ country.code } key={ i }>{ country.label }</option>
+                                                })
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className={ this.state.billingToggled ? 'buttons' : 'hide' }>
+                                    <button className="purchase" type="submit">{ downgradePlan ? "DOWNGRADE PLAN" : "PURCHASE PLAN" }</button>
+                                    <button className="addcard" onClick={ this.toggleBilling.bind(this,false) }>BACK</button>
+                                </div>
+                            </form>
+                            {/*billing modal and purchase ==========END==============*/}
+
+                            
+                        </div>
+                }
+                <div className="plans">
+                    <div className="planname" onTouchTap={this.handleTouchTap}>
+                        <span className="type">{this.state.selectedPlan.label}</span>
+                        <span className="value">${this.state.selectedPlan.price}</span>
+                        <i className="icon ion-ios-arrow-down arrow"></i>
+                    </div>
+                    <Popover
+                        open={this.state.openPlanSelector}
+                        anchorEl={this.state.anchorEl}
+                        anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+                        targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                        onRequestClose={this.handleRequestClose}
+                    >
+                        {
+                            planList.map((plan,i)=>{
+                                return  <div className="plannamepop" key={ i } onClick={ this.selectPlan.bind(this,plan) }>
+                                            <span className="type">{plan.label}</span>
+                                            <span className="value">${plan.price}</span>
+                                        </div>
+                            })
+                        }
+                    </Popover>
+                    <p className="divlabel">DATABASE</p>
+                    <div className="divdetail">
+                        <span className="type">API Calls</span>
+                        <span className="value">{ this.state.selectedPlan.usage[0].features[0].limit.label }</span>
+                    </div>
+                    <div className="divdetail">
+                        <span className="type">Storage</span>
+                        <span className="value">{ this.state.selectedPlan.usage[0].features[1].limit.label }</span>
+                    </div>
+                    <p className="divlabel">REALTIME</p>
+                    <div className="divdetail">
+                        <span className="type">Connections</span>
+                        <span className="value">{ this.state.selectedPlan.usage[1].features[0].limit.label }</span>
+                    </div>
+                    <p className="divlabel">MISC</p>
+                    <div className="divdetail">
+                        <span className="type">MongoDB Access</span>
+                        <span className="value">{ this.state.selectedPlan.usage[2].features[0].limit.show ? 'Available' : '-' }</span>
+                    </div>
+                </div>
+            </div>
+        )
     }
 }
 
-const mapStateToProps = (state) => {
-    if (typeof state.manageApp !== 'undefined' && typeof state.manageApp.error !== 'undefined')
-        return {
-            error: state.manageApp.error
-        };
-    else
-        return {};
-};
+const mapStateToProps = (state,selfProps) => {
+    return {
+        cards:state.cards,
+        planId: selfProps.planId,
+        appId: selfProps.appId,
+        loading: state.loader.modal_loading
+    }
+}
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        purchase: (appId, cardDetails, plan) => dispatch(createSale(appId, cardDetails, plan))
+        getCards: () => dispatch(getCards()),
+        addCard: (name,number,expMonth,expYear) => dispatch(addCard(name,number,expMonth,expYear)),
+        createSale: (appId, cardDetails, planId) => dispatch(createSale(appId, cardDetails, planId))
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Upgrade);
+export default connect(mapStateToProps, mapDispatchToProps)(Upgrade)

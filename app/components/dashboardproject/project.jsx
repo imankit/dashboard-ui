@@ -109,14 +109,17 @@ const Project = React.createClass({
                     </div>
                     <Modal show={this.state.showModal} bsSize={ (this.state.selectedTab === 'upgrade') ? 'large' : null}
                            onHide={this.close} dialogClassName='options-modal'>
-                        <Modal.Header>
-                            <Modal.Title>{ this.state.displayText}</Modal.Title>
-                            <div className="modalicon" style={{paddingRight: 8, height: 56, width: 56, borderRadius: 50, backgroundColor: '#0F6DA6'}}>
-                                <div className="flex-general-column-wrapper-center" style={{height: 56, width: 56}}>          
-                                <i className="fa fa-cog" style={{fontSize: 30, color: 'white'}} />
-                                </div>
-                            </div>
-                        </Modal.Header>
+                        {
+                            this.state.selectedTab == 'upgrade' ? '' :
+                                <Modal.Header> 
+                                    <Modal.Title>{ this.state.displayText}</Modal.Title>
+                                    <div className="modalicon" style={{paddingRight: 8, height: 56, width: 56, borderRadius: 50, backgroundColor: '#0F6DA6'}}>
+                                        <div className="flex-general-column-wrapper-center" style={{height: 56, width: 56}}>          
+                                        <i className="fa fa-cog" style={{fontSize: 30, color: 'white'}} />
+                                        </div>
+                                    </div>
+                                </Modal.Header>
+                        }
                         <Modal.Body>
                             <OptionsModal id={this.props._id}
                                         appId={this.props.appId}

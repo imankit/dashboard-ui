@@ -1,68 +1,241 @@
 /**
  * Created by Darkstar on 12/5/2016.
  */
-export default {
-    plans: [
-        {
-            id: 1,
-            name: 'Free Plan',
-            cost: 0,
-            timePeriod: 'Month',
-            apiCalls: 10000,
-            numApiCalls: 10000,
-            storage: 200,
-            storageUnit: 'MB',
-            numStorage: 200,
-            connections: 500,
-            mongoDbAccess: false
+export default [
+    {
+        id: 1,
+        label: "Free Plan",
+        price: 0,
+        priceDescription: "Forever",
+        usage: [{
+            category: "DATABASE",
+            features: [{
+                type: "text",
+                name: "API Calls",
+                limit: {
+                    show: true,
+                    label: "5,000",
+                    value: 5000
+                }
+            }, {
+                type: "text",
+                name: "Storage",
+                limit: {
+                    show: true,
+                    label: "200MB",
+                    value: 0.2
+                }
+            }]
         }, {
-            id: 2,
-            name: 'Launch Plan',
-            cost: 49,
-            timePeriod: 'Month',
-            apiCalls: 250000,
-            numApiCalls: 250000,
-            storage: 5,
-            storageUnit: 'GB',
-            numStorage: 5120,
-            connections: 500,
-            mongoDbAccess: true
+            category: "REALTIME",
+            features: [{
+                name: "Connections",
+                type: "text",
+                limit: {
+                    show: true,
+                    label: "500",
+                    value: 500
+                }
+            }]
         }, {
-            id: 3,
-            name: 'Bootstrap Plan',
-            cost: '149',
-            timePeriod: 'Month',
-            apiCalls: '1 MILLION',
-            numApiCalls: 1000000,
-            storage: '10',
-            storageUnit: 'GB',
-            numStorage: 10240,
-            connections: 'UNLIMITED',
-            mongoDbAccess: true
+            category: "MISC",
+            features: [{
+                name: "MongoDB Access",
+                type: "boolean",
+                limit: {
+                    show: false,
+                    label: "",
+                    value: 0
+                }
+            }]
+        }]
+    }, {
+        id: 2,
+        label: "Launch Plan",
+        price: 49,
+        priceDescription: "per month",
+        usage: [{
+            category: "DATABASE",
+            features: [{
+                type: "text",
+                name: "API Calls",
+                limit: {
+                    show: true,
+                    label: "250,000",
+                    value: 250000
+                }
+            }, {
+                type: "text",
+                name: "Storage",
+                limit: {
+                    show: true,
+                    label: "5GB",
+                    value: 5
+                }
+            }]
         }, {
-            id: 4,
-            name: 'Scale Plan',
-            cost: '449',
-            timePeriod: 'Month',
-            apiCalls: '5 MILLION',
-            numApiCalls: 5000000,
-            storage: 30,
-            storageUnit: 'GB',
-            numStorage: 30720,
-            connections: 'UNLIMITED',
-            mongoDbAccess: true
+            category: "REALTIME",
+            features: [{
+                name: "Connections",
+                type: "text",
+                limit: {
+                    show: true,
+                    label: "500",
+                    value: 500
+                }
+            }]
         }, {
-            id: 5,
-            name: 'Unicorn Plan',
-            cost: 1449,
-            timePeriod: 'Month',
-            apiCalls: '10 MILLION',
-            numApiCalls: 10000000,
-            storage: 100,
-            storageUnit: 'GB',
-            numStorage: 102400,
-            connections: 'UNLIMITED',
-            mongoDbAccess: true
-        }
-    ]
-};
+            category: "MISC",
+            features: [{
+                name: "MongoDB Access",
+                type: "boolean",
+                limit: {
+                    show: true,
+                    label: "",
+                    value: 1
+                }
+            }]
+        }]
+    }, {
+        id: 3,
+        label: "Bootstrap Plan",
+        price: 149,
+        priceDescription: "per month",
+        usage: [{
+            category: "DATABASE",
+            features: [{
+                type: "text",
+                name: "API Calls",
+                limit: {
+                    show: true,
+                    label: "1 MILLION",
+                    value: 1000000
+                }
+            }, {
+                type: "text",
+                name: "Storage",
+                limit: {
+                    show: true,
+                    label: "10GB",
+                    value: 10
+                }
+            }]
+        }, {
+            category: "REALTIME",
+            features: [{
+                name: "Connections",
+                type: "text",
+                limit: {
+                    show: true,
+                    label: "UNLIMITED",
+                    value: 10000
+                }
+            }]
+        }, {
+            category: "MISC",
+            features: [{
+                name: "MongoDB Access",
+                type: "boolean",
+                limit: {
+                    show: true,
+                    label: "",
+                    value: 1
+                }
+            }]
+        }]
+    }, {
+        id: 4,
+        label: "Scale Plan",
+        price: 449,
+        priceDescription: "per month",
+        usage: [{
+            category: "DATABASE",
+            features: [{
+                type: "text",
+                name: "API Calls",
+                limit: {
+                    show: true,
+                    label: "5 MILLION",
+                    value: 5000000
+                }
+            }, {
+                type: "text",
+                name: "Storage",
+                limit: {
+                    show: true,
+                    label: "30GB",
+                    value: 30
+                }
+            }]
+        }, {
+            category: "REALTIME",
+            features: [{
+                name: "Connections",
+                type: "text",
+                limit: {
+                    show: true,
+                    label: "UNLIMITED",
+                    value: 10000
+                }
+            }]
+        }, {
+            category: "MISC",
+            features: [{
+                name: "MongoDB Access",
+                type: "boolean",
+                limit: {
+                    show: true,
+                    label: "",
+                    value: 1
+                }
+            }]
+        }]
+    }, {
+        id: 5,
+        label: "Unicorn Plan",
+        price: 1449,
+        priceDescription: "per month",
+        usage: [{
+            category: "DATABASE",
+            features: [{
+                type: "text",
+                name: "API Calls",
+                limit: {
+                    show: true,
+                    label: "10 MILLION",
+                    value: 10000000
+                }
+            }, {
+                type: "text",
+                name: "Storage",
+                limit: {
+                    show: true,
+                    label: "100GB",
+                    value: 100
+                }
+            }]
+        }, {
+            category: "REALTIME",
+            features: [{
+                name: "Connections",
+                type: "text",
+                limit: {
+                    show: true,
+                    label: "UNLIMITED",
+                    value: 10000
+                }
+            }]
+        }, {
+            category: "MISC",
+            features: [{
+                name: "MongoDB Access",
+                type: "boolean",
+                limit: {
+                    show: true,
+                    label: "",
+                    value: 1
+                }
+            }]
+        }]
+    }
+]
