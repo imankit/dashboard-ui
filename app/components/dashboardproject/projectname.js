@@ -35,9 +35,10 @@ class ProjectName extends React.Component {
         if (this.state.editMode === false) {
             return (
                 <div className="relative-pos">
-                    <h3>
+                    <h3 onClick={editName}>
                         {this.props.name}
-                        <EditIcon style={iconStyles} color={grey500} onClick={editName}/>
+                        {//<EditIcon style={iconStyles} color={grey500} onClick={editName}/>
+                        }
                     </h3>
                 </div>
             );

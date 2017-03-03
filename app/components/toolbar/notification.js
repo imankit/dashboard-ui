@@ -55,7 +55,7 @@ class Notifications extends React.Component {
         })
         return (
             <div>
-                <ToolbarTitle style={toolbartitle} text="Notifications" onTouchTap={this.handleTouchTap}/>
+                <ToolbarTitle style={toolbartitle} text="" onTouchTap={this.handleTouchTap}/>
                 <Badge
                     badgeContent={notificationsUnSeen}
                     primary={true}
