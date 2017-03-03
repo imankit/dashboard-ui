@@ -9,7 +9,6 @@ import {grey500} from 'material-ui/styles/colors';
 import planList from '../../fakeAPI/plans';
 import {createSale,getCards,addCard} from '../../actions';
 import {paymentCountries} from '../../config';
-import CardReactFormContainer from 'card-react';
 import Popover from 'material-ui/Popover';
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 var valid = require('card-validator');
