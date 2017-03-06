@@ -5,11 +5,11 @@ import plans from '../../fakeAPI/plans'
 
 const Progressbar = (props) => (
     <div className="progress_bar">
-        <p>API Calls {props.apiUsed}% used of {props.maxAPI}</p>
+        <p><b>API &emsp;&ensp;</b> {props.apiUsed}% used of {props.maxAPI}</p>
         <div className="apihead">
             <div className="api_bar" style={{width: props.apiUsed+'%'}}></div>
         </div>
-        <p>Storage {props.storageUsed}% used of 200MB</p>
+        <p><b>Storage</b> {props.storageUsed}% used of {props.maxStorage} </p>
         <div className="storagehead">
             <div className="storage_bar" style={{width: props.storageUsed+'%'}}></div>
         </div>

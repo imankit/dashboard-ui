@@ -56,7 +56,7 @@ class ToolBar extends React.Component {
                 <div className="container">
                     <Toolbar className='toolbar' style={{backgroundColor: '#FFF'}}>
                         <ToolbarGroup>
-                            <img className="icon cp" src="/assets/images/cblogo.png" alt="cloud" onClick={ this.redirectTo.bind(this,'') }/>
+                            <img style={{marginLeft:-25}} className="icon cp" src="/assets/images/cblogo.png" alt="cloud" onClick={ this.redirectTo.bind(this,'') }/>
 
                         </ToolbarGroup>
                         {

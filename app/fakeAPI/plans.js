@@ -22,7 +22,7 @@ export default [
                 name: "Storage",
                 limit: {
                     show: true,
-                    label: "200MB",
+                    label: "200 MB",
                     value: 0.2
                 }
             }]
@@ -69,7 +69,7 @@ export default [
                 name: "Storage",
                 limit: {
                     show: true,
-                    label: "5GB",
+                    label: "5 GB",
                     value: 5
                 }
             }]
@@ -116,7 +116,7 @@ export default [
                 name: "Storage",
                 limit: {
                     show: true,
-                    label: "10GB",
+                    label: "10 GB",
                     value: 10
                 }
             }]
@@ -163,7 +163,7 @@ export default [
                 name: "Storage",
                 limit: {
                     show: true,
-                    label: "30GB",
+                    label: "30 GB",
                     value: 30
                 }
             }]
@@ -210,7 +210,7 @@ export default [
                 name: "Storage",
                 limit: {
                     show: true,
-                    label: "100GB",
+                    label: "100 GB",
                     value: 100
                 }
             }]
