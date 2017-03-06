@@ -9,7 +9,7 @@ const Progressbar = (props) => (
         <div className="apihead">
             <div className="api_bar" style={{width: props.apiUsed+'%'}}></div>
         </div>
-        <p><b>Storage</b> {props.storageUsed}% used of 200 MB</p>
+        <p><b>Storage</b> {props.storageUsed}% used of {props.maxStorage} </p>
         <div className="storagehead">
             <div className="storage_bar" style={{width: props.storageUsed+'%'}}></div>
         </div>
