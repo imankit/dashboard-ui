@@ -5,11 +5,25 @@ import plans from '../../fakeAPI/plans'
 
 const Progressbar = (props) => (
     <div className="progress_bar">
-        <p><b style={{fontSize:15}}>API &emsp;</b>  &emsp;&emsp;&ensp;<b>{props.apiUsed}%</b> used of <b>{props.maxAPI}</b></p>
+        <p style={{display:'flex'}}>
+            <span style={{flex:'1'}}>
+                <b style={{fontSize:15}}>API</b>
+            </span>
+            <span style={{flex:'2'}}>
+                <b>{props.apiUsed}%</b> used of <b>{props.maxAPI}</b>
+            </span>
+        </p>
         <div className="apihead">
             <div className="api_bar" style={{width: props.apiUsed+'%'}}></div>
         </div>
-        <p><b style={{fontSize:15}}>Storage</b>&emsp;&nbsp;<b>{props.storageUsed}%</b> used of <b>{props.maxStorage}</b> </p>
+        <p style={{display:'flex'}}>
+            <span style={{flex:'1'}}>
+                <b style={{fontSize:15}}>Storage</b>
+            </span>
+            <span style={{flex:'2'}}>
+                <b>{props.storageUsed}%</b> used of <b>{props.maxStorage}</b>
+            </span>
+        </p>
         <div className="storagehead">
             <div className="storage_bar" style={{width: props.storageUsed+'%'}}></div>
         </div>
