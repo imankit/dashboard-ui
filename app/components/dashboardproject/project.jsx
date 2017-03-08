@@ -7,7 +7,7 @@ import {Modal,Button} from 'react-bootstrap';
 import OptionsModal from './optionsModal';
 
 import IconDelete from 'material-ui/svg-icons/action/delete';
-import FileCloudUpload from 'material-ui/svg-icons/file/cloud-upload';
+import FileFileUpload from 'material-ui/svg-icons/file/file-upload';
 import Key from 'material-ui/svg-icons/communication/vpn-key';
 import PersonAdd from 'material-ui/svg-icons/social/person-add';
 import Icon from 'material-ui/svg-icons/file/cloud';
@@ -81,31 +81,32 @@ const Project = React.createClass({
                 </div>
                 <div className="project-option">
                     <div >
-                    {
-                        this.isAppAdmin() ?
-                            <div style={{display:'inline'}}>
-                                <PersonAdd style={iconStyles} color={grey500} onClick={this.open1}/>
-                                <Key style={iconStyles} color={grey500} onClick={this.open2}/>
-                                <FileCloudUpload style={iconStyles} color={grey500} onClick={this.open3}/>
-                                <IconDelete style={iconStyles} color={grey500} onClick={this.delete}/>
-                            </div>
-                            :
-                            <div style={{display:'inline'}}>
-                                <PersonAdd style={iconStyles} color={grey300}/>
-                                <Key style={iconStyles} color={grey500} onClick={this.open2}/>
-                                <FileCloudUpload style={iconStyles} color={grey300}/>
-                                <IconDelete style={iconStyles} color={grey300}/>
-                            </div>
-                    }
-
-                        <ManageApp style={iconStyles}
+                    <ManageApp style={iconStyles}
                                    color={grey500}
                                    onClick={() => this.props.onProjectClick(
                                        this.props.appId,
                                        this.props.keys.master,
                                        this.props.name
                                    )}
-                        />
+                    />
+                    {
+                        this.isAppAdmin() ?
+                            <div style={{display:'inline'}}>
+                                <PersonAdd style={iconStyles} color={grey500} onClick={this.open1}/>
+                                <Key style={iconStyles} color={grey500} onClick={this.open2}/>
+                                <FileFileUpload style={iconStyles} color={grey500} onClick={this.open3}/>
+                                <IconDelete style={iconStyles} color={grey500} onClick={this.delete}/>
+                            </div>
+                            :
+                            <div style={{display:'inline'}}>
+                                <PersonAdd style={iconStyles} color={grey300}/>
+                                <Key style={iconStyles} color={grey500} onClick={this.open2}/>
+                                <FileFileUpload style={iconStyles} color={grey300}/>
+                                <IconDelete style={iconStyles} color={grey300}/>
+                            </div>
+                    }
+
+                        
                     </div>
                     <Modal show={this.state.showModal} bsSize={ (this.state.selectedTab === 'upgrade') ? 'large' : null}
                            onHide={this.close} dialogClassName='options-modal'>
@@ -115,7 +116,7 @@ const Project = React.createClass({
                                     <Modal.Title>{ this.state.displayText}</Modal.Title>
                                     <div className="modalicon" style={{paddingRight: 8, height: 56, width: 56, borderRadius: 50, backgroundColor: '#0F6DA6'}}>
                                         <div className="flex-general-column-wrapper-center" style={{height: 56, width: 56}}>          
-                                        <i className="fa fa-cog" style={{fontSize: 30, color: 'white'}} />
+                                        <i className="ion-android-people" style={{fontSize: 30, color: 'white'}} />
                                         </div>
                                     </div>
                                 </Modal.Header>

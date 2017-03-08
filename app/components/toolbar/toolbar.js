@@ -47,7 +47,7 @@ class ToolBar extends React.Component {
         this.context.router.push('/'+where)
     }
     render(){
-        let userImage = "/assets/images/user-default-image.jpg"
+        let userImage = "/assets/images/user-image.png"
         if(this.props.currentUser.file){
             userImage = this.props.currentUser.file.document.url
         }
