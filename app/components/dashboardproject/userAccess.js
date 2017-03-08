@@ -46,16 +46,6 @@ class UserAccess extends Component {
 
         return (
             <div className="tab-content">
-                <FormGroup>
-                    <InputGroup>
-                        <InputGroup.Addon>@</InputGroup.Addon>
-                        <FormControl type="text" placeholder="example@example.com" value={this.state.email}
-                                     onChange={handleChange}/>
-                    </InputGroup>
-                    <Button bsStyle="primary"
-                            onClick={onSend}>Invite</Button>
-                </FormGroup>
-                <Clearfix/>
                 <Table responsive>
                     <thead>
                     <tr>
@@ -101,6 +91,16 @@ class UserAccess extends Component {
                     }
                     </tbody>
                 </Table>
+                <FormGroup>
+                    <InputGroup>
+                        <InputGroup.Addon>@</InputGroup.Addon>
+                        <FormControl type="text" placeholder="example@example.com" value={this.state.email}
+                                     onChange={handleChange}/>
+                    </InputGroup>
+                    <Button bsStyle="primary"
+                            onClick={onSend}>Invite</Button>
+                </FormGroup>
+                <Clearfix/>
             </div>
         );
     }
