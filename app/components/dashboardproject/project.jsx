@@ -68,7 +68,7 @@ const Project = React.createClass({
 
         return (
             <div className="project">
-                <div className="plan-status">{planName}</div>
+                <div className="plan-status" onClick={this.open3}>{planName}</div>
                 <div className="app-info">
                     <div className="app-icon">
                         <Icon style={logoStyles} color={blue500}> </Icon>

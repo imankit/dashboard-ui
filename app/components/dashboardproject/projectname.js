@@ -35,8 +35,10 @@ class ProjectName extends React.Component {
         if (this.state.editMode === false) {
             return (
                 <div className="relative-pos">
-                    <h3 style={{cursor:'pointer'}} onClick={editName}>
-                        {this.props.name}
+                    <h3>
+                        <input className="nameedit" type="text" defaultValue={this.props.name}  onClick={editName}/>
+                        {//this.props.name
+                        }
                         {//<EditIcon style={iconStyles} color={grey500} onClick={editName}/>
                         }
                     </h3>
