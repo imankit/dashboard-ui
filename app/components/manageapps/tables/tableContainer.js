@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {Grid, Row, Col} from 'react-bootstrap';
 import PowerOn from 'material-ui/svg-icons/action/power-settings-new';
 import TableIcon from 'material-ui/svg-icons/device/storage';
-import {grey500, grey50} from 'material-ui/styles/colors';
+import {grey500, grey50, white} from 'material-ui/styles/colors';
 import IconDelete from 'material-ui/svg-icons/action/delete';
 import RoleIcon from 'material-ui/svg-icons/hardware/security';
 import UserIcon from 'material-ui/svg-icons/social/people';
@@ -53,13 +53,13 @@ class TableContainer extends React.Component {
     getIcon(tableType) {
         switch (tableType) {
             case 'role':
-                return <RoleIcon style={iconStyles} color={grey500}/>;
+                return <RoleIcon style={iconStyles} color={white}/>;
             case 'user':
-                return <UserIcon style={iconStyles} color={grey500}/>;
+                return <UserIcon style={iconStyles} color={white}/>;
             case 'device':
-                return <DeviceIcon style={iconStyles} color={grey500}/>;
+                return <DeviceIcon style={iconStyles} color={white}/>;
             default:
-                return <TableIcon style={iconStyles} color={grey500}/>;
+                return <TableIcon style={iconStyles} color={white}/>;
         }
     }
 
@@ -80,22 +80,22 @@ class TableContainer extends React.Component {
                                 :
                                 this.props.tables.map((table) => (
                                     <Col sm={12} md={6} lg={4} key={table.id}>
-                                        <div className="table">
+                                        <div className="table" style={{backgroundColor: '#1476ff'}}>
                                             { this.getIcon(table.type)}
-                                            <p>{table.name}</p>
+                                            <p style={{color: white}}>{table.name}</p>
                                             {
                                                 (table.type !== 'custom') ?
                                                     (<div className="overlay">
-                                                        <PowerOn style={iconStyles3} color={grey50}
+                                                        <PowerOn style={iconStyles3} color={white}
                                                                 onClick={() => this.props.onEditTable(table.id)}/>
                                                     </div>)
                                                     :
                                                     (<div className="overlay">
-                                                        <PowerOn style={iconStyles2} color={grey50}
+                                                        <PowerOn style={iconStyles2} color={white}
                                                                 onClick={() => this.props.onEditTable(table.id)}/>
                                                         <div className="bordertop"></div>
                                                         <IconDelete style={iconStyles2}
-                                                                    color={grey50}
+                                                                    color={white}
                                                                     onClick={
                                                                         () => this.props.deleteTable(
                                                                             this.props.activeAppId,

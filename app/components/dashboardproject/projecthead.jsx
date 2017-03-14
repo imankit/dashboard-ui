@@ -31,7 +31,7 @@ class Projecthead extends React.Component {
     render() {
         return (
             <div className="project-head">
-                <h1 className="dashboard-title pull-left" style={{fontFamily: 'Signika'}}>Your Apps</h1>
+                <h1 className="dashboard-title pull-left" style={{fontFamily: 'Signika', color: '#555555'}}>Your Apps</h1>
                 <div className="btn" onClick={this.open}>+ New App</div>
                 <Modal show={this.state.showModal} onHide={this.close} dialogClassName="custom-modal">
                     <Modal.Header>
