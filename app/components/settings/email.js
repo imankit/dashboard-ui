@@ -74,7 +74,7 @@ class Email extends React.Component {
     }
     render() {
         return (
-            <div className="contentsubdiv">
+            <div className="contentsubdiv" style={{fontFamily: 'Signika'}}>
                 <div style={{width: '100%'}} className="solo-horizontal-center">
                     <span style={{color: '#169CEE', fontSize: 24, fontWeight: 700}}>Email Settings</span>
                 </div>

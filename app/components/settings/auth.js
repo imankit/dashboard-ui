@@ -58,7 +58,7 @@ class AuthSettings extends React.Component {
     render() {
         let loginPageUR = cloudBoostAPI + "/page/" + this.props.appData.appId + "/authentication"
         return (
-            <div className="contentsubdiv">
+            <div className="contentsubdiv" style={{fontFamily: 'Signika'}}>
                 <div style={{width: '100%'}} className="solo-horizontal-center">
                     <span style={{color: '#169CEE', fontSize: 24, fontWeight: 700}}>Authentication Settings</span>
                 </div>
