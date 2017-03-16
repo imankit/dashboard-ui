@@ -3,7 +3,6 @@
  */
 
 import {xhrDashBoardClient, xhrAccountsClient, xhrCBClient} from '../xhrClient';
-import {loadState, deleteAllCookies} from '../helper';
 import {browserHistory} from 'react-router';
 import {twoCheckoutCredentials,cloudBoostAPI,appSettings} from '../config';
 import Alert from 'react-s-alert';
@@ -32,6 +31,7 @@ export function fetchApps() {
                 dispatch({type:'STOP_LOADING'})
             })
             .catch(error => {
+                dispatch({type:'STOP_LOADING'})
                 console.log('inside fetch Apps error catch error: ');
                 console.log(error);
             });
@@ -110,6 +110,7 @@ export const addApp = (name) => {
                 showAlert('success',"App added.")
             })
             .catch(error => {
+                dispatch({type:'STOP_LOADING'})
                 console.log('inside fetch Apps error catch error: ');
                 console.log(error);
             });
@@ -141,8 +142,6 @@ export const logOut = () => {
     return function (dispatch) {
         xhrAccountsClient.post('/user/logout')
             .then(response => {
-                localStorage.removeItem('state');
-                deleteAllCookies();
                 dispatch({
                     type: 'LOGOUT'
                 });
@@ -201,8 +200,9 @@ export const getUsersBySkipLimit = (skip,limit,skipUserIds) => {
                 dispatch({type:'STOP_LOADING'})
             })
             .catch(error => {
-                console.log('inside fetchusers catch error: ');
+                console.log('inside getusers catch error: ');
                 console.log(error);
+                dispatch({type:'STOP_LOADING'})
             });
     };
 };
@@ -394,11 +394,12 @@ export const deleteApp = (appId) => {
             .catch(error => {
                 console.log('inside delete app error catch error: ');
                 console.log(error);
+                dispatch({type:'STOP_LOADING'})
             });
     };
 };
 
-export const manageApp = (appId, masterKey, name) => {
+export const manageApp = (appId, masterKey, name, from) => {
     return function (dispatch) {
         // init CloudApp for current application
         CB.CloudApp.init(SERVER_URL,appId,masterKey)
@@ -406,15 +407,135 @@ export const manageApp = (appId, masterKey, name) => {
             type: 'MANAGE_APP',
             payload: {appId: appId, masterKey: masterKey, name: name}
         })
-        browserHistory.push('/tables')
         markAppActive(appId)
+        if(from === '/') browserHistory.push("/"+appId+'/tables')
+        
     };
 };
 
+export const createSale = (appId, cardDetails, planId) => {
+    return function (dispatch) {
+        dispatch({type:'START_LOADING_MODAL'})
+        let reqObj = {
+            cardDetails: cardDetails,
+            planId: planId
+        };
+        xhrDashBoardClient.post('/' + appId + '/sale', reqObj)
+            .then(response => {
+                dispatch({type:'STOP_LOADING_MODAL'})
+            })
+            .catch(error => {
+                dispatch({type:'STOP_LOADING_MODAL'})
+                console.log('inside createSale error catch error: ');
+                console.log(error);
+            });
+    };
+};
+
+export function getAnalyticsData(appIdArray) {
+    return function (dispatch) {
+        xhrDashBoardClient
+            .post('/analytics/api-storage/bulk/count',
+                {appIdArray: appIdArray}
+            )
+            .then(response => {
+                dispatch({
+                    type: 'RECEIVE_ANALYTICS',
+                    payload: response.data
+                });
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
+    };
+}
+
+export function getNotifications() {
+    return function (dispatch) {
+        xhrDashBoardClient
+            .get('/notification/0/10')
+            .then(response => {
+                dispatch({
+                    type: 'FETCH_NOTIFICATIONS',
+                    payload: response.data
+                })
+            })
+            .catch(error => {
+                console.log(error);
+            })
+
+    }
+}
+
+export function updateNotificationsSeen() {
+    return function (dispatch) {
+        xhrDashBoardClient
+            .get('/notification/seen')
+            .then(response => {
+                dispatch(getNotifications())
+            })
+            .catch(error => {
+                console.log(error);
+            })
+
+    }
+}
+
+export function markAppActive(appId) {
+    xhrDashBoardClient
+        .post('/app/active/'+appId,{})
+        .then(response => {
+
+        })
+        .catch(error => {
+            console.log('mark active error',error);
+        })
+}
+
+export function getCards() {
+    return function (dispatch) {
+        dispatch({type:'START_LOADING_MODAL'})
+        xhrDashBoardClient
+            .get('/cards')
+            .then(response => {
+                dispatch({
+                    type: 'FETCH_CARDS',
+                    payload: response.data
+                })
+                dispatch({type:'STOP_LOADING_MODAL'})
+            })
+            .catch(error => {
+                dispatch({type:'STOP_LOADING_MODAL'})
+                console.log('get cards error',error);
+            })
+    }
+}
+
+export function addCard(name,number,expMonth,expYear) {
+    return function (dispatch) {
+        dispatch({type:'START_LOADING_MODAL'})
+        let postObject = {}
+        postObject.name = name
+        postObject.number = number
+        postObject.expMonth = expMonth
+        postObject.expYear = expYear
+
+        xhrDashBoardClient.post('/card',postObject)
+        .then(response => {
+            dispatch(getCards())
+        },err => {
+            showAlert('error',"Error Adding card.")
+            dispatch({type:'STOP_LOADING_MODAL'})
+        })
+    }
+}
+
+// table actions
 export function fetchTables(appId, masterKey) {
 
     return function (dispatch) {
-        dispatch({type:'START_LOADING'})
+        dispatch({type:'START_SECONDARY_LOADING'})
         xhrCBClient.post('/app/' + appId + '/_getAll', {key: masterKey})
             .then(response => {
                 if (response.data){
@@ -423,11 +544,12 @@ export function fetchTables(appId, masterKey) {
                         payload: {appId: appId, tables: response.data}
                     });
                 }
-                dispatch({type:'STOP_LOADING'})
+                dispatch({type:'STOP_SECONDARY_LOADING'})
             })
             .catch(error => {
                 console.log('inside fetch Tables error catch error: ');
                 console.log(error);
+                dispatch({type:'STOP_SECONDARY_LOADING'})
             });
 
     };
@@ -569,126 +691,6 @@ export const editTable = (tableId) => {
         });
     };
 };
-
-export const createSale = (appId, cardDetails, planId) => {
-    return function (dispatch) {
-        dispatch({type:'START_LOADING_MODAL'})
-        let reqObj = {
-            cardDetails: cardDetails,
-            planId: planId
-        };
-        xhrDashBoardClient.post('/' + appId + '/sale', reqObj)
-            .then(response => {
-                dispatch({type:'STOP_LOADING_MODAL'})
-            })
-            .catch(error => {
-                dispatch({type:'STOP_LOADING_MODAL'})
-                console.log('inside createSale error catch error: ');
-                console.log(error);
-            });
-    };
-};
-
-export function getAnalyticsData(appIdArray) {
-    return function (dispatch) {
-        xhrDashBoardClient
-            .post('/analytics/api-storage/bulk/count',
-                {appIdArray: appIdArray}
-            )
-            .then(response => {
-                dispatch({
-                    type: 'RECEIVE_ANALYTICS',
-                    payload: response.data
-                });
-            })
-            .catch(error => {
-                console.log(error);
-            });
-
-    };
-}
-
-export function getNotifications() {
-    return function (dispatch) {
-        xhrDashBoardClient
-            .get('/notification/0/10')
-            .then(response => {
-                dispatch({
-                    type: 'FETCH_NOTIFICATIONS',
-                    payload: response.data
-                })
-            })
-            .catch(error => {
-                console.log(error);
-            })
-
-    }
-}
-
-export function updateNotificationsSeen() {
-    return function (dispatch) {
-        xhrDashBoardClient
-            .get('/notification/seen')
-            .then(response => {
-                dispatch(getNotifications())
-            })
-            .catch(error => {
-                console.log(error);
-            })
-
-    }
-}
-
-export function markAppActive(appId) {
-    xhrDashBoardClient
-        .post('/app/active/'+appId,{})
-        .then(response => {
-
-        })
-        .catch(error => {
-            console.log('mark active error',error);
-        })
-}
-
-export function getCards() {
-    return function (dispatch) {
-        dispatch({type:'START_LOADING_MODAL'})
-        xhrDashBoardClient
-            .get('/cards')
-            .then(response => {
-                dispatch({
-                    type: 'FETCH_CARDS',
-                    payload: response.data
-                })
-                dispatch({type:'STOP_LOADING_MODAL'})
-            })
-            .catch(error => {
-                dispatch({type:'STOP_LOADING_MODAL'})
-                console.log('get cards error',error);
-            })
-    }
-}
-
-export function addCard(name,number,expMonth,expYear) {
-    return function (dispatch) {
-        dispatch({type:'START_LOADING_MODAL'})
-        let postObject = {}
-        postObject.name = name
-        postObject.number = number
-        postObject.expMonth = expMonth
-        postObject.expYear = expYear
-
-        xhrDashBoardClient.post('/card',postObject)
-        .then(response => {
-            dispatch(getCards())
-        },err => {
-            showAlert('error',"Error Adding card.")
-            dispatch({type:'STOP_LOADING_MODAL'})
-        })
-    }
-}
-
-
 
 // cache actions 
 export function fetchCache() {
@@ -958,7 +960,7 @@ export function resetAnalytics() {
 //app settings
 export function fetchAppSettings(appId,masterKey) {
     return function (dispatch) {
-        dispatch({type:'START_LOADING'})
+        dispatch({type:'START_SECONDARY_LOADING'})
         let postObject = {}
         postObject.key = masterKey
         xhrCBClient.post('/settings/'+appId,postObject)
@@ -974,7 +976,7 @@ export function fetchAppSettings(appId,masterKey) {
                     dispatch(fetchAppSettings(appId,masterKey))
                 },(err)=>{
                     showAlert('error',"Error fetching App settings.")
-                    dispatch({type:'STOP_LOADING'})
+                    dispatch({type:'STOP_SECONDARY_LOADING'})
                 })
                 
             } else {
@@ -982,7 +984,7 @@ export function fetchAppSettings(appId,masterKey) {
                     type: 'FETCH_APP_SETTINGS',
                     payload: response.data
                 })
-                dispatch({type:'STOP_LOADING'})
+                dispatch({type:'STOP_SECONDARY_LOADING'})
             }
         },err => {
             showAlert('error',"Error fetching App settings.")
@@ -992,7 +994,7 @@ export function fetchAppSettings(appId,masterKey) {
 
 export function updateSettings(appId,masterKey,categoryName,settingsObject) {
     return function (dispatch) {
-        dispatch({type:'START_LOADING'})
+        dispatch({type:'START_SECONDARY_LOADING'})
         let postObject = {}
         postObject.key = masterKey
         postObject.settings = settingsObject
@@ -1003,14 +1005,14 @@ export function updateSettings(appId,masterKey,categoryName,settingsObject) {
             dispatch(fetchAppSettings(appId,masterKey))
         },err => {
             showAlert('error',"Error Updating App settings.")
-            dispatch({type:'STOP_LOADING'})
+            dispatch({type:'STOP_SECONDARY_LOADING'})
         })
     }
 }
 
 export function upsertAppSettingsFile(appId,masterKey,fileObj,category,settingsObject) {
     return function (dispatch) {
-        dispatch({type:'START_LOADING'})
+        dispatch({type:'START_SECONDARY_LOADING'})
         let postObject = new FormData()   
         postObject.append('file', fileObj)      
         postObject.append('key', masterKey)
@@ -1028,44 +1030,44 @@ export function upsertAppSettingsFile(appId,masterKey,fileObj,category,settingsO
             dispatch(updateSettings(appId,masterKey,category,settingsObject))
         },err => {
             showAlert('error',"Error Updating File.")
-            dispatch({type:'STOP_LOADING'})
+            dispatch({type:'STOP_SECONDARY_LOADING'})
         })
     }
 }
 
 export function exportDatabase(appId,masterKey) {
     return function (dispatch) {
-        dispatch({type:'START_LOADING'})
+        dispatch({type:'START_SECONDARY_LOADING'})
         let postObject = new FormData()    
         postObject.append('key', masterKey)
 
         xhrCBClient.post("/backup/"+appId+"/exportdb",postObject)
         .then(response => {
-            dispatch({type:'STOP_LOADING'})
+            dispatch({type:'STOP_SECONDARY_LOADING'})
             showAlert('success',"Database Export Success.")
             let blob = new Blob([JSON.stringify(response.data)], {type: "text/plain;charset=utf-8"})
             saveAs(blob, "dump.json")
         },err => {
             showAlert('error',"Error Exporting Database.")
-            dispatch({type:'STOP_LOADING'})
+            dispatch({type:'STOP_SECONDARY_LOADING'})
         })
     }
 }
 
 export function importDatabase(appId,masterKey,fileObj) {
     return function (dispatch) {
-        dispatch({type:'START_LOADING'})
+        dispatch({type:'START_SECONDARY_LOADING'})
         let postObject = new FormData()    
         postObject.append('key', masterKey)
         postObject.append('file', fileObj)
 
         xhrCBClient.post("/backup/"+appId+"/importdb",postObject)
         .then(response => {
-            dispatch({type:'STOP_LOADING'})
+            dispatch({type:'STOP_SECONDARY_LOADING'})
             showAlert('success',"Database Imported Success.")
         },err => {
             showAlert('error',"Error Importing Database.")
-            dispatch({type:'STOP_LOADING'})
+            dispatch({type:'STOP_SECONDARY_LOADING'})
         })
     }
 }

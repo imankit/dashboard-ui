@@ -13,8 +13,9 @@ import {grey500} from 'material-ui/styles/colors';
 
 const iconStyles = {
     marginLeft: 5,
-    width: 16,
-    height: 16,
+    width: 20,
+    height: 20,
+    marginBottom: -3
 };
 
 class ProjectName extends React.Component {
@@ -37,10 +38,6 @@ class ProjectName extends React.Component {
                 <div className="relative-pos">
                     <h3>
                         <input className="nameedit" type="text" defaultValue={this.props.name}  onClick={editName}/>
-                        {//this.props.name
-                        }
-                        {//<EditIcon style={iconStyles} color={grey500} onClick={editName}/>
-                        }
                     </h3>
                 </div>
             );
@@ -49,7 +46,7 @@ class ProjectName extends React.Component {
             return (
                 <div className="relative-pos">
                     <h3>
-                        <input ref="input" defaultValue={this.props.name} onChange={handleChange}/>
+                        <input ref="input" className="nameeditenable" defaultValue={this.props.name} onChange={handleChange}/>
                         <CloseIcon style={iconStyles} color={grey500} onClick={() => {
                             closeEditing();
                             this.props.onNameChange(this.props.appId, this.state.value);

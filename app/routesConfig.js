@@ -1,9 +1,15 @@
 /**
  * Created by Darkstar on 11/30/2016.
  */
-'use strict';
+
+import React from 'react';
+import { Route, IndexRoute } from 'react-router'
+
+// custom comps
 import App from './components/app';
-import TablesPage from './components/manageapps/tables/tablesPage';
+import AppSelected from './components/appSelected';
+import Dashboardproject from './components/dashboardproject/dashboardproject.jsx';
+import TablesPage from './components/tables/tablesPage';
 import Cache from './components/cache/cache';
 import Queue from './components/queue/queue';
 import EmailCampaign from './components/campaign/email';
@@ -13,16 +19,20 @@ import Profile from './components/profile/profile';
 import Settings from './components/settings/settings';
 import Admin from './components/admin/admin';
 
-const routesConfig = [
-    {path: '/', component: App},
-    {path: '/tables', component: TablesPage},
-    {path: '/cache', component: Cache},
-    {path: '/queue', component: Queue},
-    {path: '/email', component: EmailCampaign},
-    {path: '/analytics', component: Analytics},
-    {path: '/push', component: PushCampaign},
-    {path: '/profile', component: Profile},
-    {path: '/settings', component: Settings},
-    {path: '/admin', component: Admin}
-];
-export default routesConfig;
+export default (
+    <Route path="/" component={ App }>
+    	<IndexRoute component={ Dashboardproject } />
+        <Route path="admin" component={ Admin }/>
+        <Route path="profile" component={ Profile }/>
+     	<Route path=":appId" component={ AppSelected }>
+            <IndexRoute component={ TablesPage } />
+            <Route path="tables" component={ TablesPage }/>
+            <Route path="cache" component={ Cache }/>
+            <Route path="queue"  component={ Queue }/>
+            <Route path="push"  component={ PushCampaign }/>
+            <Route path="email" component={ EmailCampaign }/>
+            <Route path="analytics"  component={ Analytics }/>
+            <Route path="settings" component={ Settings }/>
+        </Route>
+    </Route>
+)

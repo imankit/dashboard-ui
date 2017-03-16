@@ -58,7 +58,6 @@ class EmailCampaign extends React.Component {
     render() {
         return (
             <div id= "" style={{backgroundColor: '#FFF'}}>
-                <Toolbar isDashboardMainPage={false}/>
                 <div className="cache campaign">
                     <div className="">
                         <div className="flex-general-column-wrapper-center" style={{width: '100%', marginTop: 20}}>
@@ -111,7 +110,6 @@ class EmailCampaign extends React.Component {
                         </div>
                     </div>
                 </div>
-                <Footer id="app-footer"/>
             </div>
         );
     }

@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Toolbar from '../toolbar/toolbar.js';
 import Footer from '../footer/footer.jsx';
-import {saveUserImage,deleteUserImage,showAlert,updateUser,fetchUser} from '../../actions';
+import {saveUserImage,deleteUserImage,showAlert,updateUser} from '../../actions';
 import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
@@ -72,7 +72,6 @@ class Profile extends React.Component {
         }
         return (
             <div id= "" style={{backgroundColor: '#FFF'}}>
-                <Toolbar isDashboardMainPage={true}/>
                 <div className="profile tables">
                     <div className="profilediv">
                         <div className="imagediv">
@@ -135,7 +134,6 @@ class Profile extends React.Component {
                         </div>
                     </div>
                 </div>
-                <Footer id="app-footer"/>
             </div>
         );
     }
@@ -154,7 +152,6 @@ const mapDispatchToProps = (dispatch) => {
     return {
         saveUserImage:(file) => dispatch(saveUserImage(file)),
         deleteUserImage:(fileId) => dispatch(deleteUserImage(fileId)),
-        fetchUser:() => dispatch(fetchUser()),
     }
 }
 

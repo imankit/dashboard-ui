@@ -69,7 +69,7 @@ class FirstDisplay extends React.Component {
                           </div>
                         </div>
                         <div style={{width: '39%', height: '100%', backgroundColor: '#F7FAFC'}} className="solo-vertical-center">
-                          <img src="assets/images/queue-cog.png" style={{marginLeft: 15}} />
+                          <img src="/assets/images/queue-cog.png" style={{marginLeft: 15}} />
                         </div>
                       </div>
                     </div>

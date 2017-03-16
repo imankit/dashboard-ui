@@ -86,7 +86,8 @@ const Project = React.createClass({
                                    onClick={() => this.props.onProjectClick(
                                        this.props.appId,
                                        this.props.keys.master,
-                                       this.props.name
+                                       this.props.name,
+                                       '/'
                                    )}
                     />
                     {

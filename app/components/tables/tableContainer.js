@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import  {fetchTables, deleteTable, editTableNavigate} from '../../../actions';
+import  {fetchTables, deleteTable, editTableNavigate} from '../../actions';
 import {connect} from 'react-redux';
 import {Grid, Row, Col} from 'react-bootstrap';
 import PowerOn from 'material-ui/svg-icons/action/power-settings-new';
@@ -18,7 +18,8 @@ const iconStyles = {
     marginRight: 12,
     marginLeft: 12,
     height: 40,
-    width: 40
+    width: 40,
+    color:'white'
 };
 const iconStyles2 = {
     marginTop: 10,
@@ -26,7 +27,8 @@ const iconStyles2 = {
     marginLeft: 12,
     marginBottom: 5,
     height: 25,
-    width: 25
+    width: 25,
+    color:'white'
 };
 const iconStyles3 = {
     marginTop: 33,
@@ -34,7 +36,8 @@ const iconStyles3 = {
     marginLeft: 12,
     marginBottom: 5,
     height: 25,
-    width: 25
+    width: 25,
+    color:'white'
 };
 
 const styles = {
@@ -47,7 +50,9 @@ const styles = {
 class TableContainer extends React.Component {
 
     componentWillMount() {
-        this.props.onLoad(this.props.activeAppId, this.props.masterKey);
+        if(this.props.tables.length === 0){
+            this.props.onLoad(this.props.activeAppId, this.props.masterKey);
+        }
     }
 
     getIcon(tableType) {
@@ -80,7 +85,7 @@ class TableContainer extends React.Component {
                                 :
                                 this.props.tables.map((table) => (
                                     <Col sm={12} md={6} lg={4} key={table.id}>
-                                        <div className="table" style={{backgroundColor: '#1476ff'}}>
+                                        <div className="table">
                                             { this.getIcon(table.type)}
                                             <p style={{color: white}}>{table.name}</p>
                                             {
@@ -119,7 +124,7 @@ const mapStateToProps = (state) => {
     let tables = state.apps.filter(app => (app.appId === state.manageApp.appId))[0].tables;
     return {
         activeAppId: state.manageApp.appId,
-        loading: state.loader.loading,
+        loading: state.loader.secondary_loading,
         masterKey: state.manageApp.masterKey,
         tables: tables ? tables.filter(t => t.name.toLowerCase().search(state.manageApp.tableFilter ? state.manageApp.tableFilter : '') >= 0) : []
     };

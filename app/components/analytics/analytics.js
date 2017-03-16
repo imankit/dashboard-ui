@@ -54,7 +54,6 @@ class Analytics extends React.Component {
 
         return (
             <div id= "" style={{backgroundColor: '#FFF'}}>
-                <Toolbar isDashboardMainPage={false}/>
                 <div className="cache">
                     <div className="buttondivanalytics">
                         <FlatButton
@@ -82,7 +81,6 @@ class Analytics extends React.Component {
                         { componentToRender }
                     </div>
                 </div>
-                <Footer id="app-footer"/>
             </div>
         );
     }

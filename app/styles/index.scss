@@ -49,14 +49,15 @@ body {
 
   .nameedit
   {
-     border-style:none;
+     text-align: center;
+      border: 1px solid white;
+      padding: 3px;
   }
   .nameedit:hover{
     cursor: text;
-    border-color: #cccccc;
-    border-style: solid;
-    border-width:1px;
-    margin:-1px;
+    text-align: center;
+    border: 1px solid #2196f3;
+    padding: 3px;
   }
 
   .btn {
@@ -136,7 +137,11 @@ body {
       margin-top: 50px;
       margin-bottom: 50px;
       height: 49px;
+      padding-right: 30px;
 
+      .dashboard-title{
+        color:rgb(139, 145, 154) !important;
+      }
       h1 {
         margin-top: 0;
         font-weight: 300;
@@ -169,6 +174,7 @@ body {
         box-sizing: border-box;
         box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
         transition: box-shadow 140ms linear;
+        font-family: Signika !important;
 
         .plan-status {
           position: absolute;
@@ -210,8 +216,10 @@ body {
             font-size: 20px;
             font-weight: normal;
 
-            input {
+            .nameeditenable{
               text-align: center;
+              border: 1px solid #2196f3;
+              padding: 3px;
             }
           }
 
@@ -255,8 +263,8 @@ body {
       }
       .project:hover {
         cursor: pointer;
-        -webkit-box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
-        -webkit-transform: translate(1, -4px);
+        -webkit-box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+        transform: scale(1.005);
       }
     }
   }
@@ -297,7 +305,7 @@ body {
         margin: 50px 20px 0px 20px;
         height: 90px;
         width: 300px;
-        background-color: #ffffff;
+        background-color: rgb(33, 150, 243);
         text-align: center;
         box-sizing: border-box;
         box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
@@ -313,7 +321,7 @@ body {
           bottom: 0;
           left: 100%;
           right: 0;
-          background-color: #092347;
+          background-color: #000000;
           opacity: 0.5;
           overflow: hidden;
           width: 0;

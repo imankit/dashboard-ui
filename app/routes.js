@@ -10,53 +10,63 @@ const browserHistory = ReactRouter.browserHistory;
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import reduxThunk from 'redux-thunk';
-import reducers from './reducers';
-import {getCookie, saveState, loadState} from './helper';
-import throttle from 'lodash/throttle';
-import {accountsURL} from './config';
+
+// ALert libraray
 import Alert from 'react-s-alert';
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/slide.css';
 
+// custom configs impprts
+import reducers from './reducers';
+import {xhrDashBoardClient} from './xhrClient';
+import {accountsURL} from './config';
 import routesConfig from './routesConfig';
 
-const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
-let persistedState = loadState();
-if (typeof persistedState === 'undefined') {
-    persistedState = {
-        user: {
-            isLogggedIn: getCookie('userId') !== null,
-            fullName: getCookie('userFullname'),
-            userId: getCookie('userId'),
-            email: getCookie('email'),
-        }
-    };
-    if (persistedState.user.isLogggedIn === false) {
-        localStorage.removeItem('state');
-        window.location = accountsURL;
-    }
-}
-
-const store = createStoreWithMiddleware(reducers, persistedState);
-
-store.subscribe(throttle(() => {
-    let state = store.getState();
-    if (state.user.isLogggedIn === false) {
-        window.location = accountsURL;
-    }
-    //else
-    //    saveState(store.getState());
-}, 1000));
 
 class Routes extends React.Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            loaded : false,
+            user:{}
+        }
+    }
+    componentWillMount(){
+        xhrDashBoardClient.get('/user')
+            .then(response => {
+                this.setState({ user:response.data,loaded:true })
+            })
+            .catch(error => {
+                debugger
+                window.location = accountsURL;
+            })
+    }
+    getStoreProvider(){
+        const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore)
+        return createStoreWithMiddleware(reducers,{
+            user:{
+                isLogggedIn:true,
+                ...this.state.user
+            }
+        })
+    }
     render() {
+        let app = ""
+        if(this.state.loaded){
+            app =   <Provider store={ this.getStoreProvider() }>
+                        <div>
+                            <Router history={browserHistory}>
+                                { routesConfig }
+                            </Router>
+                            <Alert stack={{limit: 3}} offset={75}/>
+                        </div>
+                    </Provider>
+        }
         return (
-            <Provider store={store}>
-                <div>
-                    <Router history={browserHistory} routes={routesConfig}/>
-                    <Alert stack={{limit: 3}} offset={75}/>
-                </div>
-            </Provider>);
+            <div>
+                { app }
+            </div>
+        );
     }
 }
 

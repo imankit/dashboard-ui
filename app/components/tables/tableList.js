@@ -8,7 +8,7 @@ import Search from 'material-ui/svg-icons/action/search';
 import {grey500} from 'material-ui/styles/colors';
 import {FormControl, FormGroup, InputGroup, Modal, Button} from 'react-bootstrap';
 import TablesContainer from './tableContainer';
-import {createTable, setTableSearchFilter} from '../../../actions';
+import {createTable, setTableSearchFilter} from '../../actions';
 import {connect} from 'react-redux';
 
 const iconStyles = {
@@ -52,7 +52,7 @@ class TableList extends React.Component {
                     <div className="tables-head">
                         <p>{this.props.name}</p>
                         <FormGroup>
-                            <div className="btn" onClick={this.open}>+ New Table</div>
+                            <div className="btn" onClick={ this.open.bind(this) }>+ New Table</div>
                             <InputGroup className="search">
                                 <InputGroup.Addon>
                                     <Search style={iconStyles} color={grey500}/>
@@ -61,20 +61,25 @@ class TableList extends React.Component {
                                              onChange={(e) => this.props.setTableSearchFilter(e.target.value)}/>
                             </InputGroup>
                         </FormGroup>
-                        <Modal show={this.state.showModal} onHide={this.close} dialogClassName="custom-modal">
-                            <Modal.Header closeButton>
-                                <Modal.Title>New Table</Modal.Title>
+                        <Modal show={this.state.showModal} onHide={this.close.bind(this)} dialogClassName="custom-modal">
+                            <Modal.Header>
+                                <Modal.Title> New Table </Modal.Title>
+                                <div className="modalicon" style={{ paddingRight: 8, height: 56, width: 56, borderRadius: 50, backgroundColor: '#0F6DA6' }}>
+                                    <div className="flex-general-column-wrapper-center" style={{ height: 56, width: 56 }}>
+                                        <i className="fa fa-table" style={{ fontSize: 30, color: 'white' }} />
+                                    </div>
+                                </div>
                             </Modal.Header>
                             <Modal.Body>
                                 <input
                                     value={this.state.value}
                                     placeholder="Pick a good name"
-                                    onChange={this.handleChange}
+                                    onChange={this.handleChange.bind(this)}
+                                    style={{ border: 'none', boxShadow: 'none', textAlign:'center'}}
                                 />
                             </Modal.Body>
                             <Modal.Footer>
-                                <Button onClick={this.close}>Cancel</Button>
-                                <Button bsStyle="primary" onClick={this.onCreateTable}>Create App</Button>
+                                <Button bsStyle="primary" onClick={this.onCreateTable.bind(this)}>Create Table</Button>
                             </Modal.Footer>
                         </Modal>
                     </div>

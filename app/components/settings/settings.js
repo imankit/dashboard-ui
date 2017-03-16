@@ -48,10 +48,8 @@ class Settings extends React.Component {
         }
     }
     componentWillMount(){
-        // redirect if active app not found
-        if(!this.props.appData.viewActive){
-            this.context.router.push('/')
-        } else {
+        // load settings if not already found
+        if(!this.props.settingsLoaded){
             this.props.onLoad(this.props.appData.appId,this.props.appData.masterKey)
         }
     }
@@ -75,7 +73,6 @@ class Settings extends React.Component {
 
         return (
             <div id= "" style={{backgroundColor: '#FFF'}}>
-                <Toolbar isDashboardMainPage={false}/>
                 <div className="settings tables campaign cache">
                     <div className="leftnav">
                     
@@ -102,7 +99,6 @@ class Settings extends React.Component {
                         }
                     </div>
                 </div>
-                <Footer id="app-footer"/>
             </div>
         );
     }
@@ -110,10 +106,10 @@ class Settings extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-
     return {
         appData: state.manageApp,
-        loading: state.loader.loading
+        loading: state.loader.secondary_loading,
+        settingsLoaded: state.settings.length
     }
 }
 

@@ -22,12 +22,24 @@ class Admin extends React.Component {
         }
     }
     componentWillMount(){
-        this.props.getUsersBySkipLimit(0,20,[])
-        getServerSettings().then((data)=>{
-            this.setState({myURL:data.data.myURL})
-        },(err)=>{
-            showAlert('error','Cannot fetch server details.')
-        })
+        if(this.props.isAdmin){
+            if(this.props.userList.length === 0){
+                this.props.getUsersBySkipLimit(0,20,[])
+            } else {
+                getServerSettings().then((data)=>{
+                    this.setState({myURL:data.data.myURL})
+                },(err)=>{
+                    showAlert('error','Cannot fetch server details.')
+                })
+            }
+        } else {
+            this.context.router.push('/')
+        }
+    }
+    static get contextTypes() {
+        return {
+            router: React.PropTypes.object.isRequired,
+        }
     }
     changeUserActive(userId,e,val){
         this.props.updateUserActive(userId,val)
@@ -62,7 +74,6 @@ class Admin extends React.Component {
     render() {
         return (
             <div id= "" style={{backgroundColor: '#FFF'}}>
-                <Toolbar isDashboardMainPage={true}/>
                 <div className="admin tables">
                     
                     <div className="adminContainer">
@@ -175,7 +186,6 @@ class Admin extends React.Component {
                         </div>
                     </div>
                 </div>
-                <Footer id="app-footer"/>
             </div>
         );
     }
@@ -184,6 +194,10 @@ class Admin extends React.Component {
 
 const mapStateToProps = (state) => {
     let userList = []
+    let isAdmin = false
+    if (state.user.user) {
+        isAdmin = state.user.user.isAdmin
+    }
     if(Object.keys(state.userList).length){
         userList = Object.keys(state.userList).map((user) => {
             return state.userList[user]
@@ -192,7 +206,8 @@ const mapStateToProps = (state) => {
     return {
         currentUser: state.user,
         loading: state.loader.loading,
-        userList:userList
+        userList:userList,
+        isAdmin
     }
 }
 

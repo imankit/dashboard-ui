@@ -4,21 +4,55 @@
 'use strict';
 
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import Toolbar from './toolbar/toolbar.js';
 import Footer from './footer/footer.jsx';
-import Dashboardproject from './dashboardproject/dashboardproject.jsx';
+import RefreshIndicator from 'material-ui/RefreshIndicator';
+import { manageApp, fetchApps } from '../actions';
 
-const App = ({showOthers}) => (
-    <div>
-        <Toolbar isDashboardMainPage={true}/>
-        <Dashboardproject id="app-dashproject" className="app-dashproject" />
-        <Footer id="app-footer"/>
-    </div>
-);
+class App extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+
+        }
+    }
+    componentWillMount() {
+        this.props.onLoad()
+    }
+    render() {
+        return (
+            <div>
+                <Toolbar isDashboardMainPage={this.props.location.pathname === '/'} />
+                {
+                    this.props.loading ?
+                        <RefreshIndicator
+                            size={50}
+                            left={70}
+                            top={0}
+                            status="loading"
+                            className="loadermain"
+                        />
+                        :
+                        this.props.children
+                }
+                <Footer id="app-footer" />
+            </div>
+        );
+    }
+}
+
 
 const mapStateToProps = (state) => {
-    return {showOthers: state.manageApp.viewActive};
+    return {
+        loading: state.loader.loading,
+    };
 };
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onLoad: () => dispatch(fetchApps())
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -7,7 +7,7 @@ import Projectscontainer from './projectscontainer.jsx';
 const Dashboardproject = React.createClass({
     render: function() {
         return (
-            <div className="dashproject">
+            <div className="dashproject app-dashproject" id="app-dashproject">
                 <div className="container">
                     <Projecthead />
                     <Projectscontainer  />

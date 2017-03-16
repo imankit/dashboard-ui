@@ -8,7 +8,7 @@ import {connect} from 'react-redux';
 import {grey500} from 'material-ui/styles/colors';
 import Refresh from 'material-ui/svg-icons/navigation/refresh';
 import {Table} from 'react-bootstrap';
-import  {fetchCount} from '../../../actions';
+import  {fetchCount} from '../../actions';
 
 class TableEdit extends React.Component {
 

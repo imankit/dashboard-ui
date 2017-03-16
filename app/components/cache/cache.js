@@ -47,11 +47,9 @@ class Cache extends React.Component {
         }
         return (
             <div id= "" style={{backgroundColor: '#FFF'}}>
-                <Toolbar isDashboardMainPage={false}/>
                 <div className="cache tables">
                     { compToDisplay }
                 </div>
-                <Footer id="app-footer"/>
             </div>
         );
     }
