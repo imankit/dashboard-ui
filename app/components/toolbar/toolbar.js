@@ -4,6 +4,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import IconMenu from 'material-ui/IconMenu';
+import Popover from 'material-ui/Popover';
 import IconButton from 'material-ui/IconButton';
 import MenuItem from 'material-ui/MenuItem';
 import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
@@ -11,12 +12,13 @@ import { logOut } from '../../actions';
 import Storage from 'material-ui/svg-icons/device/storage';
 import Analytics from 'material-ui/svg-icons/editor/insert-chart';
 import Setting from 'material-ui/svg-icons/action/settings';
+import Book from 'material-ui/svg-icons/action/book';
 import Cache from 'material-ui/svg-icons/image/flash-on';
 import Queues from 'material-ui/svg-icons/action/compare-arrows';
 import Notifications from 'material-ui/svg-icons/alert/add-alert';
 import Email from 'material-ui/svg-icons/communication/email';
 import People from 'material-ui/svg-icons/social/people';
-import { grey500 } from 'material-ui/styles/colors';
+import { grey500, grey700 } from 'material-ui/styles/colors';
 import NotificationsModal from './notification'
 
 const toolbartitle = {
@@ -30,8 +32,11 @@ const iconStyles = {
 };
 
 class ToolBar extends React.Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
+        this.state = {
+            open: false,
+        }
     }
     static get contextTypes() {
         return {
@@ -41,12 +46,26 @@ class ToolBar extends React.Component {
     componentWillMount() {
 
     }
-    redirectTo(where,noAppId) {
+    handleTouchTap = (event) => {
+        event.preventDefault()
+        this.setState({
+            open: true,
+            anchorEl: event.currentTarget,
+        })
+    }
+
+    handleRequestClose = () => {
+        this.setState({
+            open: false
+        })
+    }
+    redirectTo(where, noAppId) {
         if (noAppId) {
-            this.context.router.push('/' + where )
+            this.context.router.push('/' + where)
         } else {
             this.context.router.push('/' + this.props.currentApp + "/" + where)
         }
+        this.handleRequestClose()
     }
     render() {
         let userImage = "/assets/images/user-image.png"
@@ -58,7 +77,7 @@ class ToolBar extends React.Component {
                 <div className="container">
                     <Toolbar className='toolbar' style={{ backgroundColor: '#FFF' }}>
                         <ToolbarGroup>
-                            <img style={{ marginLeft: -25 }} className="icon cp" src="/assets/images/cblogo.png" alt="cloud" onClick={this.redirectTo.bind(this,'', true)} />
+                            <img style={{ marginLeft: -25 }} className="icon cp" src="/assets/images/cblogo.png" alt="cloud" onClick={this.redirectTo.bind(this, '', true)} />
 
                         </ToolbarGroup>
                         {
@@ -73,44 +92,62 @@ class ToolBar extends React.Component {
                                     <Email style={iconStyles} color={grey500} onClick={this.redirectTo.bind(this, 'email', false)} />
                                     <ToolbarSeparator />
                                     <ToolbarTitle style={toolbartitle} text="" />
-                                    <ToolbarTitle style={toolbartitle} text="Quickstart" />
+                                    <Book style={iconStyles} color={grey700} />
                                     <NotificationsModal />
                                     {
-                                        this.props.isAdmin ? <People style={iconStyles} onClick={this.redirectTo.bind(this, 'admin', true)} /> : ''
+                                        this.props.isAdmin ? <People style={iconStyles} color={grey700} onClick={this.redirectTo.bind(this, 'admin', true)} /> : ''
                                     }
                                     <ToolbarSeparator />
-                                    <IconMenu
-                                        iconButtonElement={
-                                            <IconButton touch={true}>
-                                                <img className="userhead"
-                                                    src={userImage}
-                                                    alt="" />
-                                            </IconButton>
-                                        }
+                                    <Popover
+                                        open={this.state.open}
+                                        anchorEl={this.state.anchorEl}
+                                        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                                        targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+                                        onRequestClose={this.handleRequestClose}
+                                        animated={true}
+                                        className="profilepop"
                                     >
-                                        <MenuItem primaryText="My Profile" onClick={this.redirectTo.bind(this, 'profile' , true)} />
-                                        <MenuItem primaryText="Billing" />
-                                        <MenuItem primaryText="Logout" onClick={() => onLogoutClick()} />
-                                    </IconMenu>
-                                </ToolbarGroup>) : <ToolbarGroup><ToolbarTitle style={toolbartitle} text="Quickstart" />
+                                        <div className="profilepoparrow"></div>
+                                        
+                                        <p className="headingpop">{this.props.currentUser.user ? this.props.currentUser.user.name.toUpperCase() : ''}</p>
+                                        <button className="coloptbtn" onClick={this.redirectTo.bind(this, 'profile', true)}>My Profile</button>
+                                        <button className="coloptbtn">Billing</button>
+                                        <button className="coloptbtn" onClick={this.props.onLogoutClick.bind(this)}>Logout</button>
+                                    </Popover>
+                                    <IconButton onClick={this.handleTouchTap.bind(this)}>
+                                        <img className="userhead"
+                                            src={userImage}
+                                            alt="" />
+                                    </IconButton>
+                                </ToolbarGroup>) :
+                                <ToolbarGroup>
+                                    <Book style={iconStyles} color={grey700} />
                                     <NotificationsModal />
                                     {
-                                        this.props.isAdmin ? <People style={iconStyles} onClick={this.redirectTo.bind(this, 'admin' , true)} /> : ''
+                                        this.props.isAdmin ? <People style={iconStyles} color={grey700} onClick={this.redirectTo.bind(this, 'admin', true)} /> : ''
                                     }
                                     <ToolbarSeparator />
-                                    <IconMenu
-                                        iconButtonElement={
-                                            <IconButton touch={true}>
-                                                <img className="userhead"
-                                                    src={userImage}
-                                                    alt="" />
-                                            </IconButton>
-                                        }
+                                    <IconButton onClick={this.handleTouchTap.bind(this)}>
+                                        <img className="userhead"
+                                            src={userImage}
+                                            alt="" />
+                                    </IconButton>
+                                    <Popover
+                                        open={this.state.open}
+                                        anchorEl={this.state.anchorEl}
+                                        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                                        targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+                                        onRequestClose={this.handleRequestClose}
+                                        animated={true}
+                                        className="profilepop"
                                     >
-                                        <MenuItem primaryText="My Profile" onClick={this.redirectTo.bind(this, 'profile' , true)} />
-                                        <MenuItem primaryText="Billing" />
-                                        <MenuItem primaryText="Logout" onClick={() => this.props.onLogoutClick()} />
-                                    </IconMenu></ToolbarGroup>
+                                        <div className="profilepoparrow"></div>
+                                        <p className="headingpop">{this.props.currentUser.user ? this.props.currentUser.user.name.toUpperCase() : ''}</p>
+                                        <button className="coloptbtn" onClick={this.redirectTo.bind(this, 'profile', true)}>My Profile</button>
+                                        <button className="coloptbtn">Billing</button>
+                                        <button className="coloptbtn" onClick={this.props.onLogoutClick.bind(this)}>Logout</button>
+                                    </Popover>
+                                </ToolbarGroup>
                         }
                     </Toolbar>
                 </div>

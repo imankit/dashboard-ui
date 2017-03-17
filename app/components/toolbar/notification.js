@@ -72,7 +72,15 @@ class Notifications extends React.Component {
                     onRequestClose={this.handleRequestClose}
                     className="popovernotifications"
                 >
-                    <p className="notpendingtasks">You have { pendingTasks } pending tasks.</p>
+                    <div className="profilepoparrow"></div>
+                    
+                    <p className="headingpop">NOTIFICATIONS { pendingTasks ? ( ' - ' + pendingTasks + ' Pending' ) : '' }</p>
+                    {
+                        !pendingTasks ? <div style={{textAlign:'center'}}>
+                                <i className="ion-ios-bell notificationemptybell" ></i>
+                                <p className="notificationemptymessage">We'll let you know when we've got something new for you!</p>
+                            </div> : ''
+                    }
                     { notifications }
                 </Popover>
             </div>

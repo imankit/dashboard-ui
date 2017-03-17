@@ -13,6 +13,8 @@ import PersonAdd from 'material-ui/svg-icons/social/person-add';
 import Icon from 'material-ui/svg-icons/file/cloud';
 import ManageApp from 'material-ui/svg-icons/navigation/apps';
 import {grey500, blue500, grey300} from 'material-ui/styles/colors';
+import ReactTooltip from 'react-tooltip'
+
 
 const iconStyles = {
     marginRight: 12,
@@ -83,6 +85,7 @@ const Project = React.createClass({
                     <div >
                     <ManageApp style={iconStyles}
                                    color={grey500}
+                                   data-tip="Manage"
                                    onClick={() => this.props.onProjectClick(
                                        this.props.appId,
                                        this.props.keys.master,
@@ -93,21 +96,21 @@ const Project = React.createClass({
                     {
                         this.isAppAdmin() ?
                             <div style={{display:'inline'}}>
-                                <PersonAdd style={iconStyles} color={grey500} onClick={this.open1}/>
-                                <Key style={iconStyles} color={grey500} onClick={this.open2}/>
-                                <FileFileUpload style={iconStyles} color={grey500} onClick={this.open3}/>
-                                <IconDelete style={iconStyles} color={grey500} onClick={this.delete}/>
+                                <PersonAdd style={iconStyles} data-tip="Manage Developers" color={grey500} onClick={this.open1}/>
+                                <Key style={iconStyles} data-tip="Manage Keys" color={grey500} onClick={this.open2}/>
+                                <FileFileUpload style={iconStyles} data-tip="Change Plan" color={grey500} onClick={this.open3}/>
+                                <IconDelete style={iconStyles} data-tip="Delete App" color={grey500} onClick={this.delete}/>
                             </div>
                             :
                             <div style={{display:'inline'}}>
-                                <PersonAdd style={iconStyles} color={grey300}/>
-                                <Key style={iconStyles} color={grey500} onClick={this.open2}/>
-                                <FileFileUpload style={iconStyles} color={grey300}/>
-                                <IconDelete style={iconStyles} color={grey300}/>
+                                <PersonAdd style={iconStyles} data-tip="Manage Developers" color={grey300}/>
+                                <Key style={iconStyles} data-tip="Manage Keys" color={grey500} onClick={this.open2}/>
+                                <FileFileUpload style={iconStyles} data-tip="Change Plan" color={grey300}/>
+                                <IconDelete style={iconStyles} data-tip="Delete App" color={grey300}/>
                             </div>
                     }
 
-                        
+                    <ReactTooltip place="bottom" type="info" />
                     </div>
                     <Modal show={this.state.showModal} bsSize={ (this.state.selectedTab === 'upgrade') ? 'large' : null}
                            onHide={this.close} dialogClassName='options-modal'>

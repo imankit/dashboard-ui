@@ -11,11 +11,6 @@ import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import reduxThunk from 'redux-thunk';
 
-// ALert libraray
-import Alert from 'react-s-alert';
-import 'react-s-alert/dist/s-alert-default.css';
-import 'react-s-alert/dist/s-alert-css-effects/slide.css';
-
 // custom configs impprts
 import reducers from './reducers';
 import {xhrDashBoardClient} from './xhrClient';
@@ -37,7 +32,7 @@ class Routes extends React.Component {
                 this.setState({ user:response.data,loaded:true })
             })
             .catch(error => {
-                debugger
+                // debugger
                 window.location = accountsURL;
             })
     }
@@ -58,7 +53,6 @@ class Routes extends React.Component {
                             <Router history={browserHistory}>
                                 { routesConfig }
                             </Router>
-                            <Alert stack={{limit: 3}} offset={75}/>
                         </div>
                     </Provider>
         }

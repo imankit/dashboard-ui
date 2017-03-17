@@ -164,6 +164,61 @@ body {
     .projects-container {
       margin-left: 0;
 
+      .noappfound{
+        width: 40%;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        font-family: Signika;
+        box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.15);
+        background-color: white;
+        padding-top: 20px;
+        padding-bottom: 35px;
+
+        .subhead{
+          color: #808080;
+          font-size: 20px;
+        }
+        .welcome{
+          color: #565656;
+          font-size: 35px;
+          margin-bottom: 5px;
+
+        }
+        input{
+          visibility: visible;
+          width: 65%;
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          margin-top: 10px;
+          font-size: 14px !important;
+          border-radius: 4px !important;
+          padding: 6px 24px !important;
+          letter-spacing: 0.02em !important;
+          border: 1px solid #cecece;
+          height: 40px;
+
+        }
+        button{
+          width: 65%;
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          margin-top: 10px;
+          font-size: 14px !important;
+          border-radius: 4px !important;
+          padding: 6px 24px !important;
+          letter-spacing: 0.02em !important;
+          height: 40px;
+        }
+        button:focus{
+          border-color: #549afc;
+          background-color: #549afc;
+          color: white;
+          font-weight: normal;
+        }
+      }
       .project {
         min-width: 280px;
         border-radius: 4px;
@@ -264,7 +319,7 @@ body {
       .project:hover {
         cursor: pointer;
         -webkit-box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
-        transform: scale(1.005);
+        // transform: scale(1.005);
       }
     }
   }
@@ -1780,6 +1835,23 @@ body {
     width: 400px;
     max-height: 500px !important;
     padding-bottom: 15px;
+    overflow: visible !important;
+    font-family: Signika !important;
+}
+.popovernotifications > div {
+  overflow: visible;
+}
+.notificationemptybell{
+      font-size: 100px;
+    color: #eaeaea;
+}
+.notificationemptymessage{
+  visibility: visible;
+    font-size: 17px;
+    margin-top: -22px;
+    color: #6f6f6f;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 .notpendingtasks{
     width: 100%;
@@ -1842,6 +1914,9 @@ body {
   margin-left: -13px !important;
   cursor:pointer;
   margin-top: 1px;
+}
+.notebadge svg {
+  color: rgb(97, 97, 97) !important;
 }
 .roleselectdev{
   height: 27px !important;
@@ -2087,4 +2162,57 @@ body {
     position: fixed !important;
     margin-left: 23%;
     margin-top: 18%;
+}
+.notificationoffset{
+  margin-top: 50px !important;
+}
+
+.profilepop{
+    min-width: 220px !important;
+    min-height: 100px !important;
+    border-radius: 5px !important;
+    background-color: #f3faff !important;
+    margin-top: 15px;
+    overflow: visible !important;
+    font-family: Signika !important;
+}
+.profilepop > div {
+    overflow: visible !important;
+}
+
+.profilepoparrow{
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 15px solid white;
+    border-radius: 3px;
+    width: 24px;
+}
+.headingpop{
+    height: 40px;
+    padding: 10px;
+    border-bottom: 2px solid #eaf2f8;
+    color: #158ae5;
+    font-weight: 600;
+    margin-bottom: 0px;
+    padding-left: 12px;
+    background-color: white;
+    font-size: 13px;
+}
+.coloptbtn{
+        width: 100%;
+    border: 0px solid #EEE;
+    height: 35px;
+    background-color: #FFFFFF;
+    color: #3E3838;
+    margin-top: 0px;
+    text-align: left;
+    padding-left: 12px;
+}
+.coloptbtn:hover{
+    background-color: #EEE;
 }

@@ -5,14 +5,14 @@
 import {xhrDashBoardClient, xhrAccountsClient, xhrCBClient} from '../xhrClient';
 import {browserHistory} from 'react-router';
 import {twoCheckoutCredentials,cloudBoostAPI,appSettings} from '../config';
-import Alert from 'react-s-alert';
 import Axios from 'axios'
 
 export function showAlert(type,text){
-    Alert[type](text, {
-        position: 'top-right',
-        effect: 'slide',
-        timeout: 5000
+
+    Messenger().post({
+        message: text,
+        type: type || 'error',
+        showCloseButton: true
     });
 }
 
@@ -557,6 +557,7 @@ export function fetchTables(appId, masterKey) {
 
 export function createTable(appId, masterKey, tableName) {
     return function (dispatch) {
+        dispatch({type:'START_SECONDARY_LOADING'})
         xhrCBClient
             .put(
                 '/app/' + appId + '/' + tableName,
@@ -638,10 +639,13 @@ export function createTable(appId, masterKey, tableName) {
                         type: 'ADD_TABLE',
                         payload: {appId: appId, newTable: response.data}
                     });
+                    
+                dispatch({type:'STOP_SECONDARY_LOADING'})
             })
             .catch(error => {
                 console.log('inside add table error catch error: ');
                 console.log(error);
+                dispatch({type:'STOP_SECONDARY_LOADING'})
             });
 
     };
@@ -683,14 +687,6 @@ export const setTableSearchFilter = (filter) => {
     };
 };
 
-export const editTable = (tableId) => {
-    return function (dispatch) {
-        dispatch({
-            type: 'TABLE_EDIT',
-            payload: {tableId: tableId}
-        });
-    };
-};
 
 // cache actions 
 export function fetchCache() {

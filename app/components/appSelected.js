@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 import Toolbar from './toolbar/toolbar.js';
 import Footer from './footer/footer.jsx';
 import { manageApp, fetchApps } from '../actions';
+const ReactRouter = require('react-router');
+const browserHistory = ReactRouter.browserHistory;
 
 class AppSelected extends React.Component {
     constructor(props) {
@@ -18,11 +20,14 @@ class AppSelected extends React.Component {
     }
     componentWillMount() {
         if(this.props.isAppActive === false){
-            this.props.apps.map((app)=>{
+            let appFound = false
+            this.props.apps.map((app) => {
                 if(app.appId == this.props.params.appId){
+                    appFound = true
                     this.props.manageApp(app.appId,app.keys.master,app.name)
                 }
             })
+            if(!appFound) browserHistory.push('/')
         }
     }
     render() {

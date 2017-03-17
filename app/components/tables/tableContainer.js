@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import  {fetchTables, deleteTable, editTableNavigate} from '../../actions';
+import  {fetchTables, deleteTable} from '../../actions';
 import {connect} from 'react-redux';
 import {Grid, Row, Col} from 'react-bootstrap';
 import PowerOn from 'material-ui/svg-icons/action/power-settings-new';
@@ -67,6 +67,10 @@ class TableContainer extends React.Component {
                 return <TableIcon style={iconStyles} color={white}/>;
         }
     }
+    redirectToTables(tableName){
+        window.location.href= DATABROWSER_URL + '/' + this.props.activeAppId + '/' + tableName
+    }
+
 
     render() {
         return (
@@ -85,20 +89,18 @@ class TableContainer extends React.Component {
                                 :
                                 this.props.tables.map((table) => (
                                     <Col sm={12} md={6} lg={4} key={table.id}>
-                                        <div className="table">
+                                        <div className="table" onClick={ this.redirectToTables.bind(this,table.name) }>
                                             { this.getIcon(table.type)}
                                             <p style={{color: white}}>{table.name}</p>
                                             {
                                                 (table.type !== 'custom') ?
                                                     (<div className="overlay">
-                                                        <PowerOn style={iconStyles3} color={white}
-                                                                onClick={() => this.props.onEditTable(table.id)}/>
+                                                        <PowerOn style={iconStyles3} color={white}/>
                                                     </div>)
                                                     :
                                                     (<div className="overlay">
-                                                        <PowerOn style={iconStyles2} color={white}
-                                                                onClick={() => this.props.onEditTable(table.id)}/>
-                                                        <div className="bordertop"></div>
+                                                        <PowerOn style={iconStyles3} color={white}/>
+                                                        {/*<div className="bordertop"></div>
                                                         <IconDelete style={iconStyles2}
                                                                     color={white}
                                                                     onClick={
@@ -107,7 +109,7 @@ class TableContainer extends React.Component {
                                                                             this.props.masterKey,
                                                                             table.name)
                                                                     }
-                                                        />
+                                                        />*/}
                                                     </div>)
                                             }
                                         </div>
@@ -133,8 +135,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onLoad: (appId, masterKey) => dispatch(fetchTables(appId, masterKey)),
-        deleteTable: (activeAppId, masterKey, name) => dispatch(deleteTable(activeAppId, masterKey, name)),
-        onEditTable: (tableId) => dispatch(editTableNavigate(tableId))
+        deleteTable: (activeAppId, masterKey, name) => dispatch(deleteTable(activeAppId, masterKey, name))
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(TableContainer);
