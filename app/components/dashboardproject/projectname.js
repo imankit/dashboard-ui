@@ -32,6 +32,12 @@ class ProjectName extends React.Component {
         const editName = () => this.setState({editMode: true});
         const closeEditing = () => this.setState({editMode: false});
         const handleChange = (e) => this.setState({value: e.target.value});
+        const handleKeyUp = (e) => {
+            if(e.which === 13){
+                this.props.onNameChange(this.props.appId, this.state.value)
+                closeEditing()
+            }
+        }
 
         if (this.state.editMode === false) {
             return (
@@ -46,7 +52,7 @@ class ProjectName extends React.Component {
             return (
                 <div className="relative-pos">
                     <h3>
-                        <input ref="input" className="nameeditenable" defaultValue={this.props.name} onChange={handleChange}/>
+                        <input ref="input" className="nameeditenable" defaultValue={this.props.name} onChange={handleChange} onKeyUp={handleKeyUp}/>
                         <CloseIcon style={iconStyles} color={grey500} onClick={() => {
                             closeEditing();
                             this.props.onNameChange(this.props.appId, this.state.value);

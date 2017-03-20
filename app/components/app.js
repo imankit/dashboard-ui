@@ -23,7 +23,7 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <Toolbar isDashboardMainPage={this.props.location.pathname === '/'} />
+                <Toolbar isDashboardMainPage={['/','/admin','/profile'].indexOf(this.props.location.pathname) !== -1} />
                 {
                     this.props.loading ?
                         <RefreshIndicator

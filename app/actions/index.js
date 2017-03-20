@@ -120,20 +120,23 @@ export const addApp = (name) => {
 export const saveAppName = (appId, name) => {
 
     return function (dispatch) {
-        xhrDashBoardClient.put('/app/' + appId, {"name": name})
+        dispatch({type:'START_LOADING'})
+        if(name){
+            xhrDashBoardClient.put('/app/' + appId, {"name": name})
             .then(response => {
-                dispatch({
-                    type: 'SAVE_APP_NAME',
-                    payload: {
-                        appId: appId,
-                        name: name
-                    }
-                });
+                dispatch(fetchApps());
             })
             .catch(error => {
                 console.log('inside saveAppName error catch error: ');
                 console.log(error);
+                dispatch({type:'STOP_LOADING'})
+                if(error.response.data == "Unauthorized"){
+                    showAlert('error','You are not authorised to change this setting.')
+                } else {
+                    showAlert('error',error.response.data)
+                }
             });
+        } else dispatch(fetchApps());
     };
 };
 

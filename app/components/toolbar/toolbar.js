@@ -36,6 +36,7 @@ class ToolBar extends React.Component {
         super(props)
         this.state = {
             open: false,
+            appSelector:false
         }
     }
     static get contextTypes() {
@@ -46,17 +47,17 @@ class ToolBar extends React.Component {
     componentWillMount() {
 
     }
-    handleTouchTap = (event) => {
+    handleTouchTap = (which,event) => {
         event.preventDefault()
-        this.setState({
-            open: true,
-            anchorEl: event.currentTarget,
-        })
+        this.state[which] = true
+        this.state.anchorEl = event.currentTarget
+        this.setState(this.state)
     }
 
     handleRequestClose = () => {
         this.setState({
-            open: false
+            open: false,
+            appSelector:false
         })
     }
     redirectTo(where, noAppId) {
@@ -67,10 +68,21 @@ class ToolBar extends React.Component {
         }
         this.handleRequestClose()
     }
+    redirectToApp(appId){
+        window.location.pathname = '/' + appId + "/" + window.location.pathname.split('/')[2]
+        this.handleRequestClose()
+    }
     render() {
         let userImage = "/assets/images/user-image.png"
         if (this.props.currentUser.file) {
             userImage = this.props.currentUser.file.document.url
+        }
+        let allApps = []
+        if(this.props.apps.length && !this.props.isDashboardMainPage && this.props.currentApp){
+            allApps = this.props.apps.filter( x => x.appId != this.props.currentApp )
+            .map((app,i)=>{
+                return <button className="coloptbtn" key={ i } onClick={this.redirectToApp.bind(this,app.appId)}> <i className="ion ion-android-cloud cloud"></i> { app.name }</button>
+            })
         }
         return (
             <div id="nav-dash" style={{ backgroundColor: '#FFF', paddingTop: 2 }}>
@@ -78,6 +90,26 @@ class ToolBar extends React.Component {
                     <Toolbar className='toolbar' style={{ backgroundColor: '#FFF' }}>
                         <ToolbarGroup>
                             <img style={{ marginLeft: -25 }} className="icon cp" src="/assets/images/cblogo.png" alt="cloud" onClick={this.redirectTo.bind(this, '', true)} />
+                            {
+                                !this.props.isDashboardMainPage ?
+                                    <span className="appselector" onClick={this.handleTouchTap.bind(this,'appSelector')}>
+                                        <i className="ion ion-android-cloud cloud"></i>
+                                        { this.props.currentAppName }
+                                        <i className="fa fa-caret-down downc" aria-hidden="true"></i>
+                                        <Popover
+                                            open={this.state.appSelector}
+                                            anchorEl={this.state.anchorEl}
+                                            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                                            targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+                                            onRequestClose={this.handleRequestClose}
+                                            animated={true}
+                                            className="profilepop"
+                                        >
+                                            <p className="headingpop">YOUR APPS</p>
+                                            { allApps }
+                                        </Popover>
+                                    </span> : ''
+                            }
 
                         </ToolbarGroup>
                         {
@@ -107,14 +139,12 @@ class ToolBar extends React.Component {
                                         animated={true}
                                         className="profilepop"
                                     >
-                                        <div className="profilepoparrow"></div>
-                                        
                                         <p className="headingpop">{this.props.currentUser.user ? this.props.currentUser.user.name.toUpperCase() : ''}</p>
                                         <button className="coloptbtn" onClick={this.redirectTo.bind(this, 'profile', true)}>My Profile</button>
                                         <button className="coloptbtn">Billing</button>
                                         <button className="coloptbtn" onClick={this.props.onLogoutClick.bind(this)}>Logout</button>
                                     </Popover>
-                                    <IconButton onClick={this.handleTouchTap.bind(this)}>
+                                    <IconButton onClick={this.handleTouchTap.bind(this,'open')}>
                                         <img className="userhead"
                                             src={userImage}
                                             alt="" />
@@ -127,7 +157,7 @@ class ToolBar extends React.Component {
                                         this.props.isAdmin ? <People style={iconStyles} color={grey700} onClick={this.redirectTo.bind(this, 'admin', true)} /> : ''
                                     }
                                     <ToolbarSeparator />
-                                    <IconButton onClick={this.handleTouchTap.bind(this)}>
+                                    <IconButton onClick={this.handleTouchTap.bind(this,'open')}>
                                         <img className="userhead"
                                             src={userImage}
                                             alt="" />
@@ -141,7 +171,6 @@ class ToolBar extends React.Component {
                                         animated={true}
                                         className="profilepop"
                                     >
-                                        <div className="profilepoparrow"></div>
                                         <p className="headingpop">{this.props.currentUser.user ? this.props.currentUser.user.name.toUpperCase() : ''}</p>
                                         <button className="coloptbtn" onClick={this.redirectTo.bind(this, 'profile', true)}>My Profile</button>
                                         <button className="coloptbtn">Billing</button>
@@ -164,7 +193,9 @@ const mapStateToProps = (state) => {
     return {
         currentApp: state.manageApp.appId,
         currentUser: state.user,
-        isAdmin
+        currentAppName : state.manageApp.name,
+        isAdmin,
+        apps:state.apps
     }
 };
 

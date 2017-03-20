@@ -45,6 +45,14 @@ class Upgrade extends React.Component {
             this.setState({selectedPlan:planList[0]})
         }
     }
+    componentWillReceiveProps(){
+        if(!this.props.loading && this.props.loading !== undefined){
+            if(this.props.cards.length === 0){
+                debugger
+                this.toggleAddcard(true)
+            }
+        }
+    }
     purchaseButton(){
         if(this.state.selectedCard.cardId){
             let cvv = this.refs[this.state.selectedCard.cardId].value
@@ -103,6 +111,7 @@ class Upgrade extends React.Component {
             else $('.'+which).css('border','none')
     }
     getCardType(number){
+        number = number.split('-')[0]
         let type = 'visa'
         let card = valid.number(number).card
         if(card){
@@ -143,7 +152,7 @@ class Upgrade extends React.Component {
                                 left={70}
                                 top={0}
                                 status="loading"
-                                className="loadermain"
+                                className="loadermodal"
                             />
                         </div> :
                         <div className="cards">
