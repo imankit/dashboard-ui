@@ -56,7 +56,7 @@ body {
   .nameedit:hover{
     cursor: text;
     text-align: center;
-    border: 1px solid #2196f3;
+    border: 1px solid #cacaca;
     padding: 3px;
   }
 
@@ -79,7 +79,7 @@ body {
     color: white !important;
     font-weight: normal !important;
   }
-  
+
   .bordertop {
     border-top: 1px solid #e8ebef;
   }
@@ -245,6 +245,7 @@ body {
         }
         .plan-status:hover {
           opacity: 1;
+          color:#b2b2b2;
         }
         .app-info {
           position: relative;
@@ -526,7 +527,103 @@ body {
       letter-spacing: 0.02em !important;
     }
   }
+  .delete-modal-header-style{
+    color: white;
+    background: #D60A00;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    font-family: "Signika";
+  }
 
+  .notification-icon{
+    font-size: 26px;
+    color: #aab7c4;
+  }
+.delete-modal-icon-style{
+  border-radius: 50%;
+  background: #9b0601;
+  font-size: 30px;
+  width: 60px;
+  padding: 15px;
+  content: url("/assets/images/trash.png");
+}
+.modal-title-inner-text{
+  font-size: 14px;
+  font-weight: normal;
+  font-family: "Signika";
+}
+
+.create-btn {
+    background: #4f9cf5;
+}
+.create-btn:hover {
+    background: #4f9cf5;
+}
+
+#createApp {
+    width: 60%;
+    text-align: center;
+    padding: 30px 0 30px 0;
+    border: none;
+    display: block;
+    font-family: "Signika";
+    margin: auto;
+    font-size: 18px;
+}
+
+#createApp:focus {
+    outline: none;
+    border: none;
+}
+
+.delete-modal-body{
+  text-align: center;
+  padding: 30px;
+  font-family: "Signika";
+  color: #585858;
+  font-size: large;
+}
+
+.modal-header-style {
+    color: white;
+    background: #4f9cf5;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    font-family: "Signika";
+}
+
+.modal-title-style {
+    vertical-align: middle;
+}
+
+.modal-icon-style {
+    border-radius: 50%;
+    background: #2c5f9a;
+    font-size: 30px;
+    width: 60px;
+    padding: 15px;
+}
+
+
+.delete-btn {
+    background: #D60A00;
+}
+
+.delete-btn:hover {
+    background: #D60A00!important;
+}
+.delete-btn:focus  {
+    background: #D60A00!important;
+}
+.copy-icon{
+  font-size: 28px;
+}
+.new-icon{
+  font-size: 20px;
+}
+.modal-dialog{
+  font-family: "Signika";
+}
   .custom-modal {
     .modal-body {
       padding: 10px 40px 40px 40px;
@@ -933,8 +1030,8 @@ body {
        /* Flex row rules */
         display: flex;
         display:-webkit-flex;
-        display:-moz-flex;    
-        
+        display:-moz-flex;
+
         flex-flow:row wrap;
         -moz-flex-flow:row wrap;
         -webkit-flex-flow:row wrap;
@@ -943,17 +1040,17 @@ body {
         -moz-justify-content: flex-start;
         -webkit-justify-content: flex-start;
 
-        align-items:flex-start;  
-        -moz-align-items: flex-start;  
-        -webkit-align-items:flex-start;    
+        align-items:flex-start;
+        -moz-align-items: flex-start;
+        -webkit-align-items:flex-start;
     }
 
     .flex-general-column-wrapper{
        /* Flex column rules */
         display: flex;
         display:-webkit-flex;
-        display:-moz-flex;    
-        
+        display:-moz-flex;
+
         flex-flow:column  wrap;
         -moz-flex-flow:column  wrap;
         -webkit-flex-flow:column wrap;
@@ -962,17 +1059,17 @@ body {
         -moz-justify-content: flex-start;
         -webkit-justify-content: flex-start;
 
-        align-items:flex-start;  
-        -moz-align-items: flex-start;  
-        -webkit-align-items:flex-start;    
+        align-items:flex-start;
+        -moz-align-items: flex-start;
+        -webkit-align-items:flex-start;
     }
 
     .flex-general-row-wrapper-center{
        /* Flex row rules */
         display: flex;
         display:-webkit-flex;
-        display:-moz-flex;    
-        
+        display:-moz-flex;
+
         flex-flow:row wrap;
         -moz-flex-flow:row wrap;
         -webkit-flex-flow:row wrap;
@@ -981,17 +1078,17 @@ body {
         -moz-justify-content: center;
         -webkit-justify-content: center;
 
-        align-items:center;  
-        -moz-align-items: center;  
-        -webkit-align-items:center;    
+        align-items:center;
+        -moz-align-items: center;
+        -webkit-align-items:center;
     }
 
     .flex-general-column-wrapper-center{
        /* Flex row rules */
         display: flex;
         display:-webkit-flex;
-        display:-moz-flex;    
-        
+        display:-moz-flex;
+
         flex-flow:column wrap;
         -moz-flex-flow:column wrap;
         -webkit-flex-flow:column wrap;
@@ -1000,9 +1097,9 @@ body {
         -moz-justify-content: center;
         -webkit-justify-content: center;
 
-        align-items:center;  
-        -moz-align-items: center;  
-        -webkit-align-items:center;    
+        align-items:center;
+        -moz-align-items: center;
+        -webkit-align-items:center;
     }
 
     .flex-equal-ratio-items{
@@ -1014,8 +1111,8 @@ body {
        /* Flex row rules */
         display: flex;
         display:-webkit-flex;
-        display:-moz-flex;    
-        
+        display:-moz-flex;
+
         flex-flow:row wrap;
         -moz-flex-flow:row wrap;
         -webkit-flex-flow:row wrap;
@@ -1024,17 +1121,17 @@ body {
         -moz-justify-content: flex-start;
         -webkit-justify-content: flex-start;
 
-        align-items:center;  
-        -moz-align-items: center;  
-        -webkit-align-items:center;    
+        align-items:center;
+        -moz-align-items: center;
+        -webkit-align-items:center;
     }
 
     .solo-horizontal-center{
        /* Flex row rules */
         display: flex;
         display:-webkit-flex;
-        display:-moz-flex;    
-        
+        display:-moz-flex;
+
         flex-flow:row wrap;
         -moz-flex-flow:row wrap;
         -webkit-flex-flow:row wrap;
@@ -1043,9 +1140,9 @@ body {
         -moz-justify-content:center;
         -webkit-justify-content:center;
 
-        align-items:flex-start;  
-        -moz-align-items:flex-start;  
-        -webkit-align-items:flex-start;    
+        align-items:flex-start;
+        -moz-align-items:flex-start;
+        -webkit-align-items:flex-start;
     }
 
     .cf:before, .cf:after { content: ""; display: table; }
@@ -1277,7 +1374,7 @@ body {
           flex: 1;
           padding-left: 10px;
         }
-        .rightspanaud{ 
+        .rightspanaud{
           flex: 4;
         }
         .icon{
@@ -1477,24 +1574,24 @@ body {
         outline: none;
     }
     .login-btn{
-        border-top-left-radius:3px; 
-        border-bottom-left-radius:3px; 
+        border-top-left-radius:3px;
+        border-bottom-left-radius:3px;
         width:100px;
         height:30px;
         color:white;
         background-color: #5c666f;
         border: 1px solid #5c666f;
         font-size: 12px;
-    } 
+    }
     .sinup-btn{
-        border-top-right-radius:3px; 
+        border-top-right-radius:3px;
         border-bottom-right-radius:3px;
         width:100px;
         height:30px;
-        color:#5c666f; 
-        background-color: white; 
+        color:#5c666f;
+        background-color: white;
         border: 1px solid #5c666f;
-        font-size: 12px;      
+        font-size: 12px;
     }
     .input-field{
         width: 100%;
@@ -1511,7 +1608,7 @@ body {
     }
     .social-btns{
         width: 40px;
-        height: 40px;        
+        height: 40px;
         margin-left: 10px;
         margin-top: 15px;
         border-radius: 3px;
@@ -1724,12 +1821,30 @@ body {
 .chartcontainer{
   width: 100%;
 }
+
+.okbtnnotinv{
+  visibility: visible;
+  background-color: #4892F9;
+  border: none;
+  color: white;
+  padding: 4px;
+  padding-right: 10px;
+  padding-left: 10px;
+  margin-top: 5px;
+  margin-left: 36px;
+}
+
+.notification-wrap{
+  overflow-y: auto;
+  max-height: 400px;
+}
+
 .flex-general-column-wrapper-center{
        /* Flex row rules */
         display: flex;
         display:-webkit-flex;
-        display:-moz-flex;    
-        
+        display:-moz-flex;
+
         flex-flow:column wrap;
         -moz-flex-flow:column wrap;
         -webkit-flex-flow:column wrap;
@@ -1738,9 +1853,9 @@ body {
         -moz-justify-content: center;
         -webkit-justify-content: center;
 
-        align-items:center;  
-        -moz-align-items: center;  
-        -webkit-align-items:center;    
+        align-items:center;
+        -moz-align-items: center;
+        -webkit-align-items:center;
     }
 
 .audcontdivs{
@@ -1882,9 +1997,12 @@ body {
     font-size: 16px;
     width: 90%;
     float: left;
+    padding-left: 10px;
 }
 .noteinvbtncontainer{
   width: 100%;
+  padding-left: 10px;
+
 }
 .cancelbtnnotinv{
     visibility: visible;
@@ -1911,7 +2029,7 @@ body {
 .notebadge{
   visibility: visible;
   display: inline !important;
-  padding: 14px 24px 12px 7px !important;
+  padding: 14px 17px 12px 0px !important;
   float: right !important;
   margin-left: -13px !important;
   cursor:pointer;
@@ -2082,7 +2200,7 @@ body {
       color: #555;
     }
   }
-  .fields{	
+  .fields{
       width: 86%;
       display: flex;
       background-color: white;
@@ -2175,7 +2293,7 @@ body {
     border-radius: 5px !important;
     background-color: #f3faff !important;
     overflow: visible !important;
-    font-family: Signika !important;
+    font-family: Roboto !important;
 }
 .profilepop > div {
     overflow: visible !important;

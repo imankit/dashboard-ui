@@ -9,21 +9,10 @@ const Axios = require('axios');
 // const baseURL = typeof window !== 'undefined' ? '/api' : 'http://localhost:3000';
 import {dashboardAPI, analyticsAPI, accountsAPI, cloudBoostAPI} from './config';
 
-export const xhrDashBoardClient = Axios.create({
-    baseURL: dashboardAPI,
-    withCredentials: true,
-});
+export const xhrDashBoardClient = Axios.create({baseURL: dashboardAPI, withCredentials: true});
 
-export const xhrAnalyticsClient = Axios.create({
-    baseURL: analyticsAPI,
-    withCredentials: true,
-});
+export const xhrAnalyticsClient = Axios.create({baseURL: analyticsAPI, withCredentials: true});
 
-export const xhrAccountsClient = Axios.create({
-    baseURL: accountsAPI,
-    withCredentials: true,
-});
+export const xhrAccountsClient = Axios.create({baseURL: accountsAPI, withCredentials: true});
 
-export const xhrCBClient = Axios.create({
-    baseURL: cloudBoostAPI
-});
+export const xhrCBClient = Axios.create({baseURL: cloudBoostAPI});
