@@ -16,6 +16,7 @@ import {grey500, blue500, grey300} from 'material-ui/styles/colors';
 import ReactTooltip from 'react-tooltip';
 import DeleteApp from './deleteApp';
 import Exit from 'material-ui/svg-icons/action/exit-to-app';
+import Upgrade from '../payment';
 
 const iconStyles = {
     marginRight: 12,
@@ -34,6 +35,7 @@ const Project = React.createClass({
         return {
             showModal: false,
             showDeleteModal: false,
+            showUpgradeModal: false,
             deleteButtonState: true,
             selectedTab: (typeof this.props.selectedTab !== 'undefined')
                 ? this.props.selectedTab
@@ -51,6 +53,9 @@ const Project = React.createClass({
     closeDeleteModal() {
         this.setState({showDeleteModal: false});
     },
+    closeUpgradeModal() {
+        this.setState({showUpgradeModal: false});
+    },
     open1() {
         this.setState({showModal: true, selectedTab: "addDev", displayText: "Add Developers"});
     },
@@ -58,7 +63,7 @@ const Project = React.createClass({
         this.setState({showModal: true, selectedTab: "keys", displayText: "App Keys", icon: "ion ion-key"});
     },
     open3() {
-        this.setState({showModal: true, selectedTab: "upgrade", displayText: "Upgrade Plan"});
+        this.setState({showUpgradeModal: true});
     },
     delete() {
         this.setState({showDeleteModal: true});
@@ -105,7 +110,7 @@ const Project = React.createClass({
                             : <div style={{
                                 display: 'inline'
                             }}>
-                                <Exit style={iconStyles} data-tip="Exit" color={grey300}/>
+                                <Exit style={iconStyles} data-tip="Remove Yourself" color={grey500}/>
                                 <Key style={iconStyles} data-tip="Manage Keys" color={grey500} onClick={this.open2}/>
                                 <FileFileUpload style={iconStyles} data-tip="Change Plan" color={grey300}/>
                                 <IconDelete style={iconStyles} data-tip="Delete App" color={grey300}/>
@@ -151,6 +156,7 @@ const Project = React.createClass({
                             <OptionsModal id={this.props._id} appId={this.props.appId} masterKey={this.props.keys.master} clientKey={this.props.keys.js} planId={this.props.planId} developers={this.props.developers} invited={this.props.invited} selectedTab={this.state.selectedTab}/>
                         </Modal.Body>
                     </Modal>
+                    <Upgrade appId={this.props.appId} planId={this.props.planId} show={this.state.showUpgradeModal} close={this.closeUpgradeModal}/>
                 </div>
             </div>
         );
