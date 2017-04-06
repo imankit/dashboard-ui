@@ -3,7 +3,6 @@
  */
 'use strict';
 
-
 import {saveAppName} from '../../actions';
 import {connect} from 'react-redux';
 import React from 'react';
@@ -33,7 +32,7 @@ class ProjectName extends React.Component {
         const closeEditing = () => this.setState({editMode: false});
         const handleChange = (e) => this.setState({value: e.target.value});
         const handleKeyUp = (e) => {
-            if(e.which === 13){
+            if (e.which === 13) {
                 this.props.onNameChange(this.props.appId, this.state.value)
                 closeEditing()
             }
@@ -43,20 +42,19 @@ class ProjectName extends React.Component {
             return (
                 <div className="relative-pos">
                     <h3>
-                        <input className="nameedit" type="text" defaultValue={this.props.name}  onClick={editName}/>
+                        <input className="nameedit" type="text" defaultValue={this.props.name} onClick={editName}/>
                     </h3>
                 </div>
             );
-        }
-        else {
+        } else {
             return (
                 <div className="relative-pos">
                     <h3>
-                        <input ref="input" className="nameeditenable" defaultValue={this.props.name} onChange={handleChange} onKeyUp={handleKeyUp}/>
-                        <CloseIcon style={iconStyles} color={grey500} onClick={() => {
+                        <input ref="input" className="nameeditenable" defaultValue={this.props.name} onChange={handleChange} onBlur={() => {
                             closeEditing();
                             this.props.onNameChange(this.props.appId, this.state.value);
-                        }}/>
+                        }} onKeyUp={handleKeyUp}/>
+
                     </h3>
                 </div>
             );
@@ -64,12 +62,11 @@ class ProjectName extends React.Component {
     }
 }
 
-
 const mapDispatchToProps = (dispatch) => {
     return {
         onNameChange: (appId, newName) => {
             dispatch(saveAppName(appId, newName));
-        },
+        }
     };
 };
 

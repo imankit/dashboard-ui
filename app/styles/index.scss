@@ -534,6 +534,19 @@ body {
     border-top-right-radius: 4px;
     font-family: "Signika";
   }
+  .__react_component_tooltip.type-dark {
+      background: #4e4e4e!important;
+      color: white!important;
+      opacity: 1 !important;
+  }
+
+  .__react_component_tooltip.type-dark.place-bottom:after {
+      border-bottom-color: #4e4e4e!important;
+      border-bottom-style: solid;
+      border-bottom-width: 6px;
+      opacity: 1 !important;
+  }
+
 
   .notification-icon{
     font-size: 26px;
@@ -578,10 +591,14 @@ body {
 
 .delete-modal-body{
   text-align: center;
-  padding: 30px;
+  padding: 0px;
   font-family: "Signika";
   color: #585858;
   font-size: large;
+}
+.copy-span{
+  color:green;
+  float:right;
 }
 
 .modal-header-style {
@@ -594,6 +611,7 @@ body {
 
 .modal-title-style {
     vertical-align: middle;
+    font-size: 20px;
 }
 
 .modal-icon-style {
@@ -604,16 +622,24 @@ body {
     padding: 15px;
 }
 
+.label-description{
+  font-size: 12px;
+  color: grey;
+}
 
 .delete-btn {
     background: #D60A00;
+    border-color: #D60A00;
 }
 
 .delete-btn:hover {
     background: #D60A00!important;
+        border-color: #D60A00;
 }
 .delete-btn:focus  {
     background: #D60A00!important;
+    border-color: #D60A00;
+
 }
 .copy-icon{
   font-size: 28px;
