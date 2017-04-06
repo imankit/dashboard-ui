@@ -133,3 +133,11 @@
     margin-top: 5px;
     margin-left: 36px;
 }
+
+.red-dot {
+    background: red;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    float: right;
+}
