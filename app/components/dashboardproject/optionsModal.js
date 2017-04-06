@@ -24,11 +24,6 @@ const OptionsModal = (props) => {
                 ? <Keys id={props.id} appId={props.appId} clientKey={props.clientKey} masterKey={props.masterKey}/>
                 : <div></div>
 }
-            {(props.selectedTab === 'upgrade')
-                ? <Upgrade onSubmit={handleSubmit} planId={props.planId} id={props.id} appId={props.appId}/>
-                : <div></div>
-}
-
         </div>
     );
 };

@@ -19,8 +19,8 @@ import Notifications from 'material-ui/svg-icons/alert/add-alert';
 import Email from 'material-ui/svg-icons/communication/email';
 import People from 'material-ui/svg-icons/social/people';
 import {grey500, grey700} from 'material-ui/styles/colors';
-import NotificationsModal from './notification'
-//import NotificationsModal from '../notification/notification'
+//import NotificationsModal from './notification'
+import NotificationsModal from '../notifications/notification'
 
 const toolbartitle = {
     fontSize: 18
@@ -170,19 +170,22 @@ class ToolBar extends React.Component {
                                     <Queues style={iconStyles} color={grey500} onClick={this.redirectTo.bind(this, 'queue', false)}/>
                                     <Notifications style={iconStyles} color={grey500} onClick={this.redirectTo.bind(this, 'push', false)}/>
                                     <Email style={iconStyles} color={grey500} onClick={this.redirectTo.bind(this, 'email', false)}/>
-                                    <ToolbarSeparator/>
                                     <ToolbarTitle style={toolbartitle} text=""/> {/* <Book style={iconStyles} color={grey700}/> */}
-                                    <object type="image/svg+xml" data="/assets/images/feedback.svg">
-                                        Your browser does not support SVG
-                                    </object>
-                                    <object type="image/svg+xml" data="/assets/images/book.svg">
-                                        Your browser does not support SVG
-                                    </object>
+                                    <IconButton touch={true}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 -4 26 26">
+                                            <g fill="none" fill-rule="evenodd"><path fill="#9e9e9e" d="M2.666 11.995a304.44 304.44 0 0 1-1.841-.776s-.41-.14-.558-.638c-.148-.498-.187-1.058 0-1.627.187-.57.558-.735.558-.735s9.626-4.07 13.64-5.43c.53-.179 1.18-.156 1.18-.156C17.607 2.702 19 6.034 19 9.9c0 3.866-1.62 6.808-3.354 6.84 0 0-.484.1-1.18-.135-2.189-.733-5.283-1.946-7.971-3.035-.114-.045-.31-.13-.338.177v.589c0 .56-.413.833-.923.627l-1.405-.566c-.51-.206-.923-.822-.923-1.378v-.63c.018-.29-.162-.362-.24-.394zM15.25 15.15c1.367 0 2.475-2.462 2.475-5.5s-1.108-5.5-2.475-5.5-2.475 2.462-2.475 5.5 1.108 5.5 2.475 5.5z"/></g>
+                                        </svg>
+                                    </IconButton>
+                                    <IconButton touch={true}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 -4 26 26">
+                                            <g fill="none" fill-rule="evenodd"><path fill="#9e9e9e" d="M5.577 3c2.167 0 3.18.846 3.923 2.127v12.288c-.512 0-1.015-.337-1.33-.59-1.03-.828-3.057-.828-5.222-.828H1.945A.944.944 0 0 1 1 15.054V3.946c0-.522.423-.944.945-.944L5.577 3z"/><path fill="#AAB7C4" d="M13.423 3c-2.166 0-3.168.894-3.928 2.107L9.5 17.415c.512 0 1.015-.337 1.33-.59 1.03-.828 3.057-.828 5.222-.828h1.003a.944.944 0 0 0 .945-.945V3.947a.944.944 0 0 0-.945-.945L13.423 3z"/></g>
+                                        </svg>
+                                    </IconButton>
+
                                     <NotificationsModal notifications={notifications}/> {this.props.isAdmin
                                         ? <People style={iconStyles} color={grey700} onClick={this.redirectTo.bind(this, 'admin', true)}/>
                                         : ''
 }
-                                    <ToolbarSeparator/>
                                     <Popover open={this.state.open} anchorEl={this.state.anchorEl} anchorOrigin={{
                                         horizontal: 'right',
                                         vertical: 'bottom'
@@ -204,17 +207,21 @@ class ToolBar extends React.Component {
                             )
                             : <ToolbarGroup>
                                 {/* <Book style={iconStyles} color={grey700}/> */}
-                                <object type="image/svg+xml" data="/assets/images/feedback.svg">
-                                    Your browser does not support SVG
-                                </object>
-                                <object type="image/svg+xml" data="/assets/images/book.svg">
-                                    Your browser does not support SVG
-                                </object>
+
+                                <IconButton touch={true}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 -4 26 26">
+                                        <g fill="none" fill-rule="evenodd"><path fill="#9e9e9e" d="M2.666 11.995a304.44 304.44 0 0 1-1.841-.776s-.41-.14-.558-.638c-.148-.498-.187-1.058 0-1.627.187-.57.558-.735.558-.735s9.626-4.07 13.64-5.43c.53-.179 1.18-.156 1.18-.156C17.607 2.702 19 6.034 19 9.9c0 3.866-1.62 6.808-3.354 6.84 0 0-.484.1-1.18-.135-2.189-.733-5.283-1.946-7.971-3.035-.114-.045-.31-.13-.338.177v.589c0 .56-.413.833-.923.627l-1.405-.566c-.51-.206-.923-.822-.923-1.378v-.63c.018-.29-.162-.362-.24-.394zM15.25 15.15c1.367 0 2.475-2.462 2.475-5.5s-1.108-5.5-2.475-5.5-2.475 2.462-2.475 5.5 1.108 5.5 2.475 5.5z"/></g>
+                                    </svg>
+                                </IconButton>
+                                <IconButton touch={true}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 -4 26 26">
+                                        <g fill="none" fill-rule="evenodd"><path fill="#9e9e9e" d="M5.577 3c2.167 0 3.18.846 3.923 2.127v12.288c-.512 0-1.015-.337-1.33-.59-1.03-.828-3.057-.828-5.222-.828H1.945A.944.944 0 0 1 1 15.054V3.946c0-.522.423-.944.945-.944L5.577 3z"/><path fill="#AAB7C4" d="M13.423 3c-2.166 0-3.168.894-3.928 2.107L9.5 17.415c.512 0 1.015-.337 1.33-.59 1.03-.828 3.057-.828 5.222-.828h1.003a.944.944 0 0 0 .945-.945V3.947a.944.944 0 0 0-.945-.945L13.423 3z"/></g>
+                                    </svg>
+                                </IconButton>
                                 <NotificationsModal notifications={notifications}/> {this.props.isAdmin
                                     ? <People style={iconStyles} color={grey700} onClick={this.redirectTo.bind(this, 'admin', true)}/>
                                     : ''
 }
-                                <ToolbarSeparator/>
                                 <IconButton onClick={this.handleTouchTap.bind(this, 'open')}>
                                     <img className="userhead" src={userImage} alt=""/>
                                 </IconButton>
@@ -232,8 +239,7 @@ class ToolBar extends React.Component {
                                     <button className="coloptbtn">Billing</button>
                                     <button className="coloptbtn" onClick={this.props.onLogoutClick.bind(this)}>Logout</button>
                                 </Popover>
-                            </ToolbarGroup>
-}
+                            </ToolbarGroup>}
                     </Toolbar>
                 </div>
             </div>
