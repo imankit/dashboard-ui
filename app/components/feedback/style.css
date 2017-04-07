@@ -9,11 +9,15 @@
     float: left;
     margin-bottom: 10px;
     margin-left: 10px;
+    min-width: 0px!important;
+    width: 66px!important;
+    overflow: hidden;
 }
 
 .feedback-sendbtn {
     float: right;
     margin-right: 10px;
+    overflow: hidden;
 }
 
 .hide {
@@ -67,4 +71,10 @@
 
 .optionpop>div {
     overflow: visible !important;
+}
+
+.sendBtnDisabled {
+    float: right;
+    margin-right: 10px;
+    overflow: hidden;
 }
