@@ -83,23 +83,26 @@ class Notifications extends React.Component {
                     <TextField floatingLabelText="Feedback about this page?" multiLine={true} rows={2} rowsMax={4} className={!this.state.feedbackSent
                         ? "feedback-textarea"
                         : 'hide'} onChange={this.handleChange.bind(this)}/><br/>
-                    <RaisedButton label="Cancel" className={!this.state.feedbackSent
-                        ? "feedback-cancelbtn"
-                        : 'hide'} labelStyle={{
-                        fontSize: 10,
-                        marginTop: -1
-                    }} buttonStyle={{
-                        height: 22,
-                        lineHeight: 'inherit'
-                    }} onTouchTap={this.handleRequestClose}/>
-                    <RaisedButton label="Send Feedback" className={this.state.disableSendBtn
-                        ? "sendBtnDisabled"
-                        : 'feedback-sendbtn'} labelStyle={this.state.disableSendBtn
-                        ? disabledBtnStyle
-                        : sendBtnStyle} buttonStyle={{
-                        height: 22,
-                        lineHeight: 'inherit'
-                    }} onTouchTap={this.sendFeedback.bind(this)}/>
+                    <div className={!this.state.feedbackSent
+                        ? ''
+                        : 'hide'}><RaisedButton label="Cancel" className={!this.state.feedbackSent
+                ? "feedback-cancelbtn"
+                : 'hide'} labelStyle={{
+                fontSize: 10,
+                marginTop: -1
+            }} buttonStyle={{
+                height: 22,
+                lineHeight: 'inherit'
+            }} onTouchTap={this.handleRequestClose}/>
+                        <RaisedButton label="Send Feedback" className={this.state.disableSendBtn
+                            ? "sendBtnDisabled"
+                            : 'feedback-sendbtn'} labelStyle={this.state.disableSendBtn
+                            ? disabledBtnStyle
+                            : sendBtnStyle} buttonStyle={{
+                            height: 22,
+                            lineHeight: 'inherit'
+                        }} onTouchTap={this.sendFeedback.bind(this)}/>
+                    </div>
                     <div className={this.state.feedbackSent
                         ? 'feedbackSent'
                         : 'hide'}>
