@@ -79,6 +79,11 @@ const Project = React.createClass({
             this.setState({deleteButtonState: false});
         }
     ,
+    openProject(appId, key, name, from, e) {
+        if (e.target !== this.refs.project)
+            return;
+        this.props.onProjectClick(appId, key, name, from);
+    },
 
     render: function() {
 
@@ -87,7 +92,7 @@ const Project = React.createClass({
             planName = "Free Plan";
 
         return (
-            <div className="project">
+            <div className="project" ref="project">
                 <div className="plan-status" onClick={this.open3}>{planName}</div>
                 <div className="app-info">
                     <div className="app-icon">
@@ -104,7 +109,7 @@ const Project = React.createClass({
                                 }}>
                                     <PersonAdd style={iconStyles} data-tip="Manage Developers" color={grey500} onClick={this.open1}/>
                                     <Key style={iconStyles} data-tip="Manage Keys" color={grey500} onClick={this.open2}/>
-                                    <FileFileUpload style={iconStyles} data-tip="Change Plan" color={grey500} onClick={this.open3}/>
+                                    <FileFileUpload style={iconStyles} data-tip="Upgrade Plan" color={grey500} onClick={this.open3}/>
                                     <IconDelete style={iconStyles} data-tip="Delete App" color={grey500} onClick={this.delete}/>
                                 </div>
                             : <div style={{
@@ -112,12 +117,12 @@ const Project = React.createClass({
                             }}>
                                 <Exit style={iconStyles} data-tip="Remove Yourself" color={grey500}/>
                                 <Key style={iconStyles} data-tip="Manage Keys" color={grey500} onClick={this.open2}/>
-                                <FileFileUpload style={iconStyles} data-tip="Change Plan" color={grey300}/>
+                                <FileFileUpload style={iconStyles} data-tip="Upgrade Plan" color={grey300}/>
                                 <IconDelete style={iconStyles} data-tip="Delete App" color={grey300}/>
                             </div>
 }
 
-                        <ReactTooltip place="bottom" type="info"/>
+                        <ReactTooltip place="bottom" type="dark"/>
                     </div>
                     <DeleteApp showDeleteModal={this.state.showDeleteModal} closeDeleteModal={this.closeDeleteModal} handleChange={this.handleChange} deleteButtonState={this.state.deleteButtonState} appId={this.props.appId}/>
                     <Modal show={this.state.showModal} bsSize={(this.state.selectedTab === 'upgrade')
@@ -125,7 +130,9 @@ const Project = React.createClass({
                         : null} onHide={this.close} dialogClassName='options-modal'>
                         {this.state.selectedTab == 'upgrade'
                             ? ''
-                            : <Modal.Header>
+                            : <Modal.Header style={{
+                                paddingTop: 10
+                            }}>
                                 <Modal.Title>{this.state.displayText}
                                     <div className="modal-title-inner-text">
                                         Use keys to initialize your app.
@@ -136,7 +143,8 @@ const Project = React.createClass({
                                     height: 56,
                                     width: 56,
                                     borderRadius: 50,
-                                    backgroundColor: '#0F6DA6'
+                                    backgroundColor: '#0F6DA6',
+                                    marginTop: 2
                                 }}>
                                     <div className="flex-general-column-wrapper-center" style={{
                                         height: 56,

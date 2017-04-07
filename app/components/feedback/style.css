@@ -1,0 +1,70 @@
+.feedback-textarea {
+    padding: 10px;
+    overflow: hidden;
+    display: block;
+    margin-top: -15px;
+}
+
+.feedback-cancelbtn {
+    float: left;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.feedback-sendbtn {
+    float: right;
+    margin-right: 10px;
+}
+
+.hide {
+    display: none;
+}
+
+.feedbackSent {
+    width: 256px;
+}
+
+.thanks-text {
+    color: #549afc;
+    display: block;
+    text-align: center;
+    font-weight: 500;
+}
+
+.note-text {
+    font-size: 14px;
+    text-align: center;
+    display: block;
+    margin-bottom: 19px;
+    color: grey;
+}
+
+.optionBtn {
+    width: 100%;
+    border: 0px solid #EEE;
+    height: 35px;
+    background-color: #FFFFFF;
+    color: #5e5e5e;
+    margin-top: 0px;
+    text-align: left;
+    padding-left: 12px;
+    font-size: 14px;
+}
+
+.optionBtn:hover {
+    background-color: #eff1f5;
+    color: black;
+}
+
+.optionpop {
+    min-width: 220px !important;
+    min-height: 70px !important;
+    border-radius: 5px !important;
+    background-color: #f3faff !important;
+    overflow: visible !important;
+    font-family: Roboto !important;
+}
+
+.optionpop>div {
+    overflow: visible !important;
+}
