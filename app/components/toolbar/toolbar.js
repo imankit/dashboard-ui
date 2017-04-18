@@ -173,19 +173,6 @@ class ToolBar extends React.Component {
 
                         </ToolbarGroup>
 
-                        { // seperate toolbar group for routes ( only if isDashboardMainPage , prevent re-render of other icons ( svg's) )
-                            !this.props.isDashboardMainPage ? (
-                                <ToolbarGroup>
-                                    <Storage style={iconStyles} color={grey500} onClick={this.redirectTo.bind(this, 'tables', false)} />
-                                    <Analytics style={iconStyles} color={grey500} onClick={this.redirectTo.bind(this, 'analytics', false)} />
-                                    <Setting style={iconStyles} color={grey500} onClick={this.redirectTo.bind(this, 'settings', false)} />
-                                    <Cache style={iconStyles} color={grey500} onClick={this.redirectTo.bind(this, 'cache', false)} />
-                                    <Queues style={iconStyles} color={grey500} onClick={this.redirectTo.bind(this, 'queue', false)} />
-                                    <Notifications style={iconStyles} color={grey500} onClick={this.redirectTo.bind(this, 'push', false)} />
-                                    <Email style={iconStyles} color={grey500} onClick={this.redirectTo.bind(this, 'email', false)} />
-                                </ToolbarGroup>
-                            ) : ''
-                        }
                         
                         <ToolbarGroup>
                             

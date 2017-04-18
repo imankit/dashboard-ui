@@ -95,7 +95,9 @@ body {
     border-style: solid;
 
     .container {
-      position: relative;
+      width: 100% !important;
+      width: 100% !important;
+      max-width: 100% !important;
 
       .toolbar {
         background-color: #FFF;
@@ -2389,3 +2391,67 @@ body {
 .appselector:hover{
   border: none !important;
 }
+.manageappcontainer{
+  display: flex;
+
+  .sidenavbar{
+    height: 100vh;
+    max-width: 200px;
+    min-width: 200px;
+    background-color: white;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+    flex: 1;
+    padding-top: 100px;
+
+    .navbutton{
+      width: 90%;
+      margin-left: 5%;
+      color: black;
+      border-radius: 5px;
+      border: 0px;
+      margin-bottom: 10px;
+      height: 40px;
+      background-color: white;
+      text-align: left;
+    }
+    .navbutton:focus{
+      outline: none !important;
+    }
+    .navbutton:hover{
+      background-color: #F3F3F3;
+      color: black;
+    }
+
+    .navbuttonselected{
+      background-color: #2196f3 !important;
+      color: white !important;
+    }
+    .navbuttonselected:hover{
+      background-color: #2196f3 !important;
+      color: white !important;
+    }
+
+    .buttonicon{
+      margin-right: 10px;
+      margin-top: 3px;
+      float: left;
+      margin-left: 10px;
+    }
+  }
+  .manageappcontainermain{
+    flex: 1;
+    padding: 10px;
+  }
+  .container{
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 100% !important;
+    max-width: 1200px;
+  }
+
+}
+
+
+
