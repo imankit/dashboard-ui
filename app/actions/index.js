@@ -21,7 +21,6 @@ export function fetchApps() {
     return function(dispatch) {
         xhrDashBoardClient.get('app').then(response => {
             dispatch({type: 'FETCH_APPS', payload: response.data});
-
             let appIdArray = response.data.map((app) => app.appId);
             dispatch(getAnalyticsData(appIdArray))
             dispatch({type: 'STOP_LOADING'})
@@ -263,6 +262,20 @@ export const deleteDev = (appId, userId) => {
                 }
             });
         }).catch(error => {
+            console.log('inside delete dev error catch error: ');
+            console.log(error);
+        });
+    };
+};
+
+export const exitApp = (appId, userId) => {
+    return function(dispatch) {
+        dispatch({type: 'START_LOADING'})
+        xhrDashBoardClient.delete('/app/' + appId + '/removedeveloper/' + userId).then(response => {
+            dispatch(fetchApps())
+            showAlert('success',"Removed from app.")
+        }).catch(error => {
+            dispatch({type: 'STOP_LOADING'})
             console.log('inside delete dev error catch error: ');
             console.log(error);
         });

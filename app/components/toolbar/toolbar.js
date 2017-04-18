@@ -61,6 +61,7 @@ class ToolBar extends React.Component {
     }
 
     handleRequestClose = () => {
+        // close all popover
         this.setState({ open: false, appSelector: false, options: false, profileModal: false })
     }
     redirectTo(where, noAppId) {
@@ -172,7 +173,7 @@ class ToolBar extends React.Component {
 
                         </ToolbarGroup>
 
-                        {
+                        { // seperate toolbar group for routes ( only if isDashboardMainPage , prevent re-render of other icons ( svg's) )
                             !this.props.isDashboardMainPage ? (
                                 <ToolbarGroup>
                                     <Storage style={iconStyles} color={grey500} onClick={this.redirectTo.bind(this, 'tables', false)} />

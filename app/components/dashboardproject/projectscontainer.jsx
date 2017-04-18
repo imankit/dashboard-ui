@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Project from './project.jsx';
-import { manageApp, fetchApps, addApp } from '../../actions';
+import { manageApp, fetchApps, addApp, exitApp } from '../../actions';
 import { connect } from 'react-redux';
 import { Grid, Row, Col } from 'react-bootstrap'
 
@@ -31,9 +31,12 @@ class Projectscontainer extends React.Component {
     addApp(e){
         e.preventDefault()
         if(this.state.value){
-            this.props.dispatch(addApp(this.state.value));
+            this.props.addApp(this.state.value)
             this.setState({value:''})
         }
+    }
+    onDeleteDev(appId){
+        this.props.exitApp(appId,this.props.currentUser.user._id)
     }
 
     render() {
@@ -47,7 +50,7 @@ class Projectscontainer extends React.Component {
                                 this.props.apps.map(app =>
                                     <Col xs={8} sm={6} md={4} lg={4} key={app._id} className="project-grid">
                                         <Project key={app._id} {...app}
-                                            onProjectClick={this.props.onProjectClick} currentUser={this.props.currentUser} />
+                                            onProjectClick={this.props.onProjectClick} currentUser={this.props.currentUser} onDeleteDev={this.onDeleteDev.bind(this)} />
                                     </Col>
                                 ) :
                                 <form onSubmit={ this.addApp.bind(this) }>
@@ -76,6 +79,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onProjectClick: (appId, masterKey, name, from) => dispatch(manageApp(appId, masterKey, name, from)),
+        onDeleteDev: (appId, userId) => dispatch(deleteDev(appId, userId)),
+        exitApp: (name) => dispatch(exitApp(name))
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Projectscontainer);
