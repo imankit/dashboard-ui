@@ -2396,13 +2396,28 @@ body {
 
   .sidenavbar{
     height: 100vh;
-    max-width: 200px;
     min-width: 200px;
     background-color: white;
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
     flex: 1;
     padding-top: 100px;
+    max-width: 14%;
 
+    .red{
+      color: #e80000;
+    }
+    .blue{
+      color: #2196f3;
+    }
+    .green{
+      color: #74d200;
+    }
+    .orange{
+      color: #ff7a00;
+    }
+    .purple{
+      color: #ad00ff;
+    }
     .navbutton{
       width: 90%;
       margin-left: 5%;

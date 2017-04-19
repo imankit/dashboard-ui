@@ -79,8 +79,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         onProjectClick: (appId, masterKey, name, from) => dispatch(manageApp(appId, masterKey, name, from)),
-        onDeleteDev: (appId, userId) => dispatch(deleteDev(appId, userId)),
-        exitApp: (name) => dispatch(exitApp(name))
+        exitApp: (appId, userId) => dispatch(exitApp(appId, userId))
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Projectscontainer);

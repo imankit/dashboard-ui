@@ -47,31 +47,31 @@ class AppSelected extends React.Component {
             <div className="manageappcontainer">
                 <div className="sidenavbar">
                     <button className={ this.state.selected == "tables" ? "navbuttonselected navbutton": "navbutton" } onClick={this.redirectTo.bind(this, 'tables')}>
-                        <i className="fa fa-bars buttonicon" aria-hidden="true"></i>
+                        <i className={ this.state.selected == "tables" ? "fa fa-bars buttonicon": "buttonicon fa fa-bars red" } aria-hidden="true"></i>
                         Tables
                     </button>
                     <button className={ this.state.selected == "analytics" ? "navbuttonselected navbutton": "navbutton" } onClick={this.redirectTo.bind(this, 'analytics')}>
-                        <i className="fa fa-bar-chart buttonicon" aria-hidden="true"></i>
+                        <i className={ this.state.selected == "analytics" ? "fa fa-bar-chart buttonicon": "buttonicon fa fa-bar-chart blue" } aria-hidden="true"></i>
                         Analytics
                     </button>
                     <button className={ this.state.selected == "settings" ? "navbuttonselected navbutton": "navbutton" } onClick={this.redirectTo.bind(this, 'settings')}>
-                        <i className="fa fa-cog buttonicon" aria-hidden="true"></i>
+                        <i className={ this.state.selected == "settings" ? "fa fa-cog buttonicon": "buttonicon fa fa-cog green" } aria-hidden="true"></i>
                         Settings
                     </button>
                     <button className={ this.state.selected == "cache" ? "navbuttonselected navbutton": "navbutton" } onClick={this.redirectTo.bind(this, 'cache')}>
-                        <i className="fa fa-bolt buttonicon" aria-hidden="true"></i>
+                        <i className={ this.state.selected == "cache" ? "fa fa-bolt buttonicon": "buttonicon fa fa-bolt purple" } aria-hidden="true"></i>
                         Cache
                     </button>
                     <button className={ this.state.selected == "queue" ? "navbuttonselected navbutton": "navbutton" } onClick={this.redirectTo.bind(this, 'queue')}>
-                        <i className="fa fa-exchange buttonicon" aria-hidden="true"></i>
+                        <i className={ this.state.selected == "queue" ? "fa fa-exchange buttonicon": "buttonicon fa fa-exchange blue" } aria-hidden="true"></i>
                         Queue
                     </button>
                     <button className={ this.state.selected == "push" ? "navbuttonselected navbutton": "navbutton" } onClick={this.redirectTo.bind(this, 'push')}>
-                        <i className="fa fa-bell-o buttonicon" aria-hidden="true"></i>
+                        <i className={ this.state.selected == "push" ? "fa fa-bell-o buttonicon": "buttonicon fa fa-bell-o orange" } aria-hidden="true"></i>
                         Push Notifications
                     </button>
                     <button className={ this.state.selected == "email" ? "navbuttonselected navbutton": "navbutton" } onClick={this.redirectTo.bind(this, 'email')}>
-                        <i className="fa fa-envelope-o buttonicon" aria-hidden="true"></i>
+                        <i className={ this.state.selected == "email" ? "fa fa-envelope-o buttonicon": "buttonicon fa fa-envelope-o blue" } aria-hidden="true"></i>
                         Email Campaign
                     </button>
                 </div>
