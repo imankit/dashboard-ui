@@ -25,6 +25,7 @@ app.get('/app/key.js', function(req, res) {
     content += "DASHBOARD_URL = null,\n";
     content += "ACCOUNTS_URL = null,\n";
     content += "DATABROWSER_URL = null,\n";
+    content += "FILES_URL=null,";
     content += "LANDING_URL = 'https://www.cloudboost.io';\n";
     content += "if(window.location.hostname.includes('cloudboost.io')){\n";
     content += "USER_SERVICE_URL='https://service.cloudboost.io';\n";
@@ -33,6 +34,7 @@ app.get('/app/key.js', function(req, res) {
     content += "DASHBOARD_URL='https://dashboard.cloudboost.io';\n";
     content += "ACCOUNTS_URL='https://accounts.cloudboost.io';\n";
     content += "DATABROWSER_URL='https://tables.cloudboost.io';\n";
+    content += "FILES_URL='https://files.cloudboost.io';\n";
     content += "}else{\n";
     content += "USER_SERVICE_URL = window.location.protocol+'//'+window.location.hostname + ':3000';\n";
     content += "SERVER_DOMAIN= window.location.hostname;\n";
@@ -40,6 +42,7 @@ app.get('/app/key.js', function(req, res) {
     content += "DASHBOARD_URL =  window.location.protocol+'//'+window.location.hostname + ':1440';\n";
     content += "ACCOUNTS_URL =  window.location.protocol+'//'+window.location.hostname + ':1447';\n";
     content += "DATABROWSER_URL =  window.location.protocol+'//'+window.location.hostname + ':3333';\n";
+    content += "FILES_URL =  window.location.protocol+'//'+window.location.hostname + ':3012';\n";
     content += "}\n";
 
     res.write(content);

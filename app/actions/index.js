@@ -88,15 +88,17 @@ export function updateUser(name, oldPassword, newPassword) {
 export const addApp = (name) => {
 
     return function(dispatch) {
-        dispatch({type: 'START_LOADING'})
-        xhrDashBoardClient.post('/app/create', {"name": name}).then(response => {
+        dispatch({type: 'START_LOADING_MODAL'})
+        return xhrDashBoardClient.post('/app/create', {"name": name}).then(response => {
             dispatch({type: 'ADD_APP', payload: response.data});
-            dispatch({type: 'STOP_LOADING'})
-            showAlert('success', "App added.")
+            dispatch({type: 'STOP_LOADING_MODAL'})
+            return Promise.resolve()
         }).catch(error => {
-            dispatch({type: 'STOP_LOADING'})
+            dispatch({type: 'STOP_LOADING_MODAL'})
+            showAlert('error', "Something went wrong, try again later.")
             console.log('inside fetch Apps error catch error: ');
             console.log(error);
+            return Promise.reject()
         });
     };
 };

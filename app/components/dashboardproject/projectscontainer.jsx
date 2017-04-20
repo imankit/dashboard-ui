@@ -5,12 +5,16 @@ import Project from './project.jsx';
 import { manageApp, fetchApps, addApp, exitApp } from '../../actions';
 import { connect } from 'react-redux';
 import { Grid, Row, Col } from 'react-bootstrap'
-
+import RefreshIndicator from 'material-ui/RefreshIndicator';
 
 const styles = {
     root: {
         display: 'flex',
         justifyContent: 'space-around'
+    },
+    refresh: {
+        display: 'inline-block',
+        position: 'relative',
     }
 };
 
@@ -58,7 +62,16 @@ class Projectscontainer extends React.Component {
                                         <p className="welcome">Welcome!</p>
                                         <p className="subhead">Let's create your first app:</p>
                                         <input required type="text" placeholder="Name your app" value={this.state.value} onChange={ this.changeHandler.bind(this) }/>
-                                        <button className="btn btn-primary" type="submit">Create App</button>
+                                        {
+                                            this.props.loading ?
+                                                <RefreshIndicator
+                                                    size={40}
+                                                    left={-1}
+                                                    top={10}
+                                                    status="loading"
+                                                    style={styles.refresh}
+                                                /> : <button className="btn btn-primary" type="submit">Create App</button>
+                                        }
                                     </div>
                                 </form>
                         }
@@ -72,14 +85,16 @@ class Projectscontainer extends React.Component {
 const mapStateToProps = (state) => {
     return {
         apps: state.apps || [],
-        currentUser: state.user
+        currentUser: state.user,
+        loading:state.loader.modal_loading
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         onProjectClick: (appId, masterKey, name, from) => dispatch(manageApp(appId, masterKey, name, from)),
-        exitApp: (appId, userId) => dispatch(exitApp(appId, userId))
+        exitApp: (appId, userId) => dispatch(exitApp(appId, userId)),
+        addApp: (name) => dispatch(addApp(name))
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Projectscontainer);

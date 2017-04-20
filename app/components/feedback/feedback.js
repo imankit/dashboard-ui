@@ -20,7 +20,7 @@ class Notifications extends React.Component {
         this.state = {
             open: false,
             disableSendBtn: true,
-            value:''
+            value: ''
         }
     }
 
@@ -32,16 +32,17 @@ class Notifications extends React.Component {
     handleRequestClose = () => {
         this.setState({ open: false })
     }
-    handleChange(e, value) {
+    handleChange(e) {
+        let value = e.target.value
         if (value) {
-            this.setState({ disableSendBtn: false, value:value });
+            this.setState({ disableSendBtn: false, value: value });
         } else {
-            this.setState({ disableSendBtn: true });
+            this.setState({ disableSendBtn: true ,value: ''});
         }
 
     }
     sendFeedback() {
-        if(this.state.value){
+        if (this.state.value) {
             // post to slack webhook , make chages here for updating webhook
             axios({
                 url:"https://hooks.slack.com/services/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",
@@ -83,11 +84,13 @@ class Notifications extends React.Component {
         }
         return (
             <div>
+
                 <IconButton touch={true} onClick={this.handleTouchTap.bind(this)}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 -4 26 26">
                         <g fill="none" fillRule="evenodd"><path fill="#9e9e9e" d="M2.666 11.995a304.44 304.44 0 0 1-1.841-.776s-.41-.14-.558-.638c-.148-.498-.187-1.058 0-1.627.187-.57.558-.735.558-.735s9.626-4.07 13.64-5.43c.53-.179 1.18-.156 1.18-.156C17.607 2.702 19 6.034 19 9.9c0 3.866-1.62 6.808-3.354 6.84 0 0-.484.1-1.18-.135-2.189-.733-5.283-1.946-7.971-3.035-.114-.045-.31-.13-.338.177v.589c0 .56-.413.833-.923.627l-1.405-.566c-.51-.206-.923-.822-.923-1.378v-.63c.018-.29-.162-.362-.24-.394zM15.25 15.15c1.367 0 2.475-2.462 2.475-5.5s-1.108-5.5-2.475-5.5-2.475 2.462-2.475 5.5 1.108 5.5 2.475 5.5z" /></g>
                     </svg>
                 </IconButton>
+
                 <Popover open={this.state.open} anchorEl={this.state.anchorEl} anchorOrigin={{
                     horizontal: 'right',
                     vertical: 'bottom'
@@ -96,33 +99,25 @@ class Notifications extends React.Component {
                     vertical: 'top'
                 }} onRequestClose={this.handleRequestClose} className="">
 
-                    <TextField floatingLabelText="Feedback about this page?" multiLine={true} rows={2} rowsMax={4} className={!this.state.feedbackSent
+                        <textarea cols="30" rows="4" placeholder="Feedback about this page?" className={!this.state.feedbackSent
                         ? "feedback-textarea"
-                        : 'hide'} onChange={this.handleChange.bind(this)} value={this.state.value}/><br />
+                        : 'hide'} onChange={this.handleChange.bind(this)} value={this.state.value}>
+                        
+                        </textarea>
+                        
+                        <br />
+
                     <div className={!this.state.feedbackSent
                         ? ''
-                        : 'hide'}><RaisedButton label="Cancel" className={!this.state.feedbackSent
-                            ? "feedback-cancelbtn"
-                            : 'hide'} labelStyle={{
-                                fontSize: 10,
-                                marginTop: -1
-                            }} buttonStyle={{
-                                height: 22,
-                                lineHeight: 'inherit'
-                            }} onTouchTap={this.handleRequestClose} />
-                        <RaisedButton label="Send Feedback" className={this.state.disableSendBtn
-                            ? "sendBtnDisabled"
-                            : 'feedback-sendbtn'} labelStyle={this.state.disableSendBtn
-                                ? disabledBtnStyle
-                                : sendBtnStyle} buttonStyle={{
-                                    height: 22,
-                                    lineHeight: 'inherit'
-                                }} onTouchTap={this.sendFeedback.bind(this)} />
+                        : 'hide'}>
+                        <button className="feedback-cancelbtn" onTouchTap={this.handleRequestClose}>Cancel</button>
+                        <button className="feedback-sendbtn" onTouchTap={this.sendFeedback.bind(this)} disabled={ this.state.disableSendBtn }>Send Feedback</button>
                     </div>
+
                     <div className={this.state.feedbackSent
                         ? 'feedbackSent'
                         : 'hide'}>
-                        <IconButton touch={true} onClick={this.handleTouchTap.bind(this)} style={{
+                        <IconButton touch={true} style={{
                             marginLeft: '37%',
                             marginTop: -30
                         }}>

@@ -22,14 +22,17 @@ class AppSelected extends React.Component {
         return { router: React.PropTypes.object.isRequired }
     }
     componentWillMount() {
+        // if no app data is found in memory , then find the app and set that data
         if(this.props.isAppActive === false){
             let appFound = false
             this.props.apps.map((app) => {
                 if(app.appId == this.props.params.appId){
                     appFound = true
+                    // save app data in memory
                     this.props.manageApp(app.appId,app.keys.master,app.name)
                 }
             })
+            // if app not found , send back to home page
             if(!appFound) browserHistory.push('/')
         }
     }
@@ -41,6 +44,9 @@ class AppSelected extends React.Component {
     }
     redirectTo(where) {
         this.context.router.push('/' + this.props.params.appId + "/" + where)
+    }
+    openFiles(){
+        window.location.href = FILES_URL + "/" + this.props.params.appId
     }
     render() {
         return (
@@ -73,6 +79,10 @@ class AppSelected extends React.Component {
                     <button className={ this.state.selected == "email" ? "navbuttonselected navbutton": "navbutton" } onClick={this.redirectTo.bind(this, 'email')}>
                         <i className={ this.state.selected == "email" ? "fa fa-envelope-o buttonicon": "buttonicon fa fa-envelope-o blue" } aria-hidden="true"></i>
                         Email Campaign
+                    </button>
+                    <button className="navbutton" onClick={this.openFiles.bind(this)}>
+                        <i className="buttonicon fa fa-file-o purple" aria-hidden="true"></i>
+                        Files
                     </button>
                 </div>
                 <div className="manageappcontainermain">

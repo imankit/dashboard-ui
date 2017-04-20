@@ -4,8 +4,14 @@
 
 const defaultState = {
 	bulkAnalytics : {},
-	analyticsApi : {},
-	analyticsStorage : {}
+	analyticsApi : {
+        totalApiCount:0,
+        usage:[]
+    },
+	analyticsStorage : {
+        totalStorage:0,
+        usage:[]
+    }
 }
 
 export default function (state = defaultState, action) {
@@ -15,16 +21,20 @@ export default function (state = defaultState, action) {
             return Object.assign({},state)
         }
         case 'ANALYTICS_API' : {
-            state.analyticsApi = action.payload
+            if(action.payload){
+                state.analyticsApi = action.payload
+            }
             return Object.assign({},state)
         }
         case 'ANALYTICS_STORAGE' : {
-            state.analyticsStorage = action.payload
+            if(action.payload){
+                state.analyticsStorage = action.payload
+            }
             return Object.assign({},state)
         }
         case 'RESET' : {
-            state.analyticsStorage = {}
-            state.analyticsApi = {}
+            state.analyticsStorage = defaultState.analyticsStorage
+            state.analyticsApi = defaultState.analyticsApi
             return Object.assign({},state)
         }
         default:
