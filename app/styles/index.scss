@@ -1532,6 +1532,54 @@ body {
       margin-right: 25%;
     }
   }
+
+  .edit-profile {
+    user-select: none;
+    font-weight: 400;
+    font-size: 16px;
+    color: rgba(0,0,0,.5);
+    line-height: 24px;
+    text-align: left;
+    letter-spacing: .03px;
+
+    input {
+      color: #222;
+      user-select: text!important;
+      line-height: normal;
+      font: inherit;
+    }
+
+    .edit-profile-photo {
+      cursor: pointer;
+      width: auto;
+      -ms-flex-positive: 1;
+      flex-grow: 1;
+      display: -ms-flexbox;
+      display: flex;
+      padding: 0 0 10px 10px;
+      align-items: center;
+      -ms-flex-align: center;
+
+      .user-icon {
+        margin-right: 10px;
+      }
+      .user-icon.medium {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+      }
+      .user-icon {
+        position: relative;
+        border-radius: 5px;
+        background-size: cover;
+        background-color: #43BDFF;
+        background-repeat: no-repeat;
+        background-position: center center;
+      }
+    }
+  }
+
+
   .settings{
     background-color: #eff1f5;
     display: flex;
