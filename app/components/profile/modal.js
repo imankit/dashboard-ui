@@ -3,12 +3,10 @@ import {connect} from 'react-redux';
 import Toolbar from '../toolbar/toolbar.js';
 import Footer from '../footer/footer.jsx';
 import {saveUserImage, deleteUserImage, showAlert, updateUser} from '../../actions';
+import ChangeField from './ChangeField';
+
 import IconButton from 'material-ui/IconButton';
-import DeleteIcon from 'material-ui/svg-icons/action/delete';
-import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
-import Divider from 'material-ui/Divider';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton'
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 import Dialog from 'material-ui/Dialog';
 import {
@@ -19,6 +17,10 @@ import {
     TableRow,
     TableRowColumn
 } from 'material-ui/Table';
+
+const dialogStyle = {
+    width: 400,
+}
 
 class Profile extends React.Component {
 
@@ -77,37 +79,74 @@ class Profile extends React.Component {
             userImage = this.props.currentUser.file.document.url
             fileId = this.props.currentUser.file.document.id
         }
+        const actionsBtn = (
+            <FlatButton
+                label="Save"
+                primary={true}
+                disabled={this.state.progress}
+                onTouchTap={this.changePassword.bind(this)}
+            />
+        );
+        let profilepicobj = (
+            <div className="edit-profile-photo">
+                <div className="user-icon medium" style={{
+                    backgroundImage: `url('${userImage}')`
+                }} onClick={this.openChangeFile.bind(this)}>
+                    <input type="file" style={{
+                        visibility: "collapse",
+                        width: "0"
+                    }} onChange={this.changeFile.bind(this)} id="fileBox" accept="image/*" />
+                </div>
+                <span>Click to Edit</span>
+            </div>
+        );
         return (
-            <Dialog title="Edit Profile" modal={false} open={this.props.open} onRequestClose={this.props.close}>
-                <Table >
-
-                    <TableBody displayRowCheckbox={false}>
-                        <TableRow>
-                            <TableRowColumn>Profile Pic</TableRowColumn>
-                            <TableRowColumn>....</TableRowColumn>
-                        </TableRow>
-                        <TableRow>
-                            <TableRowColumn>Name</TableRowColumn>
-                            <TableRowColumn>Ritish Gumber</TableRowColumn>
-                        </TableRow>
-                        <TableRow>
-                            <TableRowColumn>Email</TableRowColumn>
-                            <TableRowColumn>ritishgumber@gmail.com</TableRowColumn>
-                        </TableRow>
-                        <TableRow>
-                            <TableRowColumn>old Password</TableRowColumn>
-                            <TableRowColumn>abcd</TableRowColumn>
-                        </TableRow>
-                        <TableRow>
-                            <TableRowColumn>new Password</TableRowColumn>
-                            <TableRowColumn>ritish12345</TableRowColumn>
-                        </TableRow>
-                        <TableRow>
-                            <TableRowColumn>confirm Password</TableRowColumn>
-                            <TableRowColumn>rtiish12345</TableRowColumn>
-                        </TableRow>
-                    </TableBody>
-                </Table>
+            <Dialog title="Edit Profile" modal={false} open={this.props.open} onRequestClose={this.props.close} contentStyle={dialogStyle} actions={actionsBtn}>
+                <div className="edit-profile">
+                    <Table >
+                        <TableBody displayRowCheckbox={false}>
+                            <TableRow>
+                                <TableRowColumn>Profile Pic</TableRowColumn>
+                                <TableRowColumn children={profilepicobj}></TableRowColumn>
+                            </TableRow>
+                            <TableRow>
+                                <TableRowColumn>Name</TableRowColumn>
+                                <TableRowColumn>
+                                {/*{
+                                    this.props.currentUser.user ? this.props.currentUser.user.name : ''
+                                }*/}
+                                    <ChangeField field="username"></ChangeField>
+                                </TableRowColumn>
+                            </TableRow>
+                            <TableRow>
+                                <TableRowColumn>Email</TableRowColumn>
+                                <TableRowColumn>
+                                {
+                                    this.props.currentUser.user ? this.props.currentUser.user.email : ''
+                                }
+                                </TableRowColumn>
+                            </TableRow>
+                            <TableRow>
+                                <TableRowColumn>Old Password</TableRowColumn>
+                                <TableRowColumn>
+                                    <ChangeField field="oldpassword"></ChangeField>
+                                </TableRowColumn>
+                            </TableRow>
+                            <TableRow>
+                                <TableRowColumn>New Password</TableRowColumn>
+                                <TableRowColumn>
+                                    <ChangeField field="newpassword"></ChangeField>
+                                </TableRowColumn>
+                            </TableRow>
+                            <TableRow>
+                                <TableRowColumn>Confirm Password</TableRowColumn>
+                                <TableRowColumn>
+                                    <ChangeField field="confpassword"></ChangeField>
+                                </TableRowColumn>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+                </div>
             </Dialog>
         );
     }
