@@ -68,8 +68,8 @@ class Profile extends React.Component {
             showAlert('error', 'Please fill all the fields.')
         }
     }
-    changeHandler(which, e, value) {
-        this.state[which] = value
+    changeHandler(which, e) {
+        this.state[which] = e.target.value
         this.setState(this.state)
     }
     render() {
@@ -104,7 +104,7 @@ class Profile extends React.Component {
             <Dialog title="Edit Profile" modal={false} open={this.props.open} onRequestClose={this.props.close} contentStyle={dialogStyle} actions={actionsBtn}>
                 <div className="edit-profile">
                     <Table >
-                        <TableBody displayRowCheckbox={false}>
+                        <TableBody displayRowCheckbox={false} showRowHover={false}>
                             <TableRow>
                                 <TableRowColumn>Profile Pic</TableRowColumn>
                                 <TableRowColumn children={profilepicobj}></TableRowColumn>
@@ -112,10 +112,9 @@ class Profile extends React.Component {
                             <TableRow>
                                 <TableRowColumn>Name</TableRowColumn>
                                 <TableRowColumn>
-                                {/*{
+                                {
                                     this.props.currentUser.user ? this.props.currentUser.user.name : ''
-                                }*/}
-                                    <ChangeField field="username"></ChangeField>
+                                }
                                 </TableRowColumn>
                             </TableRow>
                             <TableRow>
@@ -129,19 +128,19 @@ class Profile extends React.Component {
                             <TableRow>
                                 <TableRowColumn>Old Password</TableRowColumn>
                                 <TableRowColumn>
-                                    <ChangeField field="oldpassword"></ChangeField>
+                                    <ChangeField field="oldPassword" value={this.state.oldPassword} changeHandler={this.changeHandler.bind(this)}></ChangeField>
                                 </TableRowColumn>
                             </TableRow>
                             <TableRow>
                                 <TableRowColumn>New Password</TableRowColumn>
                                 <TableRowColumn>
-                                    <ChangeField field="newpassword"></ChangeField>
+                                    <ChangeField field="newPassword" value={this.state.newPassword} changeHandler={this.changeHandler.bind(this)}></ChangeField>
                                 </TableRowColumn>
                             </TableRow>
                             <TableRow>
                                 <TableRowColumn>Confirm Password</TableRowColumn>
                                 <TableRowColumn>
-                                    <ChangeField field="confpassword"></ChangeField>
+                                    <ChangeField field="confirmPassword" value={this.state.confirmPassword} changeHandler={this.changeHandler.bind(this)}></ChangeField>
                                 </TableRowColumn>
                             </TableRow>
                         </TableBody>
