@@ -9,29 +9,18 @@ class ChangeField extends React.Component {
   }
 
   render() {
-    const editName = () => this.setState({ editMode: true });
+    const editPassword = () => this.setState({ editMode: true });
     const closeEditing = () => {
         this.setState({ editMode: false });
     }
     
     if (this.state.editMode === false) {
         return (
-            <div className="relative-pos">
-                <h3>
-                    <input className="nameedit" ref={this.props.field} type="password" defaultValue={this.props.value} onClick={editName} />
-                </h3>
-            </div>
+            <input className="password-field passwordedit" ref={this.props.field} type="password" placeholder="Type here" value={this.props.value} onClick={editPassword} />
         );
     } else {
         return (
-            <div className="relative-pos">
-                <h3>
-                    <input className="nameeditenable" ref={this.props.field} type="password" defaultValue={this.props.value} onChange={(event) => this.props.changeHandler(this.props.field, event)} onBlur={() => {
-                        closeEditing();
-                    }} />
-
-                </h3>
-            </div>
+            <input className="password-field passwordeditenable" ref={this.props.field} type="password" value={this.props.value} placeholder="Type here" onChange={(event) => this.props.changeHandler(this.props.field, event)} onBlur={closeEditing} />
         );
     }
   }

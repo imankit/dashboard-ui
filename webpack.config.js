@@ -2,7 +2,7 @@ var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var isHosted = process.env['CLOUDBOOST_HOSTED'];
 
-console.log('isHosted : ' + !!isHosted)
+console.log('isHosted : ' + isHosted)
 
 var config = {
    entry: './app/index.js',
@@ -11,8 +11,8 @@ var config = {
       path:'./public',
       filename: '/client.min.js',
    },
-   debug: !isHosted ? true : false,
-   devtool: !isHosted ? "#eval-source-map" : false,
+   debug: isHosted === 'false' || !isHosted ? true : false,
+   devtool: isHosted === 'false' || !isHosted ? "#eval-source-map" : false, 
    module: {
       loaders: [
           {
