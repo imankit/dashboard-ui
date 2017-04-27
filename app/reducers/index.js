@@ -9,6 +9,7 @@ import analytics from './analytics';
 import settings from './settings';
 import loader from './loader';
 import cards from './cards';
+import beacons from './beacons'
 import {reducer as formReducer} from 'redux-form';
 
 const todoApp = combineReducers({
@@ -22,7 +23,8 @@ const todoApp = combineReducers({
     cards,
     loader,
     settings,
-    form: formReducer
+    form: formReducer,
+    beacons
 });
 
 export default todoApp;

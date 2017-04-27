@@ -24,6 +24,7 @@ export function fetchApps() {
             let appIdArray = response.data.map((app) => app.appId);
             dispatch(getAnalyticsData(appIdArray))
             dispatch({type: 'STOP_LOADING'})
+            dispatch(getBeacon())
         }).catch(error => {
             dispatch({type: 'STOP_LOADING'})
             console.log('inside fetch Apps error catch error: ');
@@ -42,6 +43,34 @@ export function fetchUser() {
             dispatch({type: 'STOP_LOADING'})
         }).catch(error => {
             console.log('fetch user error');
+            console.log(error);
+        });
+
+    };
+}
+
+export function getBeacon() {
+    return function(dispatch) {
+        xhrDashBoardClient.get('/beacon/get').then(response => {
+            dispatch({type: 'USER_BEACONS', payload: response.data})
+
+        }).catch(error => {
+            console.log('fetch beacons error');
+            console.log(error);
+        });
+
+    };
+}
+
+export function updateBeacon(beacons, field) {
+    return function(dispatch) {
+        if (!beacons[field])
+            beacons[field] = true;
+        xhrDashBoardClient.post('/beacon/update', beacons).then(response => {
+            dispatch({type: 'USER_BEACONS', payload: response.data})
+
+        }).catch(error => {
+            console.log('update beacons error');
             console.log(error);
         });
 
@@ -275,7 +304,7 @@ export const exitApp = (appId, userId) => {
         dispatch({type: 'START_LOADING'})
         xhrDashBoardClient.delete('/app/' + appId + '/removedeveloper/' + userId).then(response => {
             dispatch(fetchApps())
-            showAlert('success',"Removed from app.")
+            showAlert('success', "Removed from app.")
         }).catch(error => {
             dispatch({type: 'STOP_LOADING'})
             console.log('inside delete dev error catch error: ');

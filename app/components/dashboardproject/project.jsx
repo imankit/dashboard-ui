@@ -1,9 +1,9 @@
 'use strict';
 
-import React, { PropTypes } from 'react';
+import React, {PropTypes} from 'react';
 import ProjectName from './projectname.js';
 import Progressbar from './progressbar.jsx';
-import { Modal, Button } from 'react-bootstrap';
+import {Modal, Button} from 'react-bootstrap';
 import OptionsModal from './optionsModal';
 
 import IconDelete from 'material-ui/svg-icons/action/delete';
@@ -12,7 +12,7 @@ import Key from 'material-ui/svg-icons/communication/vpn-key';
 import PersonAdd from 'material-ui/svg-icons/social/person-add';
 import Icon from 'material-ui/svg-icons/file/cloud';
 import ManageApp from 'material-ui/svg-icons/navigation/apps';
-import { grey500, blue500, grey300 } from 'material-ui/styles/colors';
+import {grey500, blue500, grey300} from 'material-ui/styles/colors';
 import ReactTooltip from 'react-tooltip';
 import DeleteApp from './deleteApp';
 import Exit from 'material-ui/svg-icons/action/exit-to-app';
@@ -48,25 +48,25 @@ const Project = React.createClass({
     },
 
     close() {
-        this.setState({ showModal: false });
+        this.setState({showModal: false});
     },
     closeDeleteModal() {
-        this.setState({ showDeleteModal: false });
+        this.setState({showDeleteModal: false});
     },
     closeUpgradeModal() {
-        this.setState({ showUpgradeModal: false });
+        this.setState({showUpgradeModal: false});
     },
     open1() {
-        this.setState({ showModal: true, selectedTab: "addDev", displayText: "Add Developers" });
+        this.setState({showModal: true, selectedTab: "addDev", displayText: "Add Developers"});
     },
     open2() {
-        this.setState({ showModal: true, selectedTab: "keys", displayText: "App Keys", icon: "ion ion-key" });
+        this.setState({showModal: true, selectedTab: "keys", displayText: "App Keys", icon: "ion ion-key"});
     },
     open3() {
-        this.setState({ showUpgradeModal: true });
+        this.setState({showUpgradeModal: true});
     },
     delete() {
-        this.setState({ showDeleteModal: true });
+        this.setState({showDeleteModal: true});
     },
 
     isAppAdmin() {
@@ -77,8 +77,8 @@ const Project = React.createClass({
     },
     handleChange(e) {
         if (e.target.value === "DELETE")
-            this.setState({ deleteButtonState: false });
-    }
+            this.setState({deleteButtonState: false});
+        }
     ,
     openProject(appId, key, name, from, e) {
         if (e.target !== this.refs.project)
@@ -86,7 +86,7 @@ const Project = React.createClass({
         this.props.onProjectClick(appId, key, name, from);
     },
 
-    render: function () {
+    render: function() {
 
         let planName = "";
         if (this.props.planId == 1)
@@ -99,39 +99,45 @@ const Project = React.createClass({
                     <div className="app-icon">
                         <Icon style={logoStyles} color={blue500}></Icon>
                     </div>
-                    <ProjectName name={this.props.name} appId={this.props.appId} />
-                    <Progressbar appId={this.props.appId} planId={this.props.planId} />
+                    <ProjectName name={this.props.name} appId={this.props.appId}/>
+                    <Progressbar appId={this.props.appId} planId={this.props.planId}/>
                 </div>
                 <div className="project-option">
                     <div >
-                        <ManageApp style={iconStyles} color={grey500} data-tip="Manage" onClick={() => this.props.onProjectClick(this.props.appId, this.props.keys.master, this.props.name, '/')} />
-                        {
-                            this.isAppAdmin()
-                                ? <div style={{ display: 'inline' }}>
-                                    <PersonAdd style={iconStyles} data-tip="Manage Developers" color={grey500} onClick={this.open1} />
-                                    <Key style={iconStyles} data-tip="Manage Keys" color={grey500} onClick={this.open2} />
-                                    <FileFileUpload style={iconStyles} data-tip="Upgrade Plan" color={grey500} onClick={this.open3} />
-                                    <IconDelete style={iconStyles} data-tip="Delete App" color={grey500} onClick={this.delete} />
+                        <span className={!this.props.beacons.tableDesignerLink
+                            ? "gps_ring manage_app_beacon"
+                            : 'hide'}></span>
+                        <ManageApp style={iconStyles} color={grey500} data-tip="Manage" onClick={() => this.props.onProjectClick(this.props.appId, this.props.keys.master, this.props.name, '/')}/> {this.isAppAdmin()
+                            ? <div style={{
+                                    display: 'inline'
+                                }}>
+                                    <PersonAdd style={iconStyles} data-tip="Manage Developers" color={grey500} onClick={this.open1}/>
+                                    <Key style={iconStyles} data-tip="Manage Keys" color={grey500} onClick={this.open2}/>
+                                    <FileFileUpload style={iconStyles} data-tip="Upgrade Plan" color={grey500} onClick={this.open3}/>
+                                    <IconDelete style={iconStyles} data-tip="Delete App" color={grey500} onClick={this.delete}/>
                                 </div>
-                                : <div style={{ display: 'inline' }}>
-                                    {/*call deletedev for exit*/}
-                                    <Exit style={iconStyles} data-tip="Remove Yourself" color={grey500} onClick={ () => this.props.onDeleteDev(this.props.appId) }/>
-                                    <Key style={iconStyles} data-tip="Manage Keys" color={grey500} onClick={this.open2} />
-                                    <FileFileUpload style={iconStyles} data-tip="Upgrade Plan" color={grey300} />
-                                    <IconDelete style={iconStyles} data-tip="Delete App" color={grey300} />
-                                </div>
-                        }
+                            : <div style={{
+                                display: 'inline'
+                            }}>
+                                {/*call deletedev for exit*/}
+                                <Exit style={iconStyles} data-tip="Remove Yourself" color={grey500} onClick={() => this.props.onDeleteDev(this.props.appId)}/>
+                                <Key style={iconStyles} data-tip="Manage Keys" color={grey500} onClick={this.open2}/>
+                                <FileFileUpload style={iconStyles} data-tip="Upgrade Plan" color={grey300}/>
+                                <IconDelete style={iconStyles} data-tip="Delete App" color={grey300}/>
+                            </div>
+}
 
                         <ReactTooltip place="bottom" type="dark" delayShow={100}/>
                     </div>
-                    
 
                     <Modal show={this.state.showModal} dialogClassName='options-modal' onHide={this.close}>
-                        <Modal.Header style={{ paddingTop: 10 }}>
+                        <Modal.Header style={{
+                            paddingTop: 10
+                        }}>
                             <Modal.Title>{this.state.displayText}
                                 <div className="modal-title-inner-text">
                                     Use keys to initialize your app.
-                                    </div>
+                                </div>
                             </Modal.Title>
                             <div className="modalicon" style={{
                                 paddingRight: 8,
@@ -148,27 +154,29 @@ const Project = React.createClass({
                                     <i className={this.state.icon
                                         ? this.state.icon
                                         : "ion-android-people"} style={{
-                                            fontSize: 30,
-                                            color: 'white'
-                                        }} />
+                                        fontSize: 30,
+                                        color: 'white'
+                                    }}/>
                                 </div>
                             </div>
                         </Modal.Header>
                         <Modal.Body>
-                            <OptionsModal id={this.props._id} appId={this.props.appId} masterKey={this.props.keys.master} clientKey={this.props.keys.js} planId={this.props.planId} developers={this.props.developers} invited={this.props.invited} selectedTab={this.state.selectedTab} />
+                            <OptionsModal id={this.props._id} appId={this.props.appId} masterKey={this.props.keys.master} clientKey={this.props.keys.js} planId={this.props.planId} developers={this.props.developers} invited={this.props.invited} selectedTab={this.state.selectedTab}/>
                         </Modal.Body>
                     </Modal>
 
                     {/*MODAL for delete and upgrade*/}
 
-                    { // only render component when its needed dont pollute DOM
-                        this.state.showDeleteModal ?
-                            <DeleteApp showDeleteModal={this.state.showDeleteModal} closeDeleteModal={this.closeDeleteModal} handleChange={this.handleChange} deleteButtonState={this.state.deleteButtonState} appId={this.props.appId} /> : ''
-                    }
-                    { // only render component when its needed dont pollute DOM
-                        this.state.showUpgradeModal ?
-                            <Upgrade appId={this.props.appId} planId={this.props.planId} show={this.state.showUpgradeModal} close={this.closeUpgradeModal} /> : ''
-                    }
+                    {// only render component when its needed dont pollute DOM
+                    this.state.showDeleteModal
+                        ? <DeleteApp showDeleteModal={this.state.showDeleteModal} closeDeleteModal={this.closeDeleteModal} handleChange={this.handleChange} deleteButtonState={this.state.deleteButtonState} appId={this.props.appId}/>
+                        : ''
+}
+                    {// only render component when its needed dont pollute DOM
+                    this.state.showUpgradeModal
+                        ? <Upgrade appId={this.props.appId} planId={this.props.planId} show={this.state.showUpgradeModal} close={this.closeUpgradeModal}/>
+                        : ''
+}
                 </div>
             </div>
         );
