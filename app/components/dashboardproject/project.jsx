@@ -15,8 +15,11 @@ import ManageApp from 'material-ui/svg-icons/navigation/apps';
 import {grey500, blue500, grey300} from 'material-ui/styles/colors';
 import ReactTooltip from 'react-tooltip';
 import DeleteApp from './deleteApp';
+import ExitApp from './exitApp';
 import Exit from 'material-ui/svg-icons/action/exit-to-app';
 import Upgrade from '../payment';
+
+import planList from '../../fakeAPI/plans'
 
 const iconStyles = {
     marginRight: 12,
@@ -37,6 +40,7 @@ const Project = React.createClass({
             showDeleteModal: false,
             showUpgradeModal: false,
             deleteButtonState: true,
+            showExitModal: false,
             selectedTab: (typeof this.props.selectedTab !== 'undefined')
                 ? this.props.selectedTab
                 : "addDev"
@@ -55,6 +59,9 @@ const Project = React.createClass({
     },
     closeUpgradeModal() {
         this.setState({showUpgradeModal: false});
+    },
+    closeExitModal() {
+        this.setState({showExitModal: false});
     },
     open1() {
         this.setState({showModal: true, selectedTab: "addDev", displayText: "Add Developers"});
@@ -75,8 +82,8 @@ const Project = React.createClass({
         } else
             return false
     },
-    handleChange(e) {
-        if (e.target.value === "DELETE")
+    handleChange(value, e) {
+        if (e.target.value === value)
             this.setState({deleteButtonState: false});
         }
     ,
@@ -85,12 +92,14 @@ const Project = React.createClass({
             return;
         this.props.onProjectClick(appId, key, name, from);
     },
+    exitApp() {
+        // this.props.onDeleteDev(this.props.appId)
+        this.setState({showExitModal: true});
+    },
 
     render: function() {
 
-        let planName = "";
-        if (this.props.planId == 1)
-            planName = "Free Plan";
+        let planName = planList[this.props.planId - 1].label;
 
         return (
             <div className="project" ref="project">
@@ -120,7 +129,7 @@ const Project = React.createClass({
                                 display: 'inline'
                             }}>
                                 {/*call deletedev for exit*/}
-                                <Exit style={iconStyles} data-tip="Remove Yourself" color={grey500} onClick={() => this.props.onDeleteDev(this.props.appId)}/>
+                                <Exit style={iconStyles} data-tip="Remove Yourself" color={grey500} onClick={this.exitApp}/>
                                 <Key style={iconStyles} data-tip="Manage Keys" color={grey500} onClick={this.open2}/>
                                 <FileFileUpload style={iconStyles} data-tip="Upgrade Plan" color={grey300}/>
                                 <IconDelete style={iconStyles} data-tip="Delete App" color={grey300}/>
@@ -175,6 +184,12 @@ const Project = React.createClass({
                     {// only render component when its needed dont pollute DOM
                     this.state.showUpgradeModal
                         ? <Upgrade appId={this.props.appId} planId={this.props.planId} show={this.state.showUpgradeModal} close={this.closeUpgradeModal}/>
+                        : ''
+}
+
+                    {// only render component when its needed dont pollute DOM
+                    this.state.showExitModal
+                        ? <ExitApp handleChange={this.handleChange} deleteButtonState={this.state.deleteButtonState} appId={this.props.appId} show={this.state.showExitModal} close={this.closeExitModal} onDeleteDev={this.props.onDeleteDev}/>
                         : ''
 }
                 </div>
