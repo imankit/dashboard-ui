@@ -1,0 +1,102 @@
+.feedback-textarea {
+    padding: 10px;
+    overflow: hidden;
+    display: block;
+    margin-top: 2px;
+    border: 0px;
+    resize: none;
+    height: 85px;
+}
+.feedback-textarea:focus {
+    outline: none !important;
+}
+
+.feedback-cancelbtn,.feedback-cancelbtn:focus,.feedback-cancelbtn:active,.feedback-cancelbtn:hover {
+    float: left;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    width: 66px!important;
+    background-color: white;
+    border: 1px solid #e8e8e8;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+    padding: 5px;
+    border-radius: 6px;
+    outline: none !important;
+    font-size: 14px;
+    margin-top: -12px;
+}
+
+.feedback-sendbtn,.feedback-sendbtn:focus,.feedback-sendbtn:active,.feedback-sendbtn:hover {
+    float: right;
+    margin-right: 10px;
+    background-color: #6080ff;
+    border: 0px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+    padding: 5px;
+    border-radius: 6px;
+    outline: none !important;
+    color: white;
+    font-size: 14px;
+    margin-top: -12px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.hide {
+    display: none;
+}
+
+.feedbackSent {
+    width: 256px;
+}
+
+.thanks-text {
+    color: #549afc;
+    display: block;
+    text-align: center;
+    font-weight: 500;
+}
+
+.note-text {
+    font-size: 14px;
+    text-align: center;
+    display: block;
+    margin-bottom: 19px;
+    color: grey;
+}
+
+.optionBtn {
+    width: 100%;
+    border: 0px solid #EEE;
+    height: 35px;
+    background-color: #FFFFFF;
+    color: #5e5e5e;
+    margin-top: 0px;
+    text-align: left;
+    padding-left: 12px;
+    font-size: 14px;
+}
+
+.optionBtn:hover {
+    background-color: #eff1f5;
+    color: black;
+}
+
+.optionpop {
+    min-width: 220px !important;
+    min-height: 70px !important;
+    border-radius: 5px !important;
+    background-color: #f3faff !important;
+    overflow: visible !important;
+    font-family: Roboto !important;
+}
+
+.optionpop>div {
+    overflow: visible !important;
+}
+
+.sendBtnDisabled {
+    float: right;
+    margin-right: 10px;
+    overflow: hidden;
+}

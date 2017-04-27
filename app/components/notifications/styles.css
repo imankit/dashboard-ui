@@ -136,8 +136,10 @@
 
 .red-dot {
     background: red;
-    width: 4px;
-    height: 4px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    float: right;
+    position: absolute;
+    left: 31px;
+    top: 9px;
 }

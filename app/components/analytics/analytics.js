@@ -18,7 +18,7 @@ class Analytics extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            selected:'api'
+            
         }
     }
     static get contextTypes() {
@@ -35,50 +35,16 @@ class Analytics extends React.Component {
             this.props.fetchAnalyticsStorage(this.props.appData.appId)
         }
     }
-    selectType(which){
-        this.setState({selected:which})
-    }
     componentWillUnmount(){
         this.props.resetAnalytics()
     }
     render() {
-        let componentToRender = <RefreshIndicator
-                                    size={50}
-                                    left={70}
-                                    top={0}
-                                    status="loading"
-                                    className="loadermain"
-                                />
-        if(this.state.selected == 'api' && this.props.analyticsApi.totalApiCount) componentToRender = <APIAnalytics analyticsApi={this.props.analyticsApi}/>
-        if(this.state.selected == 'storage' && this.props.analyticsStorage.totalStorage) componentToRender = <StorageAnalytics analyticsStorage={this.props.analyticsStorage}/>
-
         return (
             <div id= "" style={{backgroundColor: '#FFF'}}>
                 <div className="cache">
-                    <div className="buttondivanalytics">
-                        <FlatButton
-                          label="API"
-                          labelPosition="before"
-                          primary={true}
-                          icon={<APIIcon />}
-                          className="apistroagebtns"
-                          backgroundColor = { this.state.selected == 'api' ? '#00BCD4' : '#EFF1F5' }
-                          onClick={ this.selectType.bind(this,'api') }
-                          style={{color:(this.state.selected == 'api' ? 'white' : '#00BCD4')}}
-                        />
-                        <FlatButton
-                          label="STORAGE"
-                          labelPosition="before"
-                          primary={true}
-                          icon={<StorageIcon />}
-                          className="apistroagebtns"
-                          backgroundColor = { this.state.selected == 'storage' ? '#00BCD4' : '#EFF1F5' }
-                          onClick={ this.selectType.bind(this,'storage') }
-                          style={{color:(this.state.selected == 'storage' ? 'white' : '#00BCD4')}}
-                        />                    
-                    </div>
                     <div className="chartcontainer">
-                        { componentToRender }
+                        <APIAnalytics analyticsApi={this.props.analyticsApi}/>
+                        <StorageAnalytics analyticsStorage={this.props.analyticsStorage}/>
                     </div>
                 </div>
             </div>

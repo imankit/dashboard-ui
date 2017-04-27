@@ -1,7 +1,15 @@
 import React from 'react';
 import {Modal, Button, FormControl} from 'react-bootstrap';
-import {addApp} from '../../actions';
+import {addApp, updateBeacon} from '../../actions';
 import {connect} from 'react-redux';
+import {RefreshIndicator, IconButton} from 'material-ui';
+
+const style = {
+    refresh: {
+        display: 'inline-block',
+        position: 'relative'
+    }
+};
 
 class Projecthead extends React.Component {
 
@@ -21,10 +29,14 @@ class Projecthead extends React.Component {
 
     createApp = () => {
         if (this.state.value) {
-            this.props.dispatch(addApp(this.state.value));
-            this.setState({showModal: false, value: ''});
+            this.props.dispatch(addApp(this.state.value)).then(() => {
+                this.setState({showModal: false, value: ''});
+                this.props.dispatch(updateBeacon(beacons, 'firstApp'))
+            }, (err) => {
+                this.setState({showModal: false, value: ''});
+            })
         }
-    };
+    }
 
     render() {
         return (
@@ -33,7 +45,12 @@ class Projecthead extends React.Component {
                     fontFamily: 'Signika',
                     color: '#555555'
                 }}>Your Apps</h1>
-                <div className="btn" onClick={this.open}>+ New App</div>
+                <div className="btn" onClick={this.open}>
+                    <div className={!this.props.beacons.firstApp
+                        ? "gps_ring create_app_beacon"
+                        : 'hide'}></div>
+
+                    + New App</div>
                 <Modal show={this.state.showModal} onHide={this.close}>
                     <Modal.Header className="modal-header-style">
                         <Modal.Title>
@@ -41,7 +58,8 @@ class Projecthead extends React.Component {
                                 New App
                             </span>
                             <i className="fa fa-cloud modal-icon-style pull-right"></i>
-                            <div className="modal-title-inner-text">Create a new app.</div>
+                            <div className="modal-title-inner-text">
+                                Create a new app.</div>
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body >
@@ -49,8 +67,15 @@ class Projecthead extends React.Component {
                         <input className="" value={this.state.value} id="createApp" placeholder="Pick a good name" onChange={this.handleChange} required={true}/>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button className="btn-primary create-btn" onClick={this.createApp}>Create App</Button>
-
+                        {this.props.loading
+                            ? <RefreshIndicator size={40} left={-10} top={0} status="loading" style={style.refresh}/>
+                            : <Button className="btn-primary create-btn" onClick={this.createApp}>
+                                <div className={!this.props.beacons.firstApp
+                                    ? "gps_ring create_app_beacon"
+                                    : 'hide'}></div>
+                                Create App
+                            </Button>
+}
                     </Modal.Footer>
                 </Modal>
 
@@ -59,4 +84,8 @@ class Projecthead extends React.Component {
     }
 }
 
-export default connect(null, null)(Projecthead);
+const mapStateToProps = (state) => {
+    return {loading: state.loader.modal_loading, beacons: state.beacons};
+};
+
+export default connect(mapStateToProps, null)(Projecthead);

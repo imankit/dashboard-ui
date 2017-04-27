@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import Routes from './routes';
 
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import { blue500 } from 'material-ui/styles/colors';
+import {blue500} from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
@@ -21,11 +21,11 @@ const muiTheme = getMuiTheme({
         primary1Color: blue500,
         primary2Color: blue500,
         accent1Color: blue500,
-        pickerHeaderColor: blue500,
-    },
+        pickerHeaderColor: blue500
+    }
 });
 
-
 window.onload = () => {
-    ReactDOM.render(<MuiThemeProvider muiTheme={muiTheme}><Routes /></MuiThemeProvider>, document.getElementById('app'));
+    ReactDOM.render(
+        <MuiThemeProvider muiTheme={muiTheme}><Routes/></MuiThemeProvider>, document.getElementById('app'));
 };

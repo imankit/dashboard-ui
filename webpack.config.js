@@ -1,7 +1,8 @@
 var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var isHosted = process.env['CLOUDBOOST_HOSTED'];
 
-console.log('isHosted : ' + !!process.env['CLOUDBOOST_HOSTED'])
+console.log('isHosted : ' + isHosted)
 
 var config = {
    entry: './app/index.js',
@@ -10,6 +11,8 @@ var config = {
       path:'./public',
       filename: '/client.min.js',
    },
+   debug: isHosted === 'false' || !isHosted ? true : false,
+   devtool: isHosted === 'false' || !isHosted ? "#eval-source-map" : false, 
    module: {
       loaders: [
           {
@@ -42,7 +45,7 @@ var config = {
           }
       ]
    },
-    plugins: (process.env['CLOUDBOOST_HOSTED'] == "true" || process.env['CLOUDBOOST_HOSTED'] == true) ?
+    plugins: (isHosted == "true" || isHosted == true) ?
         [
             new webpack.optimize.UglifyJsPlugin({
                 compress: {
