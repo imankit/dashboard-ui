@@ -7,7 +7,11 @@ import {RefreshIndicator, IconButton} from 'material-ui';
 const style = {
     refresh: {
         display: 'inline-block',
-        position: 'relative'
+        position: 'relative',
+        background: 'none',
+        boxShadow: 'none',
+        float: 'right',
+        marginLeft: '40px'
     }
 };
 
@@ -31,7 +35,7 @@ class Projecthead extends React.Component {
         if (this.state.value) {
             this.props.dispatch(addApp(this.state.value)).then(() => {
                 this.setState({showModal: false, value: ''});
-                this.props.dispatch(updateBeacon(beacons, 'firstApp'))
+                this.props.dispatch(updateBeacon(this.props.beacons, 'firstApp'))
             }, (err) => {
                 this.setState({showModal: false, value: ''});
             })
@@ -68,7 +72,10 @@ class Projecthead extends React.Component {
                     </Modal.Body>
                     <Modal.Footer>
                         {this.props.loading
-                            ? <RefreshIndicator size={40} left={-10} top={0} status="loading" style={style.refresh}/>
+                            ? <Button className="btnloadingg btn-primary create-btn " onClick={this.createApp}>
+                                    <RefreshIndicator loadingColor="#ececec" size={40} left={-10} top={0} status="loading" style={style.refresh}/>
+                                    <span className="createAppLabel">Create App</span>
+                                </Button>
                             : <Button className="btn-primary create-btn" onClick={this.createApp}>
                                 <div className={!this.props.beacons.firstApp
                                     ? "gps_ring create_app_beacon"

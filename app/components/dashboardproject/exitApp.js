@@ -6,8 +6,6 @@
  */
 'use strict';
 import React from 'react';
-import {connect} from 'react-redux';
-import {deleteApp} from '../../actions';
 import {
     FormGroup,
     InputGroup,
@@ -37,33 +35,25 @@ class DeleteApp extends React.Component {
 
         return (
 
-            <Modal show={this.props.showDeleteModal} onHide={this.props.closeDeleteModal}>
+            <Modal show={this.props.show} onHide={this.props.close}>
                 <Modal.Header className="delete-modal-header-style">
                     <Modal.Title>
-                        Delete App
-                        <img className="delete-modal-icon-style pull-right"></img>
+                        Exit App
+                        <img className="exit-app-modal-icon-style pull-right"></img>
                         <div className="modal-title-inner-text">Please type
-                            <strong>"DELETE"</strong>&nbsp; in the box below.
+                            <strong>"REMOVE"</strong>&nbsp; in the box below.
                         </div>
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="delete-modal-body">
-                    <input onChange={this.props.handleChange.bind(this, 'DELETE')} className="" value={this.state.value} id="createApp" placeholder='Please type "DELETE"' required={true}/>
+                    <input onChange={this.props.handleChange.bind(this, 'REMOVE')} className="" value={this.state.value} id="createApp" placeholder='Please type "REMOVE"' required={true}/>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button className="btn-primary delete-btn" disabled={this.props.deleteButtonState} onClick={() => this.props.onDelete(this.props.appId)}>Delete App</Button>
+                    <Button className="btn-primary delete-btn" disabled={this.props.deleteButtonState} onClick={() => this.props.onDeleteDev(this.props.appId)}>Exit</Button>
                 </Modal.Footer>
             </Modal>
         );
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onDelete: (appId) => {
-            dispatch(deleteApp(appId));
-        }
-    };
-};
-
-export default connect(null, mapDispatchToProps)(DeleteApp);
+export default(DeleteApp);

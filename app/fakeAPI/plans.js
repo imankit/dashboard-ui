@@ -167,59 +167,5 @@ export default[
                 ]
             }
         ]
-    }, {
-        id : 4,
-        label : "Enterprise",
-        priceDescription : "per month",
-        usage : [
-            {
-                category: "DATABASE",
-                features: [
-                    {
-                        type: "text",
-                        name: "API Calls",
-                        limit: {
-                            show: true,
-                            label: "Custom",
-                            value: 5000000
-                        }
-                    }, {
-                        type: "text",
-                        name: "Storage",
-                        limit: {
-                            show: true,
-                            label: "Custom",
-                            value: 30
-                        }
-                    }
-                ]
-            }, {
-                category: "REALTIME",
-                features: [
-                    {
-                        name: "Connections",
-                        type: "text",
-                        limit: {
-                            show: true,
-                            label: "Custom",
-                            value: 10000
-                        }
-                    }
-                ]
-            }, {
-                category: "MISC",
-                features: [
-                    {
-                        name: "MongoDB Access",
-                        type: "boolean",
-                        limit: {
-                            show: true,
-                            label: "",
-                            value: 1
-                        }
-                    }
-                ]
-            }
-        ]
     }
 ]
