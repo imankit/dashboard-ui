@@ -142,6 +142,22 @@ body {
     font-family: "Signika";
 }
 
+.app-selector-img {
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.app-list-item.selected-app {
+    background: #fafafa!important;
+    color: black!important;
+}
+
+.app-list-item {
+    border-bottom: 1px solid #f3f7fd!important;
+    border-top: 1px solid #f3f7fd!important;
+    color: #858585!important;
+}
+
 .__react_component_tooltip.type-dark {
     background: #4e4e4e!important;
     color: white!important;
