@@ -5,7 +5,6 @@ import ChangeField from './ChangeField';
 
 import FlatButton from 'material-ui/FlatButton'
 import RefreshIndicator from 'material-ui/RefreshIndicator';
-import ReactTooltip from 'react-tooltip';
 import Dialog from 'material-ui/Dialog';
 import {
     Table,
@@ -28,7 +27,7 @@ const profileStyle = {
         letterSpacing: .03,
         paddingRight: 0,
         paddingLeft: 0,
-        width: 140
+        width: 150
     },
     profileLabelOutput: {
         fontWeight: 400,
@@ -38,7 +37,7 @@ const profileStyle = {
         textAlign: 'left',
         letterSpacing: .03,
         paddingRight: 0,
-        paddingLeft: 10
+        paddingLeft: 0
     },
     cutPadding: {
         paddingLeft: 0,
@@ -54,9 +53,6 @@ class Profile extends React.Component {
             oldPassword: '',
             newPassword: '',
             confirmPassword: '',
-            name: this.props.currentUser.user
-                ? this.props.currentUser.user.name
-                : '',
             progress: false
         }
     }
@@ -74,23 +70,23 @@ class Profile extends React.Component {
         if (fileId)
             this.props.deleteUserImage(fileId)
     }
-    changeUserData() {
-        if ((this.state.oldPassword && this.state.newPassword) || this.state.name) {
+    changePassword() {
+        if (this.state.oldPassword && this.state.newPassword) {
             if (this.state.newPassword === this.state.confirmPassword) {
                 this.setState({progress: true})
-                updateUser(this.state.name, this.state.oldPassword, this.state.newPassword).then(() => {
+                updateUser(this.props.currentUser.user.name, this.state.oldPassword, this.state.newPassword).then(() => {
                     this.setState({oldPassword: '', newPassword: '', confirmPassword: '', progress: false})
-                    // showAlert('success', "User Update Success.")
+                    showAlert('success', "Password Update Success.")
                 }, (err) => {
                     if (err.response) {
-                        let error = 'User Update Error'
+                        let error = 'Invalid Password'
                         showAlert('error', error)
-                    }
+                    } else
+                        showAlert('success', "Password Update Success.")
                     this.setState({oldPassword: '', newPassword: '', confirmPassword: '', progress: false})
                 })
-            } else {
+            } else
                 showAlert('error', 'New passwords does not match.')
-            }
         } else {
             showAlert('error', 'Please fill all the fields.')
         }
@@ -99,9 +95,6 @@ class Profile extends React.Component {
         this.state[which] = e.target.value
         this.setState(this.state)
     }
-    keyUpHandler() {
-        this.changeUserData();
-    }
     render() {
         let userImage = "/assets/images/user_image.png"
         let fileId = null
@@ -109,16 +102,14 @@ class Profile extends React.Component {
             userImage = this.props.currentUser.file.document.url
             fileId = this.props.currentUser.file.document.id
         }
-        const actionsBtn = (<FlatButton label="Save" primary={true} disabled={this.state.progress} onTouchTap={this.changeUserData.bind(this)}/>);
+        const actionsBtn = (<FlatButton label="Save" primary={true} disabled={this.state.progress} onTouchTap={this.changePassword.bind(this)}/>);
         let profilepicobj = (
             <div className="edit-profile-photo">
                 <div className="user-icon medium" style={{
                     backgroundImage: `url('${userImage}')`
                 }} onClick={this.openChangeFile.bind(this)}>
                     {this.props.loading
-                        ? <div className="profileimageloader">
-                                <img src="/assets/images/rolling.svg" alt=""/>
-                            </div>
+                        ? <RefreshIndicator size={30} left={3} top={3} status="loading" className="profileimageloader"/>
                         : ''
 }
                     <input type="file" style={{
@@ -143,13 +134,16 @@ class Profile extends React.Component {
                         </TableRow>
                         <TableRow className="profile-row">
                             <TableRowColumn style={profileStyle.profileLabel}>Name</TableRowColumn>
-                            <TableRowColumn style={profileStyle.cutPadding}>
-                                <ChangeField field="name" value={this.state.name} changeHandler={this.changeHandler.bind(this)} keyUpHandler={this.keyUpHandler.bind(this)}/>
+                            <TableRowColumn style={profileStyle.profileLabelOutput}>
+                                {this.props.currentUser.user
+                                    ? this.props.currentUser.user.name
+                                    : ''
+}
                             </TableRowColumn>
                         </TableRow>
                         <TableRow className="profile-row">
                             <TableRowColumn style={profileStyle.profileLabel}>Email</TableRowColumn>
-                            <TableRowColumn style={profileStyle.profileLabelOutput} data-tip={this.props.currentUser.user.email}>
+                            <TableRowColumn style={profileStyle.profileLabelOutput}>
                                 {this.props.currentUser.user
                                     ? this.props.currentUser.user.email
                                     : ''
@@ -159,13 +153,13 @@ class Profile extends React.Component {
                         <TableRow className="profile-row">
                             <TableRowColumn style={profileStyle.profileLabel}>Old Password</TableRowColumn>
                             <TableRowColumn style={profileStyle.cutPadding}>
-                                <ChangeField field="oldPassword" value={this.state.oldPassword} changeHandler={this.changeHandler.bind(this)} keyUpHandler={this.keyUpHandler.bind(this)}/>
+                                <ChangeField field="oldPassword" value={this.state.oldPassword} changeHandler={this.changeHandler.bind(this)}/>
                             </TableRowColumn>
                         </TableRow>
                         <TableRow className="profile-row">
                             <TableRowColumn style={profileStyle.profileLabel}>New Password</TableRowColumn>
                             <TableRowColumn style={profileStyle.cutPadding}>
-                                <ChangeField field="newPassword" value={this.state.newPassword} changeHandler={this.changeHandler.bind(this)} keyUpHandler={this.keyUpHandler.bind(this)}/>
+                                <ChangeField field="newPassword" value={this.state.newPassword} changeHandler={this.changeHandler.bind(this)}/>
                             </TableRowColumn>
                         </TableRow>
                         <TableRow className="profile-row" style={{
@@ -173,12 +167,11 @@ class Profile extends React.Component {
                         }}>
                             <TableRowColumn style={profileStyle.profileLabel}>Confirm Password</TableRowColumn>
                             <TableRowColumn style={profileStyle.cutPadding}>
-                                <ChangeField field="confirmPassword" value={this.state.confirmPassword} changeHandler={this.changeHandler.bind(this)} keyUpHandler={this.keyUpHandler.bind(this)}/>
+                                <ChangeField field="confirmPassword" value={this.state.confirmPassword} changeHandler={this.changeHandler.bind(this)}/>
                             </TableRowColumn>
                         </TableRow>
                     </TableBody>
                 </Table>
-                <ReactTooltip place="bottom" type="dark" delayShow={100}/>
             </Dialog>
         );
     }
