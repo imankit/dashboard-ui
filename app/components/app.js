@@ -24,20 +24,17 @@ class App extends React.Component {
         return (
             <div>
                 <Toolbar isDashboardMainPage={['/','/admin','/profile'].indexOf(this.props.location.pathname) !== -1} />
-                <div>
-                    {this.props.children}
-                    {
-                        this.props.loading ?
-                            <RefreshIndicator
-                                size={50}
-                                left={70}
-                                top={0}
-                                status="loading"
-                                className="loadermain"
-                            />
-                            : ''
-                    }
-                </div>
+                {
+                    this.props.loading ?
+                        <RefreshIndicator
+                            size={50}
+                            left={70}
+                            top={0}
+                            status="loading"
+                            className="loadermain"
+                        />
+                        : this.props.children
+                }
                 <Footer id="app-footer" />
             </div>
         );
