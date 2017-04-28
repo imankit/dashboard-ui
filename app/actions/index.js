@@ -85,7 +85,6 @@ export function saveUserImage(file) {
         fd.append('file', file)
         xhrDashBoardClient.post('/file', fd).then((data) => {
             dispatch(fetchUser())
-            // showAlert('success', "User image updated.")
         }, (err) => {
             console.log(err)
         })
@@ -173,9 +172,7 @@ export const getServerSettings = () => {
 
 export const upsertAPI_URL = (apiURL) => {
     return function(dispatch) {
-        xhrDashBoardClient.post('/server/url', {apiURL: apiURL}).then(response => {
-            showAlert('success', "URL Updated")
-        }).catch(error => {
+        xhrDashBoardClient.post('/server/url', {apiURL: apiURL}).then(response => {}).catch(error => {
             showAlert('error', "URL Update Error")
             console.log('update url error : ');
             console.log(error);
@@ -213,7 +210,6 @@ export const updateUserActive = (userId, isActive) => {
     return function(dispatch) {
         xhrDashBoardClient.get('/user/active/' + userId + '/' + isActive).then(response => {
             dispatch(getUsersBySkipLimit(0, 20, []))
-            showAlert('success', "User Updated")
         }).catch(error => {
             showAlert('error', "Error Updating User")
             console.log('update user error : ');
@@ -226,7 +222,6 @@ export const updateUserRole = (userId, isAdmin) => {
     return function(dispatch) {
         xhrDashBoardClient.get('/user/changerole/' + userId + '/' + isAdmin).then(response => {
             dispatch(getUsersBySkipLimit(0, 20, []))
-            showAlert('success', "User Updated")
         }).catch(error => {
             showAlert('error', "Error Updating User")
             console.log('update user error : ');
@@ -256,7 +251,6 @@ export const addUser = (name, email, password, isAdmin) => {
             isAdmin: isAdmin
         }).then(response => {
             dispatch(getUsersBySkipLimit(0, 20, []))
-            showAlert('success', "User Added")
         }).catch(error => {
             showAlert('error', "Error Adding User")
             console.log('add user error : ');
@@ -301,12 +295,13 @@ export const deleteDev = (appId, userId) => {
 
 export const exitApp = (appId, userId) => {
     return function(dispatch) {
-        dispatch({type: 'START_LOADING'})
+        dispatch({type: 'START_LOADING_MODAL'})
         xhrDashBoardClient.delete('/app/' + appId + '/removedeveloper/' + userId).then(response => {
             dispatch(fetchApps())
-            showAlert('success', "Removed from app.")
+
         }).catch(error => {
-            dispatch({type: 'STOP_LOADING'})
+            showAlert('error', "Error while removing from app.")
+            dispatch({type: 'STOP_LOADING_MODAL'})
             console.log('inside delete dev error catch error: ');
             console.log(error);
         });
@@ -329,7 +324,6 @@ export const changeDeveloperRole = (appId, userId, role) => {
     return function(dispatch) {
         xhrDashBoardClient.get('/app/' + appId + '/changerole/' + userId + '/' + role).then(response => {
             dispatch(fetchApps())
-            showAlert('success', "Developer role updated.")
         }).catch(error => {
             showAlert('error', "Error Updating Developer role.")
             console.log('change role error : ');
@@ -393,7 +387,7 @@ export const genClientKey = (appId) => {
 export const deleteApp = (appId) => {
 
     return function(dispatch) {
-        dispatch({type: 'START_LOADING'})
+        dispatch({type: 'START_LOADING_MODAL'})
         xhrDashBoardClient.delete('/app/' + appId).then(response => {
             dispatch({
                 type: 'DELETE_APP',
@@ -401,7 +395,7 @@ export const deleteApp = (appId) => {
                     appId: appId
                 }
             });
-            dispatch({type: 'STOP_LOADING'})
+            dispatch({type: 'STOP_LOADING_MODAL'})
         }).catch(error => {
             console.log('inside delete app error catch error: ');
             console.log(error);
@@ -981,7 +975,6 @@ export function updateSettings(appId, masterKey, categoryName, settingsObject) {
         postObject.settings = settingsObject
 
         xhrCBClient.put('/settings/' + appId + '/' + categoryName, postObject).then(response => {
-            showAlert('success', "Settings Updated.")
             dispatch(fetchAppSettings(appId, masterKey))
         }, err => {
             showAlert('error', "Error Updating App settings.")
@@ -998,7 +991,7 @@ export function upsertAppSettingsFile(appId, masterKey, fileObj, category, setti
         postObject.append('key', masterKey)
 
         xhrCBClient.put('/settings/' + appId + '/file/' + category, postObject).then(response => {
-            showAlert('success', "Image Update Success.")
+
             if (category == 'general') {
                 settingsObject.appIcon = response.data
             }
@@ -1024,7 +1017,6 @@ export function exportDatabase(appId, masterKey) {
 
         xhrCBClient.post("/backup/" + appId + "/exportdb", postObject).then(response => {
             dispatch({type: 'STOP_SECONDARY_LOADING'})
-            showAlert('success', "Database Export Success.")
             let blob = new Blob([JSON.stringify(response.data)], {type: "text/plain;charset=utf-8"})
             saveAs(blob, "dump.json")
         }, err => {
@@ -1043,7 +1035,6 @@ export function importDatabase(appId, masterKey, fileObj) {
 
         xhrCBClient.post("/backup/" + appId + "/importdb", postObject).then(response => {
             dispatch({type: 'STOP_SECONDARY_LOADING'})
-            showAlert('success', "Database Imported Success.")
         }, err => {
             showAlert('error', "Error Importing Database.")
             dispatch({type: 'STOP_SECONDARY_LOADING'})

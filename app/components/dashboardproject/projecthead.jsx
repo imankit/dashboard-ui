@@ -30,6 +30,10 @@ class Projecthead extends React.Component {
     open = () => this.setState({showModal: true});
 
     handleChange = (e) => this.setState({value: e.target.value});
+    handleKeyChange(e) {
+        if (e.keyCode === 13)
+            this.createApp();
+        }
 
     createApp = () => {
         if (this.state.value) {
@@ -63,17 +67,18 @@ class Projecthead extends React.Component {
                             </span>
                             <i className="fa fa-cloud modal-icon-style pull-right"></i>
                             <div className="modal-title-inner-text">
-                                Create a new app.</div>
+                                Create a new app.
+                            </div>
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body >
 
-                        <input className="" value={this.state.value} id="createApp" placeholder="Pick a good name" onChange={this.handleChange} required={true}/>
+                        <input className="" value={this.state.value} id="createApp" placeholder="Pick a good name" onChange={this.handleChange} onKeyUp={this.handleKeyChange.bind(this)} required={true}/>
                     </Modal.Body>
                     <Modal.Footer>
                         {this.props.loading
                             ? <Button className="btnloadingg btn-primary create-btn " onClick={this.createApp}>
-                                    <RefreshIndicator loadingColor="#ececec" size={40} left={-10} top={0} status="loading" style={style.refresh}/>
+                                    <RefreshIndicator loadingColor="#ececec" size={35} left={-10} top={0} status="loading" style={style.refresh}/>
                                     <span className="createAppLabel">Create App</span>
                                 </Button>
                             : <Button className="btn-primary create-btn" onClick={this.createApp}>
