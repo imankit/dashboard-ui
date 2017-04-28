@@ -98,7 +98,7 @@ class ToolBar extends React.Component {
             allApps = this.props.apps.map((app, i) => {
                 let label = (
                     <div>
-                        <img height="20px" className="app-selector-img" src={SERVER_URL + '/appfile/' + app.id + '/icon'} onError={this.setImgFallbackUrl}></img>
+                        <img height="20px" className="app-selector-img" src={SERVER_URL + '/appfile/' + app.appId + '/icon'} onError={this.setImgFallbackUrl}></img>
                         {app.name}</div>
                 );
                 let thisObj = this;
@@ -109,14 +109,14 @@ class ToolBar extends React.Component {
                         "display": "inline-flex",
                         "alignItems": "center"
                     }} value={i} primaryText={app.name} key={i} label={label} onClick={this.redirectToApp.bind(this, app.appId)}>
-                        <img height="20px" className="app-selector-img" src={SERVER_URL + '/appfile/' + app.id + '/icon'} onError={this.setImgFallbackUrl}></img>
+                        <img height="20px" className="app-selector-img" src={SERVER_URL + '/appfile/' + app.appId + '/icon'} onError={this.setImgFallbackUrl}></img>
                     </MenuItem>
                 );
             })
         }
         let value = 0
-        if (this.props.allApps) {
-            value = _.pluck(this.props.apps, 'id').indexOf(this.props.currentApp);
+        if (this.props.apps) {
+            value = _.pluck(this.props.apps, 'appId').indexOf(this.props.currentApp);
         }
         return (
             <div id="nav-dash" style={{
