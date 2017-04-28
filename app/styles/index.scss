@@ -209,7 +209,8 @@ body {
 }
 
 .add-card-fullwidth {
-    width: 85%!important;
+    width: 60%!important;
+    margin-left: 19% !important;
 }
 
 #createApp {
@@ -289,6 +290,16 @@ body {
 .delete-btn {
     background-color: #D60A00!important;
     border-color: #D60A00!important;
+
+    .deleteapplabel {
+        position: relative;
+        top: 3px;
+        left: 10px;
+    }
+}
+
+button.delete-btn.btnloading {
+    height: 40px!important;
 }
 
 button.delete-btn:hover {
@@ -829,9 +840,10 @@ button.delete-btn:hover {
 .btnloadingg {
     background-color: #cccccc!important;
     border-color: #cccccc!important;
+    padding: 0;
 
     .createAppLabel {
-        top: 10px;
+        top: 8px;
         left: 17px;
         position: relative;
     }
@@ -979,6 +991,7 @@ button.btnloadingg:hover {
 }
 
 .modal-dialog {
+    margin-top: 12%;
     font-family: "Signika";
 }
 
@@ -2708,7 +2721,7 @@ button.btnloadingg:hover {
 
 .payment {
     display: flex;
-    min-height: 347px;
+    min-height: 355px;
     position: relative;
 
     .cards {
@@ -2720,6 +2733,11 @@ button.btnloadingg:hover {
             font-size: 80px;
             margin-top: -10px;
             color: #a0a0a0;
+        }
+
+        .addacardmessage {
+            color: #a0a0a0;
+            margin-top: 12px;
         }
     }
 
@@ -2788,6 +2806,10 @@ button.btnloadingg:hover {
                 font-weight: 500;
                 padding-top: 4px;
             }
+
+            .disabled {
+                color: #c4c4c4!important;
+            }
         }
     }
 
@@ -2837,7 +2859,7 @@ button.btnloadingg:hover {
         position: absolute;
         bottom: 0;
         width: 100%;
-        padding: 12px 0;
+        padding: 21px 0;
 
         .purchase {
             height: 41px;
