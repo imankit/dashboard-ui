@@ -16,12 +16,23 @@ import {
     Button,
     Modal
 } from 'react-bootstrap';
-
+import {RefreshIndicator} from 'material-ui'
 import IconDelete from 'material-ui/svg-icons/action/delete';
 import {grey500} from 'material-ui/styles/colors';
 const iconStyles = {
     marginRight: 12,
     marginLeft: 12
+};
+
+const style = {
+    refresh: {
+        display: 'inline-block',
+        position: 'relative',
+        background: 'none',
+        boxShadow: 'none',
+        float: 'right',
+        marginLeft: '40px'
+    }
 };
 
 class DeleteApp extends React.Component {
@@ -31,6 +42,11 @@ class DeleteApp extends React.Component {
         this.state = {
             buttonState: false
         };
+    }
+
+    handleKeyChange(e) {
+        if (e.keyCode === 13 && !this.props.deleteButtonState)
+            this.props.onDelete(this.props.appId)
     }
 
     render() {
@@ -48,16 +64,24 @@ class DeleteApp extends React.Component {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="delete-modal-body">
-                    <input onChange={this.props.handleChange.bind(this, 'DELETE')} className="" value={this.state.value} id="createApp" placeholder='Please type "DELETE"' required={true}/>
+                    <input onChange={this.props.handleChange.bind(this, 'DELETE')} className="" value={this.state.value} id="createApp" placeholder='Please type "DELETE"' onKeyUp={this.handleKeyChange.bind(this)} required={true}/>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button className="btn-primary delete-btn" disabled={this.props.deleteButtonState} onClick={() => this.props.onDelete(this.props.appId)}>Delete App</Button>
+                    {this.props.loading
+                        ? <Button className="btn-primary delete-btn btnloading" disabled>
+                                <RefreshIndicator loadingColor="#ececec" size={35} left={-10} top={0} status="loading" style={style.refresh}/>
+                                <span className="deleteapplabel">Delete App</span>
+                            </Button>
+                        : <Button className="btn-primary delete-btn" disabled={this.props.deleteButtonState} onClick={() => this.props.onDelete(this.props.appId)}>Delete App</Button>}
                 </Modal.Footer>
             </Modal>
         );
     }
 }
 
+const mapStateToProps = (state) => {
+    return {loading: state.loader.modal_loading};
+};
 const mapDispatchToProps = (dispatch) => {
     return {
         onDelete: (appId) => {
@@ -66,4 +90,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(null, mapDispatchToProps)(DeleteApp);
+export default connect(mapStateToProps, mapDispatchToProps)(DeleteApp);
