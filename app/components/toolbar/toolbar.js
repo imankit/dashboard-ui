@@ -3,6 +3,8 @@
  */
 import React from 'react';
 import {connect} from 'react-redux';
+import {updateBeacon} from '../../actions';
+
 import {DropDownMenu, MenuItem, IconButton, Popover, IconMenu} from 'material-ui'
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 import {logOut} from '../../actions';
@@ -151,7 +153,7 @@ class ToolBar extends React.Component {
 
                         <ToolbarGroup>
 
-                            <FeedbackModal/>
+                            <FeedbackModal beacons={this.props.beacons} updateBeacon={this.props.updateBeacon}/>
 
                             <IconButton touch={true} onClick={this.handleTouchTap.bind(this, 'options')}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 -4 26 26">
@@ -210,14 +212,22 @@ const mapStateToProps = (state) => {
     if (state.user.user) {
         isAdmin = state.user.user.isAdmin
     }
-    return {currentApp: state.manageApp.appId, currentUser: state.user, currentAppName: state.manageApp.name, isAdmin, apps: state.apps}
+    return {
+        currentApp: state.manageApp.appId,
+        currentUser: state.user,
+        currentAppName: state.manageApp.name,
+        isAdmin,
+        apps: state.apps,
+        beacons: state.beacons
+    }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         onLogoutClick: () => {
             dispatch(logOut());
-        }
+        },
+        updateBeacon: (beacons, which) => dispatch(updateBeacon(beacons, which))
     };
 };
 

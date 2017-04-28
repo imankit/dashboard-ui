@@ -653,6 +653,7 @@ button.delete-btn:hover {
     min-width: 850px !important;
 }
 //Remove classes that are not needed for our app
+
 %modal-common {
     .modal-header {
         border: none;
@@ -1098,6 +1099,13 @@ button.btnloadingg:hover {
 .new_table_beacon {
     margin-left: -5px;
     margin-top: 1px;
+}
+
+.feedback_beacon {
+    position: absolute;
+    left: 15px;
+    top: 23px;
+    border-color: #aab7c4;
 }
 
 .delete-modal-header-style {
