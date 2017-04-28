@@ -85,7 +85,7 @@ export function saveUserImage(file) {
         fd.append('file', file)
         xhrDashBoardClient.post('/file', fd).then((data) => {
             dispatch(fetchUser())
-            showAlert('success', "User image updated.")
+            // showAlert('success', "User image updated.")
         }, (err) => {
             console.log(err)
         })

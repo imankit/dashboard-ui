@@ -113,14 +113,6 @@ body {
     }
 }
 
-.delete-modal-header-style {
-    color: white;
-    background: #D60A00;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    font-family: "Signika";
-}
-
 .__react_component_tooltip.type-dark {
     background: #4e4e4e!important;
     color: white!important;
@@ -132,145 +124,6 @@ body {
     border-bottom-style: solid;
     border-bottom-width: 6px;
     opacity: 1 !important;
-}
-
-.notification-icon {
-    font-size: 26px;
-    color: #aab7c4;
-}
-
-.delete-modal-icon-style {
-    border-radius: 50%;
-    background: #9b0601;
-    font-size: 30px;
-    width: 60px;
-    padding: 15px;
-    content: url("/assets/images/trash.png");
-}
-
-.modal-title-inner-text {
-    font-size: 14px;
-    font-weight: normal;
-    font-family: "Signika";
-}
-
-.create-btn {
-    background: #4f9cf5;
-}
-
-.create-btn:hover {
-    background: #4f9cf5;
-}
-
-#createApp {
-    width: 60%;
-    text-align: center;
-    padding: 30px 0 30px 0;
-    border: none;
-    display: block;
-    font-family: "Signika";
-    margin: auto;
-    font-size: 18px;
-}
-
-#createApp:focus {
-    outline: none;
-    border: none;
-}
-
-
-/* do not group these rules */
-
-#createApp::-webkit-input-placeholder {
-    color: #CCC;
-}
-
-#createApp:-moz-placeholder {
-    /* FF 4-18 */
-    color: #CCC;
-}
-
-#createApp::-moz-placeholder {
-    /* FF 19+ */
-    color: #CCC;
-}
-
-#createApp:-ms-input-placeholder {
-    /* IE 10+ */
-    color: #CCC;
-}
-
-.delete-modal-body {
-    text-align: center;
-    padding: 0px;
-    font-family: "Signika";
-    color: #585858;
-    font-size: large;
-}
-
-.copy-span {
-    color: green;
-    float: right;
-}
-
-.modal-header-style {
-    color: white;
-    background: #4f9cf5;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    font-family: "Signika";
-}
-
-.modal-title-style {
-    vertical-align: middle;
-    font-size: 20px;
-}
-
-.modal-icon-style {
-    border-radius: 50%;
-    background: #2c5f9a;
-    font-size: 30px;
-    width: 60px;
-    padding: 15px;
-}
-
-.label-description {
-    font-size: 12px;
-    color: grey;
-}
-
-.delete-btn {
-    background: #D60A00;
-    border-color: #D60A00;
-}
-
-.delete-btn:hover {
-    background: #D60A00!important;
-    border-color: #D60A00;
-}
-
-.delete-btn:focus {
-    background: #D60A00!important;
-    border-color: #D60A00;
-}
-
-.copy-icon {
-    font-size: 28px;
-}
-
-.new-icon {
-    font-size: 20px;
-}
-
-.modal-dialog {
-    font-family: "Signika";
-}
-
-.custom-modal {
-    .modal-body {
-        padding: 10px 40px 40px 40px;
-    }
-    @extend %modal-common;
 }
 
 .app-dashproject {
@@ -703,19 +556,6 @@ body {
     font-family: "Signika";
 }
 
-.__react_component_tooltip.type-dark {
-    background: #4e4e4e!important;
-    color: white!important;
-    opacity: 1 !important;
-}
-
-.__react_component_tooltip.type-dark.place-bottom:after {
-    border-bottom-color: #4e4e4e!important;
-    border-bottom-style: solid;
-    border-bottom-width: 6px;
-    opacity: 1 !important;
-}
-
 .card-icon {
     font-size: 35px;
     float: right;
@@ -743,10 +583,7 @@ body {
     font-family: "Signika";
 }
 
-.create-btn {
-    background: #4f9cf5;
-}
-
+.create-btn,
 .create-btn:hover {
     background: #4f9cf5;
 }
@@ -1081,7 +918,7 @@ body {
 
 .profile-body {
     user-select: none;
-    .password-field {
+    .input-field {
         width: 100%;
         color: #222;
         padding: 10px;
@@ -1090,17 +927,17 @@ body {
         font-size: 16px;
         outline: none;
     }
-
-    .passwordedit {
+    .inputedit {
         border: 0;
     }
-
-    .passwordeditenable {
+    .inputeditenable {
         box-shadow: inset 0 0 0 2px #43BDFF;
         outline: 0;
         border-color: transparent !important;
+        border-radius: 5px;
     }
 }
+
 .edit-profile-photo {
     cursor: pointer;
     width: auto;
@@ -1114,13 +951,11 @@ body {
     .user-icon {
         margin-right: 10px;
     }
-
     .user-icon.medium {
         width: 36px;
         height: 36px;
         min-width: 36px;
     }
-
     .user-icon {
         position: relative;
         border-radius: 5px;
@@ -1143,7 +978,6 @@ body {
             justify-content: center;
         }
     }
-
     span {
         font-weight: 400;
         font-size: 16px;
@@ -1155,6 +989,7 @@ body {
         padding-left: 0;
     }
 }
+
 .app-setting {
     font-family: "Avenir Next", "Helvetica Neue", Helvetica, sans-serif;
     position: relative;
@@ -1169,7 +1004,6 @@ body {
     #header {
         background-color: #f8f9fb;
     }
-
     .title-bar {
         margin-bottom: 0;
         padding: 35px 0 37px;
@@ -1197,7 +1031,6 @@ body {
             }
         }
     }
-
     .project-icon {
         float: left;
         vertical-align: middle;
@@ -1211,7 +1044,6 @@ body {
         background-size: 40px 40px;
         background-position: 50%;
     }
-
     .menu-panel {
         background-color: #ffffff;
         .menu-wrapper {
@@ -1316,6 +1148,7 @@ body {
         }
     }
 }
+
 .cache {
     padding: 75px 0;
     font-family: 'Open Sans', sans-serif;
@@ -1327,7 +1160,6 @@ body {
     .container-cache {
         margin-top: 5%;
     }
-
     .flex-general-row-wrapper {
         /* Flex row rules */
         display: flex;
@@ -1343,7 +1175,6 @@ body {
         -moz-align-items: flex-start;
         -webkit-align-items: flex-start;
     }
-
     .flex-general-column-wrapper {
         /* Flex column rules */
         display: flex;
@@ -1359,7 +1190,6 @@ body {
         -moz-align-items: flex-start;
         -webkit-align-items: flex-start;
     }
-
     .flex-general-row-wrapper-center {
         /* Flex row rules */
         display: flex;
@@ -1375,7 +1205,6 @@ body {
         -moz-align-items: center;
         -webkit-align-items: center;
     }
-
     .flex-general-column-wrapper-center {
         /* Flex row rules */
         display: flex;
@@ -1391,13 +1220,11 @@ body {
         -moz-align-items: center;
         -webkit-align-items: center;
     }
-
     .flex-equal-ratio-items {
         flex: 1;
         -moz-flex: 1;
         -webkit-flex: 1;
     }
-
     .solo-vertical-center {
         /* Flex row rules */
         display: flex;
@@ -1413,7 +1240,6 @@ body {
         -moz-align-items: center;
         -webkit-align-items: center;
     }
-
     .solo-horizontal-center {
         /* Flex row rules */
         display: flex;
@@ -1429,25 +1255,19 @@ body {
         -moz-align-items: flex-start;
         -webkit-align-items: flex-start;
     }
-
     .cf:after,
     .cf:before {
         content: "";
         display: table;
     }
-
     .cf:after {
         clear: both;
     }
-
     .cf {
         zoom: 1;
     }
-
     .cacheleft {}
-
     .cacheright {}
-
     .cacheDiv {
         border-radius: 4px;
         height: 50px;
@@ -1458,12 +1278,10 @@ body {
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
         margin-top: 1px;
     }
-
     .cacheDiv:hover {
         background-color: whitesmoke;
         cursor: pointer;
     }
-
     .cacheDivSelected {
         border-radius: 4px;
         height: 50px;
@@ -1480,7 +1298,6 @@ body {
         /* Safari */
         transform: scale(1.03, 1.03);
     }
-
     .cacheicondiv {
         height: 40px;
         width: 40px;
@@ -1490,27 +1307,23 @@ body {
         margin-top: 4px;
         margin-left: 8px;
     }
-
     .cacheI {
         color: white;
         font-size: 20px;
         margin-top: 10px;
         text-align: center;
     }
-
     .cachecontent {
         float: left;
         width: 45%;
         height: 100%;
     }
-
     .cacheNamediv {
         float: left;
         width: 100%;
         height: 70%;
         padding: 7px;
     }
-
     .cachename {
         float: left;
         font-size: 19px;
@@ -1518,13 +1331,11 @@ body {
         margin-left: 4px;
         color: #616060;
     }
-
     .cacheProps {
         float: left;
         width: 100%;
         height: 30%;
     }
-
     .cachesizeitems {
         float: left;
         font-size: 11px;
@@ -1533,49 +1344,40 @@ body {
         color: #929090;
         margin-right: 15px;
     }
-
     .cacheitemssizecontent {
         color: #545353;
         margin-left: 4px;
     }
-
     .cachebuttonsdiv {
         float: left;
         width: 44%;
         height: 100%;
         padding-left: 90px;
     }
-
     .buttoncachedelete {
         min-width: 20% !important;
         margin-top: 7px;
         width: 30% !important;
     }
-
     .buttoncachedelete:hover {
         background-color: red !important;
     }
-
     .buttoncacheminus {
         min-width: 20% !important;
         margin-top: 7px;
         width: 30% !important;
     }
-
     .cacheaddfieldsdiv {
         width: 100%;
         float: left;
         margin-bottom: 5px;
     }
-
     .cacheinputs {
         float: left;
     }
-
     .addtocachebtn {
         float: left;
     }
-
     .buttoncacheelemdelete {
         width: 30px !important;
         min-width: 30px !important;
@@ -1583,12 +1385,12 @@ body {
         margin-left: 30px !important;
     }
 }
+
 .queue {
     .addmessgaebuttontop {
         text-align: center;
         margin-bottom: 5px;
     }
-
     .queueitemsdiv {
         border-radius: 4px;
         min-height: 70px;
@@ -1602,7 +1404,6 @@ body {
         position: relative;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     }
-
     .messagequeuemessage {
         text-align: left;
         padding: 5px 5px 5px 11px;
@@ -1612,28 +1413,23 @@ body {
         word-wrap: break-word;
         height: 80px;
     }
-
     .messagemessage {
         visibility: visible;
     }
-
     .messagequeueicons {
         visibility: visible;
         position: absolute;
         right: 6px;
         bottom: 6px;
     }
-
     .messagequeueprops {
         position: absolute;
         bottom: 0;
     }
-
     .messagequediv {
         visibility: visible;
         height: 100px;
     }
-
     .buttonquemessage {
         visibility: visible;
         width: 20px;
@@ -1642,29 +1438,26 @@ body {
         margin-left: 7px;
     }
 }
+
 .campaign {
     .emailcampbtn {
         visibility: visible;
     }
-
     .push-box {
         margin-top: 15px;
         background-color: #ffffff;
         box-sizing: border-box;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     }
-
     .emailinputcampaign {
         border: none;
         outline: none;
     }
-
     .emailtextareacampaign {
         border: none;
         outline: none;
         padding: 5px !important;
     }
-
     .audiencecontainerpush {
         min-height: 100px;
         background-color: white;
@@ -1714,13 +1507,13 @@ body {
             font-weight: 600;
         }
     }
-
     .filteraud {
         position: absolute;
         right: 5px;
         top: 5px;
     }
 }
+
 .profile {
     visibility: visible;
     background-color: #eff1f5;
@@ -1731,11 +1524,9 @@ body {
         height: 500px;
         display: flex;
     }
-
     .imagediv {
         flex: 1;
     }
-
     .contentdiv {
         flex: 2;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
@@ -1746,7 +1537,6 @@ body {
         padding-top: 15px;
         padding-right: 20px;
     }
-
     .userimage {
         width: 95%;
         height: 300px;
@@ -1754,13 +1544,11 @@ body {
         margin-left: 5%;
         margin-top: 5%;
     }
-
     .btndivimage {
         float: right;
         margin-top: -50px;
         position: relative;
     }
-
     .iconbtns {
         visibility: visible;
         background-color: #f3f3f3 !important;
@@ -1769,11 +1557,9 @@ body {
         opacity: 0.5;
         transition: opacity 140ms;
     }
-
     .iconbtns:hover {
         opacity: 1.0;
     }
-
     .username {
         visibility: visible;
         font-size: 25px;
@@ -1782,7 +1568,6 @@ body {
         margin-top: -7px;
         margin-bottom: 10px;
     }
-
     .useremail {
         visibility: visible;
         font-size: 22px;
@@ -1791,13 +1576,11 @@ body {
         margin-top: -7px;
         margin-bottom: 35px;
     }
-
     .labelunameemail {
         color: #B2B0B0;
         font-size: 12px;
         font-weight: 600;
     }
-
     .heading {
         visibility: visible;
         width: 100%;
@@ -1808,17 +1591,16 @@ body {
         font-weight: 500;
         margin-top: 10px;
     }
-
     .textfieldspasword {
         display: block !important;
     }
-
     .passwordsubmitbtn {
         float: right;
         margin-top: -7%;
         margin-right: 25%;
     }
 }
+
 .edit-profile {
     user-select: none;
     font-weight: 400;
@@ -1833,7 +1615,6 @@ body {
         line-height: normal;
         font: inherit;
     }
-
     .edit-profile-photo {
         cursor: pointer;
         width: auto;
@@ -1862,6 +1643,7 @@ body {
         }
     }
 }
+
 .settings {
     background-color: #eff1f5;
     display: flex;
@@ -1871,66 +1653,55 @@ body {
         flex: 1;
         padding: 40px;
     }
-
     .content {
         flex: 3;
         padding: 40px;
         margin-top: -20px;
     }
-
     .contentsubdiv {
         width: 800px;
     }
-
     .smallp {
         color: rgb(179, 179, 183);
         font-size: 13px;
         font-weight: 600;
         display: block;
     }
-
     .togglegeneral {
         width: 200px;
     }
-
     .addfile {
         font-size: 17px;
         color: #9E9E9E;
         cursor: pointer;
     }
-
     .sidenavselected {
         background-color: #efefef !important;
         /* color: #443939; */
         box-shadow: rgba(0, 0, 0, 0.2) 0 1px 3px;
         transform: scale(1.05, 1.05);
     }
-
     .appIcon {
         width: 60px;
         height: 60px;
         margin-right: 20px;
         font-size: 60px;
     }
-
     .buttondeleteicon {
         min-width: 5% !important;
         width: 7% !important;
         color: red !important;
     }
-
     .signupemailace {
         width: 90% !important;
         height: 300px !important;
         margin-left: 5%;
     }
-
     .signupemailacepreview {
         width: 90% !important;
         height: 300px !important;
         margin-left: 5%;
     }
-
     .htmlprev {
         visibility: visible;
         margin-top: 5px;
@@ -1943,25 +1714,20 @@ body {
         background-color: #eff1f5;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     }
-
     .socialimages {
         height: 38px;
     }
-
     .attrtoggles {
         background-color: #eff1f5;
         margin-top: 3px;
         padding: 3px;
     }
-
     .default-inputfield {
         border: none;
     }
-
     .default-inputfield:focus {
         outline: none;
     }
-
     .login-btn {
         border-top-left-radius: 3px;
         border-bottom-left-radius: 3px;
@@ -1972,7 +1738,6 @@ body {
         border: 1px solid #5c666f;
         font-size: 12px;
     }
-
     .sinup-btn {
         border-top-right-radius: 3px;
         border-bottom-right-radius: 3px;
@@ -1983,23 +1748,19 @@ body {
         border: 1px solid #5c666f;
         font-size: 12px;
     }
-
     .input-field {
         width: 100%;
         border: 1px solid #f1f1f1;
         margin-top: 10px;
     }
-
     .input-field:first-child {
         margin-top: 0;
     }
-
     .final-btn {
         background-color: blue;
         padding: 15px;
         cursor: pointer;
     }
-
     .social-btns {
         width: 40px;
         height: 40px;
@@ -2008,37 +1769,33 @@ body {
         border-radius: 3px;
         cursor: pointer;
     }
-
     .facebook {
         background-color: #4863ae;
         color: white;
         font-size: 18px;
     }
-
     .twitter {
         background-color: #46c0fb;
         color: white;
         font-size: 18px;
     }
-
     .github {
         background-color: #eeeeee;
         color: black;
         font-size: 18px;
     }
-
     .google {
         background-color: #4285f4;
         color: white;
         font-size: 18px;
     }
-
     .linkedin {
         background-color: #0177B5;
         color: white;
         font-size: 18px;
     }
 }
+
 .admin {
     visibility: visible;
     background-color: #eff1f5;
@@ -2050,7 +1807,6 @@ body {
         align-items: flex-start;
         flex-wrap: wrap;
     }
-
     .adduserdiv {
         flex: 1;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
@@ -2058,22 +1814,18 @@ body {
         margin-right: 10px;
         padding: 10px;
     }
-
     .tablecontainer {
         flex: 2;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
         position: relative;
     }
-
     .buttonadmindelete {
         min-width: 20% !important;
         width: 50% !important;
     }
-
     .adminactivetoggle {
         visibility: visible;
     }
-
     .adminroleseelct {
         height: 27px !important;
         padding: 0 12px !important;
@@ -2081,7 +1833,6 @@ body {
         border: 1px solid #e8e8e8;
         border-radius: 5px;
     }
-
     .adminninputs {
         visibility: visible;
         width: 100%;
@@ -2091,19 +1842,16 @@ body {
         border: 1px solid #ececec;
         padding: 10px;
     }
-
     .loaderadinsettings {
         margin-left: 32%;
         margin-top: 15%;
     }
-
     .push-box {
         margin-top: 15px;
         background-color: #ffffff;
         box-sizing: border-box;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     }
-
     .urladmininput {
         width: 35%;
         margin-right: 15px;
@@ -2113,11 +1861,9 @@ body {
         border-radius: 3px;
         padding: 8px;
     }
-
     .changeurl {
         visibility: visible;
     }
-
     .noteadmin {
         color: red;
         font-size: 13px;
@@ -2136,18 +1882,21 @@ body {
     border-radius: 5px;
     padding: 5px;
 }
+
 .jsonmodal {
     height: 120px !important;
     border: 2px solid #cec9c9;
     resize: none;
     border-radius: 5px;
 }
+
 .quesmessagtype {
     color: #b5b4b4;
     font-size: 12px;
     font-weight: 500;
     margin-top: 10px;
 }
+
 .aclrow {
     width: 100%;
     float: left;
@@ -2156,25 +1905,30 @@ body {
     padding: 10px;
     background-color: #F9F9F9;
 }
+
 .logoaclrow {
     font-size: 20px !important;
     margin-top: 2px;
     float: left;
 }
+
 .textaclrow {
     float: left;
     font-size: 15px;
     margin-left: 20px;
 }
+
 .aclrowcheckbox {
     float: right;
     width: 40px !important;
 }
+
 .readwitetext {
     float: right;
     margin-left: 0;
     margin-right: 10px;
 }
+
 .cancelaclrow {
     float: right;
     font-size: 20px !important;
@@ -2183,12 +1937,14 @@ body {
     cursor: pointer;
     margin-right: 7px;
 }
+
 .selectautoacl {
     /* text-align: center; */
     float: left;
     /* margin-left: 64%; */
     width: 150% !important;
 }
+
 .aclrowpublic {
     width: 100%;
     float: left;
@@ -2198,44 +1954,45 @@ body {
     background-color: #F9F9F9;
     font-weight: bold;
 }
+
 .textinputaddmessage {
     margin-top: -15px;
 }
+
 .chart_div_api {
     height: 40vh;
     width: 45% !important;
     margin-left: 2%;
     margin-top: 1%;
-    box-shadow: 0 1px 3px rgba(0,
-    0,
-    0,
-    0.2);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     float: left;
 }
+
 .chart_div_storage {
     height: 40vh;
     width: 45% !important;
     margin-left: 2%;
     margin-top: 1%;
-    box-shadow: 0 1px 3px rgba(0,
-    0,
-    0,
-    0.2);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     float: left;
 }
+
 .apistroagebtns {
     margin-left: 5px;
     color: white;
 }
+
 .buttondivanalytics {
     position: absolute;
     top: 80px;
     left: 45%;
     z-index: 100;
 }
+
 .chartcontainer {
     width: 100%;
 }
+
 .okbtnnotinv {
     visibility: visible;
     background-color: #4892F9;
@@ -2245,10 +2002,12 @@ body {
     margin-top: 5px;
     margin-left: 36px;
 }
+
 .notification-wrap {
     overflow-y: auto;
     max-height: 400px;
 }
+
 .flex-general-column-wrapper-center {
     /* Flex row rules */
     display: flex;
@@ -2264,23 +2023,23 @@ body {
     -moz-align-items: center;
     -webkit-align-items: center;
 }
+
 .audcontdivs {
     width: 100%;
     background-color: white;
     margin-bottom: 5px;
     height: 100px;
     box-sizing: border-box;
-    box-shadow: 0 1px 3px rgba(0,
-    0,
-    0,
-    0.2);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
+
 .filtericonmodalaud {
     visibility: visible;
     position: absolute !important;
     top: 0;
     right: 0;
 }
+
 .secondcontentdivselaud {
     position: relative;
     background-color: white;
@@ -2288,16 +2047,19 @@ body {
     height: 100px;
     float: left;
 }
+
 .channelPop {
     width: 250px;
     height: 85px;
 }
+
 .osPop {
     width: 250px;
     border: 1px solid #BBB;
     background-color: white;
     overflow-y: scroll;
 }
+
 .tailnamefilter {
     float: left;
     width: 100%;
@@ -2305,16 +2067,19 @@ body {
     font-size: 18px;
     border-bottom: 1px solid #DDD;
 }
+
 .filterrowplane {
     float: left;
     width: 100%;
     padding-top: 6px;
 }
+
 .checkcardfilter {
     float: right;
     width: 20px;
     height: 18px;
 }
+
 .inptchannelbtn {
     height: 30px !important;
     width: 48% !important;
@@ -2323,6 +2088,7 @@ body {
     float: left;
     margin-left: 1%;
 }
+
 .inptchannel {
     height: 30px !important;
     width: 50% !important;
@@ -2331,6 +2097,7 @@ body {
     float: left;
     margin-left: 2px;
 }
+
 .oschip {
     visibility: visible;
     min-width: 80px !important;
@@ -2339,22 +2106,27 @@ body {
     margin-top: 3px !important;
     height: 30px;
 }
+
 .oschipdiv {
     width: 80%;
 }
+
 .loadermain {
     visibility: visible;
     position: fixed !important;
     margin-left: 42%;
     margin-top: 21%;
 }
+
 .show-grid {
     position: relative !important;
 }
+
 .loaderimageuser {
     margin-left: -135px !important;
     margin-top: -125px !important;
 }
+
 .popovernotifications {
     min-height: 200px;
     width: 400px;
@@ -2363,13 +2135,16 @@ body {
     overflow: visible !important;
     font-family: Signika !important;
 }
+
 .popovernotifications>div {
     overflow: visible;
 }
+
 .notificationemptybell {
     font-size: 100px;
     color: #eaeaea;
 }
+
 .notificationemptymessage {
     visibility: visible;
     font-size: 17px;
@@ -2378,6 +2153,7 @@ body {
     padding-left: 15px;
     padding-right: 15px;
 }
+
 .notpendingtasks {
     width: 100%;
     color: #585656;
@@ -2386,16 +2162,15 @@ body {
     padding-top: 8px;
     padding-left: 17px;
 }
+
 .notificationdiv {
     width: 100%;
     height: 100px;
     padding: 12px;
-    background-color: rgba(236,
-    236,
-    236,
-    0.4);
+    background-color: rgba(236, 236, 236, 0.4);
     margin-top: 10px;
 }
+
 .notinvicon {
     float: left;
     width: 10%;
@@ -2403,6 +2178,7 @@ body {
     margin-top: 3px;
     color: #4AA3DF;
 }
+
 .nottextinv {
     word-break: break-all;
     font-size: 16px;
@@ -2410,10 +2186,12 @@ body {
     float: left;
     padding-left: 10px;
 }
+
 .noteinvbtncontainer {
     width: 100%;
     padding-left: 10px;
 }
+
 .cancelbtnnotinv {
     visibility: visible;
     background-color: #555;
@@ -2423,6 +2201,7 @@ body {
     margin-top: 5px;
     margin-left: 36px;
 }
+
 .acceptbtnnotinv {
     visibility: visible;
     background-color: #4892F9;
@@ -2432,6 +2211,7 @@ body {
     margin-top: 5px;
     margin-left: 5px;
 }
+
 .notebadge {
     visibility: visible;
     display: inline !important;
@@ -2441,24 +2221,27 @@ body {
     cursor: pointer;
     margin-top: 1px;
 }
+
 .notebadge svg {
-    color: rgb(97,
-    97,
-    97) !important;
+    color: rgb(97, 97, 97) !important;
 }
+
 .roleselectdev {
     height: 27px !important;
     padding: 0 12px !important;
 }
+
 .roleselectdevdisabled {
     height: 27px !important;
     padding: 0 12px !important;
     background-color: #c5c5c5 !important;
     cursor: no-drop;
 }
+
 .hide {
     display: none;
 }
+
 .payment {
     display: flex;
     min-height: 320px;
@@ -2496,7 +2279,6 @@ body {
                 margin-right: 15px;
             }
         }
-
         .divlabel {
             clear: both;
             padding: 5px;
@@ -2508,7 +2290,6 @@ body {
             color: #9AA7BA;
             font-weight: bold;
         }
-
         .divdetail {
             width: 100%;
             clear: both;
@@ -2548,17 +2329,14 @@ body {
             height: 50px;
             flex: 1;
         }
-
         .cardnumber {
             flex: 3;
             padding: 13px;
         }
-
         .cardname {
             flex: 3;
             padding: 13px;
         }
-
         .cardcvv {
             flex: 1;
             padding: 5px;
@@ -2567,7 +2345,6 @@ body {
             margin-top: 5px;
             border: 2px solid #c1c1c1;
         }
-
         .cardcvv:focus {
             outline: none;
         }
@@ -2587,7 +2364,6 @@ body {
             font-weight: 500;
             border: none;
         }
-
         .addcard {
             height: 41px;
             width: 39%;
@@ -2609,7 +2385,6 @@ body {
             font-size: 20px;
             display: block;
         }
-
         .sub {
             font-size: 12px;
             color: #555;
@@ -2626,11 +2401,9 @@ body {
             border: none;
             padding: 5px;
         }
-
         .field:focus {
             outline: none;
         }
-
         .labels {
             flex: 1;
             padding-top: 14px;
@@ -2650,11 +2423,9 @@ body {
             border: none;
             padding: 5px;
         }
-
         .field:focus {
             outline: none;
         }
-
         .labels {
             flex: 6;
             padding-top: 14px;
@@ -2671,6 +2442,7 @@ body {
         padding-top: 15px;
     }
 }
+
 .plannamepop {
     width: 244px;
     height: 80px;
@@ -2692,18 +2464,22 @@ body {
         margin-right: 15px;
     }
 }
+
 .plannamepop:hover {
     background-color: #e6e6e6;
 }
+
 .loadermodal {
     visibility: visible;
     position: fixed !important;
     margin-left: 25%;
     margin-top: 18%;
 }
+
 .notificationoffset {
     margin-top: 50px !important;
 }
+
 .profilepop {
     min-width: 220px !important;
     min-height: 100px !important;
@@ -2712,9 +2488,11 @@ body {
     overflow: visible !important;
     font-family: Roboto !important;
 }
+
 .profilepop>div {
     overflow: visible !important;
 }
+
 .profilepoparrow {
     position: absolute;
     top: -10px;
@@ -2727,6 +2505,7 @@ body {
     border-radius: 3px;
     width: 24px;
 }
+
 .headingpop {
     height: 40px;
     padding: 10px;
@@ -2738,6 +2517,7 @@ body {
     background-color: white;
     font-size: 13px;
 }
+
 .coloptbtn {
     width: 100%;
     border: 0 solid #EEE;
@@ -2749,20 +2529,19 @@ body {
     padding-left: 12px;
     font-size: 14px;
 }
+
 .coloptbtn:hover {
     background-color: #EEE;
     color: black;
 }
+
 .appselector {
     color: #484848;
     padding: 8px;
     font-family: Signika;
     font-size: 17px;
     cursor: pointer;
-    box-shadow: 0 1px 3px rgba(0,
-    0,
-    0,
-    0.2);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     margin-left: 10px;
     padding-right: 15px;
     .cloud {
@@ -2777,9 +2556,11 @@ body {
         font-size: 15px;
     }
 }
+
 .appselector:hover {
     border: none !important;
 }
+
 .manageappcontainer {
     display: flex;
     .sidenavbar {
@@ -2793,23 +2574,18 @@ body {
         .red {
             color: #e80000;
         }
-
         .blue {
             color: #2196f3;
         }
-
         .green {
             color: #74d200;
         }
-
         .orange {
             color: #ff7a00;
         }
-
         .purple {
             color: #ad00ff;
         }
-
         .navbutton {
             width: 90%;
             margin-left: 5%;
@@ -2821,26 +2597,21 @@ body {
             background-color: white;
             text-align: left;
         }
-
         .navbutton:focus {
             outline: none !important;
         }
-
         .navbutton:hover {
             background-color: #F3F3F3;
             color: black;
         }
-
         .navbuttonselected {
             background-color: #43BDFF !important;
             color: white !important;
         }
-
         .navbuttonselected:hover {
             background-color: #43BDFF !important;
             color: white !important;
         }
-
         .buttonicon {
             margin-right: 10px;
             margin-top: 2px;
