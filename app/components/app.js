@@ -21,11 +21,19 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <Toolbar isDashboardMainPage={['/', '/admin', '/profile'].indexOf(this.props.location.pathname) !== -1}/> {this.props.loading
-                    ? <RefreshIndicator size={50} left={70} top={0} status="loading" className="loadermain"/>
-                    : this.props.children
-}
-                <Footer id="app-footer"/>
+                <Toolbar isDashboardMainPage={['/','/admin','/profile'].indexOf(this.props.location.pathname) !== -1} />
+                {
+                    this.props.loading ?
+                        <RefreshIndicator
+                            size={50}
+                            left={70}
+                            top={0}
+                            status="loading"
+                            className="loadermain"
+                        />
+                        : this.props.children
+                }
+                <Footer id="app-footer" />
             </div>
         );
     }
