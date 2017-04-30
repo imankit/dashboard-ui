@@ -200,7 +200,7 @@ body {
     background: #4f9cf5;
 }
 
-.add-card-fullwidth {
+.wide-button {
     width: 60% !important;
     margin-left: 19% !important;
 }
@@ -277,6 +277,11 @@ body {
 .label-description {
     font-size: 12px;
     color: grey;
+}
+
+.plandetailsdropdown {
+    border: 1px solid #549afc;
+    margin-left: 11px;
 }
 
 .delete-btn {
@@ -539,7 +544,7 @@ button.delete-btn:hover {
                 border-top: 1px solid #e8ebef;
                 background-color: #FFF;
                 height: 69px;
-                padding: 20px 20px 28px;
+                padding: 20px 19px 28px;
             }
             @include clearfix;
         }
@@ -762,6 +767,8 @@ button.delete-btn:hover {
         -moz-box-shadow: 0 4px 32px rgba(31, 32, 35, 0.07);
         -webkit-box-shadow: 0 4px 32px rgba(31, 32, 35, 0.07);
         box-shadow: 0 4px 32px rgba(31, 32, 35, 0.07);
+        width: 80%;
+        margin: auto;
     }
 
     .modal-header {
@@ -3005,9 +3012,21 @@ button.btnloadingg:hover {
     position: relative;
 
     .cards {
-        flex: 2;
+        flex: 3;
         background-color: #F2F3F7;
         position: relative;
+
+        .cardimage {
+            height: 50px;
+            flex: 1;
+        }
+
+        .cardDiv {
+            height: 166px;
+            overflow-y: scroll;
+            margin: auto;
+            padding-top: 13px;
+        }
 
         .cardnotfound {
             font-size: 80px;
@@ -3022,7 +3041,7 @@ button.btnloadingg:hover {
     }
 
     .plans {
-        flex: 1;
+        flex: 2;
 
         .planname {
             width: 100%;
@@ -3031,6 +3050,7 @@ button.btnloadingg:hover {
             padding: 17px 25px;
             cursor: pointer;
             margin-top: 15px;
+            color: #71767C;
 
             .type {
                 font-size: 19px;
@@ -3103,12 +3123,14 @@ button.btnloadingg:hover {
         width: 90%;
         margin-left: 5%;
         display: flex;
-        margin-bottom: 2px;
+        margin-bottom: 5px;
         cursor: pointer;
+        border-radius: 5px;
 
         .cardimage {
             height: 50px;
             flex: 1;
+            padding: 5px;
         }
 
         .cardnumber {
@@ -3123,7 +3145,6 @@ button.btnloadingg:hover {
 
         .cardcvv {
             flex: 1;
-            padding: 5px;
             margin-right: 3px;
             height: 40px;
             margin-top: 5px;
@@ -3143,7 +3164,7 @@ button.btnloadingg:hover {
 
         .purchase {
             height: 41px;
-            width: 51%;
+            width: 48%;
             border-radius: 2px;
             background-color: #19b698;
             color: white;
@@ -3228,7 +3249,7 @@ button.btnloadingg:hover {
         }
 
         .labels {
-            flex: 6;
+            flex: 8;
             padding-top: 14px;
             text-align: center;
             color: #adadad;
@@ -3238,18 +3259,31 @@ button.btnloadingg:hover {
     .selectedcard {
         border: 1px solid #bbbbbb;
         background-color: gainsboro;
-        transform: scale(1.05, 1.05);
+        transform: scale(1.01, 1.05);
     }
 
     .billing {
         padding-top: 15px;
+        height: 357px;
+
+        .fields {
+            .labels {
+                flex: 2;
+            }
+        }
+
+        .fieldssmall {
+            .labels {
+                flex: 2;
+            }
+        }
     }
 }
 
 .plannamepop {
     width: 244px;
     height: 80px;
-    background-color: white;
+    background-color: #F2F3F7;
     padding: 20px;
     cursor: pointer;
 
@@ -3322,6 +3356,14 @@ button.btnloadingg:hover {
     margin-bottom: 2px;
     cursor: pointer;
 
+    .closeIcon {
+        margin: auto 10px;
+    }
+
+    .closeIcon:hover {
+        color: red;
+    }
+
     .cardimage {
         height: 50px;
         flex: 1;
@@ -3339,7 +3381,6 @@ button.btnloadingg:hover {
 
     .cardcvv {
         flex: 1;
-        padding: 5px;
         margin-right: 3px;
         height: 40px;
         margin-top: 5px;
@@ -3464,7 +3505,7 @@ button.btnloadingg:hover {
 .plannamepop {
     width: 244px;
     height: 80px;
-    background-color: white;
+    background-color: #F2F3F7;
     padding: 20px;
     cursor: pointer;
 
@@ -3487,7 +3528,7 @@ button.btnloadingg:hover {
 }
 
 .plannamepop:hover {
-    background-color: #e6e6e6;
+    background-color: #0484e0;
 }
 
 .loadermodal {
