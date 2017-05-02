@@ -2,7 +2,16 @@
 
 import React from 'react';
 import Project from './project.jsx';
-import {manageApp, fetchApps, addApp, exitApp, updateBeacon} from '../../actions';
+import {
+    manageApp,
+    fetchApps,
+    addApp,
+    exitApp,
+    updateBeacon,
+    fetchAppSettings,
+    upsertAppSettingsFile,
+    showAlert
+} from '../../actions';
 import {connect} from 'react-redux';
 import {Grid, Row, Col} from 'react-bootstrap'
 import {RefreshIndicator, IconButton} from 'material-ui';
@@ -27,7 +36,12 @@ class Projectscontainer extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            value: ''
+            value: '',
+            appSettingObj: {
+                appIcon: null,
+                appInProduction: false,
+                appName: null
+            }
         }
     }
     componentWillMount() {}
@@ -37,23 +51,40 @@ class Projectscontainer extends React.Component {
     addApp(e) {
         e.preventDefault()
         if (this.state.value) {
-            this.props.addApp(this.state.value)
+            this.props.dispatch(addApp(this.state.value))
             this.props.dispatch(updateBeacon(this.props.beacons, 'firstApp'))
             this.setState({value: ''})
         }
     }
     onDeleteDev(appId) {
-        this.props.exitApp(appId, this.props.currentUser.user._id)
+        this.props.dispatch(exitApp(appId, this.props.currentUser.user._id))
     }
     onProjectClick(appId, masterKey, name, from) {
         this.props.dispatch(updateBeacon(this.props.beacons, 'tableDesignerLink'))
         this.props.dispatch(manageApp(appId, masterKey, name, from))
     }
+    fetchAppSettings(appId, masterKey, file) {
+        if (file.type.includes('/png')) {
+            this.props.dispatch(fetchAppSettings(appId, masterKey)).then(() => {
+                if (this.props.generalSettings) {
+                    // this.setState({
+                    //     ...this.props.generalSettings.settings
+                    // })
+                    this.props.dispatch(upsertAppSettingsFile(appId, masterKey, file, 'general', {
+                        ...this.state
+                    }))
 
+                }
+            })
+        } else {
+            showAlert('error', 'Only .png type images are allowed.')
+        }
+
+    }
     render() {
         const content = (this.props.apps.length
             ? this.props.apps.map(app => <Col xs={8} sm={6} md={4} lg={4} key={app._id} className="project-grid">
-                <Project key={app._id} {...app} onProjectClick={this.onProjectClick.bind(this)} currentUser={this.props.currentUser} onDeleteDev={this.onDeleteDev.bind(this)} beacons={this.props.beacons} selectedPlan={app.planId}/>
+                <Project key={app._id} fetchAppSettings={this.fetchAppSettings.bind(this)} {...app} onProjectClick={this.onProjectClick.bind(this)} currentUser={this.props.currentUser} onDeleteDev={this.onDeleteDev.bind(this)} beacons={this.props.beacons} selectedPlan={app.planId}/>
             </Col>)
             : <form onSubmit={this.addApp.bind(this)}>
                 <div className="noappfound">
@@ -84,20 +115,18 @@ class Projectscontainer extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+    let generalSettings = null
+    if (state.settings.length) {
+        generalSettings = state.settings.filter(x => x.category == 'general')[0]
+    }
     return {
         apps: state.apps || [],
         currentUser: state.user,
         loading: state.loader.modal_loading,
-        beacons: state.beacons
+        beacons: state.beacons,
+        generalSettings: generalSettings
+
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onProjectClick: (appId, masterKey, name, from) => dispatch(manageApp(appId, masterKey, name, from)),
-        exitApp: (appId, userId) => dispatch(exitApp(appId, userId)),
-        addApp: (name) => dispatch(addApp(name)),
-        dispatch
-    };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Projectscontainer);
+export default connect(mapStateToProps, null)(Projectscontainer);

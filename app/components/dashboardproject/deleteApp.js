@@ -31,7 +31,8 @@ const style = {
         background: 'none',
         boxShadow: 'none',
         float: 'right',
-        marginLeft: '40px'
+        marginLeft: '40px',
+        marginTop: '-4px'
     }
 };
 

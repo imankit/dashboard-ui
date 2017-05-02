@@ -50,8 +50,7 @@ class Projecthead extends React.Component {
         return (
             <div className="project-head">
                 <h1 className="dashboard-title pull-left" style={{
-                    fontFamily: 'Signika',
-                    color: '#555555'
+                    fontSize: '30px'
                 }}>Your Apps</h1>
                 <div className="btn" onClick={this.open}>
                     <div className={!this.props.beacons.firstApp
