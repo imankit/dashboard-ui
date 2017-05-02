@@ -927,7 +927,7 @@ export function resetAnalytics() {
 }
 
 //app settings
-export function fetchAppSettings(appId, masterKey) {
+export function fetchAppSettings(appId, masterKey, from) {
     return function(dispatch) {
         dispatch({type: 'START_SECONDARY_LOADING'})
         let postObject = {}
@@ -963,7 +963,8 @@ export function fetchAppSettings(appId, masterKey) {
             } else {
                 dispatch({type: 'FETCH_APP_SETTINGS', payload: response.data})
                 dispatch({type: 'STOP_SECONDARY_LOADING'})
-                dispatch(fetchApps())
+                if (from === '/') 
+                    dispatch(fetchApps())
                 return Promise.resolve();
             }
 

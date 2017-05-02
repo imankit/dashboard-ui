@@ -65,7 +65,7 @@ class Projectscontainer extends React.Component {
     }
     fetchAppSettings(appId, masterKey, file) {
         if (file.type.includes('/png')) {
-            this.props.dispatch(fetchAppSettings(appId, masterKey)).then(() => {
+            this.props.dispatch(fetchAppSettings(appId, masterKey, '/')).then(() => {
                 if (this.props.generalSettings) {
                     // this.setState({
                     //     ...this.props.generalSettings.settings
