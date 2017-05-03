@@ -87,19 +87,6 @@
     color: black;
 }
 
-.optionpop {
-    min-width: 220px !important;
-    min-height: 70px !important;
-    border-radius: 5px !important;
-    background-color: #f3faff !important;
-    overflow: visible !important;
-    font-family: Roboto !important;
-}
-
-.optionpop>div {
-    overflow: visible !important;
-}
-
 .sendBtnDisabled {
     float: right;
     margin-right: 10px;

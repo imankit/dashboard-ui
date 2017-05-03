@@ -62,15 +62,16 @@ class Notifications extends React.Component {
                     <p className="nottextinv" dangerouslySetInnerHTML={{
                         __html: x.text
                     }}></p>
-                    <p className="nottimestamp">4th Apr</p>
+
                     {acceptButton
                         ? <div className="noteinvbtncontainer">
+                                <span className="nottimestamp">4th Apr</span>
+                                <button className="acceptbtnnotinv" onClick={this.callAction.bind(this, acceptButton)}>{acceptButton.text}</button>
                                 {cancelButton
                                     ? <button className="cancelbtnnotinv" onClick={this.callAction.bind(this, cancelButton)}>{cancelButton.text}</button>
                                     : ''}
-                                <button className="acceptbtnnotinv" onClick={this.callAction.bind(this, acceptButton)}>{acceptButton.text}</button>
                             </div>
-                        : ''}
+                        : <span className="nottimestamp">4th Apr</span>}
                 </div>
             )
         })

@@ -38,7 +38,7 @@ class Keys extends React.Component {
                     ? 'success'
                     : null}>
                     <label>App ID</label><br/>
-                    <label className="label-description">App ID is the unique identifier.</label>&nbsp;
+                    <label className="label-description">This is your App's unique ID.</label>&nbsp;
                     <label className={this.state.appIdCopied
                         ? 'copy-span'
                         : 'hide'}>Copied!</label>
@@ -47,7 +47,8 @@ class Keys extends React.Component {
                         <FormControl type="text" value={this.props.appId} disabled/>
                         <InputGroup.Addon className="input-addon">
                             <CopyToClipboard text={this.props.appId} onCopy={this.copyText.bind(this, 'appIdCopied')}>
-                                <i className="ion ion-ios-copy-outline copy-icon"></i>
+                                <i className="fa fa-copy copy-icon"></i>
+                                {/* <img src="/assets/images/copy-icon.png" className="copy-icon"/> */}
                             </CopyToClipboard>
                         </InputGroup.Addon>
                     </InputGroup>
@@ -56,7 +57,7 @@ class Keys extends React.Component {
                     ? 'success'
                     : null}>
                     <label htmlFor="firstName">Master Key</label><br/>
-                    <label className="label-description">Master key is private key and it ignore all the security rules.</label>
+                    <label className="label-description">Master Key ignores all security rules. Use this on the server and not on the client.</label>
                     <label className={this.state.masterKeyCopied
                         ? 'copy-span'
                         : 'hide'}>Copied!</label>
@@ -66,11 +67,11 @@ class Keys extends React.Component {
 
                         <InputGroup.Addon>
                             <CopyToClipboard text={this.props.masterKey} onCopy={this.copyText.bind(this, 'masterKeyCopied')}>
-                                <i className="ion ion-ios-copy-outline copy-icon"></i>
+                                <i className="fa fa-copy copy-icon"></i>
                             </CopyToClipboard>
                         </InputGroup.Addon>
                         <InputGroup.Addon onClick={() => this.props.onGenMasterKey(this.props.appId)}>
-                            <i className="ion ion-ios-loop-strong new-icon"></i>
+                            <i className="ion ion-android-sync new-icon"></i>
                         </InputGroup.Addon>
                     </InputGroup>
                 </FormGroup>
@@ -78,7 +79,7 @@ class Keys extends React.Component {
                     ? 'success'
                     : null}>
                     <label htmlFor="firstName">Client Key</label><br/>
-                    <label className="label-description">Client key is the public key and can be used in your apps.</label>&nbsp;
+                    <label className="label-description">Client Key can be public. You can use this on the client.</label>&nbsp;
                     <label className={this.state.clientKeyCopied
                         ? 'copy-span'
                         : 'hide'}>Copied!</label>
@@ -87,11 +88,11 @@ class Keys extends React.Component {
                         <FormControl type="text" value={this.props.clientKey} disabled/>
                         <InputGroup.Addon>
                             <CopyToClipboard text={this.props.clientKey} onCopy={this.copyText.bind(this, 'clientKeyCopied')}>
-                                <i className="ion ion-ios-copy-outline copy-icon"></i>
+                                <i className="fa fa-copy copy-icon"></i>
                             </CopyToClipboard>
                         </InputGroup.Addon>
                         <InputGroup.Addon onClick={() => this.props.onGenClientKey(this.props.appId)}>
-                            <i className="ion ion-ios-loop-strong new-icon"></i>
+                            <i className="ion ion-android-sync new-icon"></i>
                         </InputGroup.Addon>
                     </InputGroup>
                 </FormGroup>

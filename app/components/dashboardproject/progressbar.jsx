@@ -19,7 +19,7 @@ const Progressbar = (props) => (
                 flex: '2'
             }}>
                 <b>{props.apiUsed}%</b>
-                used of
+                &nbsp;used of&nbsp;
                 <b>{props.maxAPI}</b>
             </span>
         </p>
@@ -42,7 +42,7 @@ const Progressbar = (props) => (
                 flex: '2'
             }}>
                 <b>{props.storageUsed}%</b>
-                used of
+                &nbsp;used of&nbsp;
                 <b>{props.maxStorage}</b>
             </span>
         </p>
