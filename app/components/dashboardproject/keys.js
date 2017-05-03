@@ -45,7 +45,7 @@ class Keys extends React.Component {
 
                     <InputGroup>
                         <FormControl type="text" value={this.props.appId} disabled/>
-                        <InputGroup.Addon>
+                        <InputGroup.Addon className="input-addon">
                             <CopyToClipboard text={this.props.appId} onCopy={this.copyText.bind(this, 'appIdCopied')}>
                                 <i className="ion ion-ios-copy-outline copy-icon"></i>
                             </CopyToClipboard>

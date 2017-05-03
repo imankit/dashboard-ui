@@ -3,12 +3,12 @@
  */
 'use strict';
 
-import { saveAppName } from '../../actions';
-import { connect } from 'react-redux';
+import {saveAppName} from '../../actions';
+import {connect} from 'react-redux';
 import React from 'react';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import CloseIcon from 'material-ui/svg-icons/navigation/close';
-import { grey500 } from 'material-ui/styles/colors';
+import {grey500} from 'material-ui/styles/colors';
 
 const iconStyles = {
     marginLeft: 5,
@@ -26,16 +26,29 @@ class ProjectName extends React.Component {
         };
     }
 
+    componentDidMount() {
+        var thisObj = this;
+        $(".relative-pos").click(function(e) {
+            var senderElement = e.target;
+            if (senderElement === $('h3')[0])
+                thisObj.props.onProjectClick()
+
+            return true;
+        });
+
+    }
+
     render() {
 
-        const editName = () => this.setState({ editMode: true });
+        const editName = () => this.setState({editMode: true});
         const closeEditing = () => {
-            this.setState({ editMode: false });
+            this.setState({editMode: false});
             // return if the name hasnt changed
-            if(this.state.value === this.props.name) return false
+            if (this.state.value === this.props.name)
+                return false
             this.props.onNameChange(this.props.appId, this.state.value)
         }
-        const handleChange = (e) => this.setState({ value: e.target.value });
+        const handleChange = (e) => this.setState({value: e.target.value});
         const handleKeyUp = (e) => {
             if (e.which === 13) {
                 closeEditing()
@@ -46,7 +59,7 @@ class ProjectName extends React.Component {
             return (
                 <div className="relative-pos">
                     <h3>
-                        <input className="nameedit" type="text" defaultValue={this.props.name} onClick={editName} />
+                        <input className="nameedit" type="text" defaultValue={this.props.name} onClick={editName}/>
                     </h3>
                 </div>
             );
@@ -56,7 +69,7 @@ class ProjectName extends React.Component {
                     <h3>
                         <input ref="input" className="nameeditenable" defaultValue={this.props.name} onChange={handleChange} onBlur={() => {
                             closeEditing();
-                        }} onKeyUp={handleKeyUp} />
+                        }} onKeyUp={handleKeyUp}/>
 
                     </h3>
                 </div>

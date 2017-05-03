@@ -19,6 +19,7 @@ export function showAlert(type, text) {
 export function fetchApps() {
 
     return function(dispatch) {
+        dispatch({type: 'START_LOADING'})
         xhrDashBoardClient.get('app').then(response => {
             dispatch({type: 'FETCH_APPS', payload: response.data});
             let appIdArray = response.data.map((app) => app.appId);
@@ -120,6 +121,7 @@ export const addApp = (name) => {
         return xhrDashBoardClient.post('/app/create', {"name": name}).then(response => {
             dispatch({type: 'ADD_APP', payload: response.data});
             dispatch({type: 'STOP_LOADING_MODAL'})
+            dispatch(fetchAppSettings(response.data.appId, response.data.keys.master))
             return Promise.resolve()
         }).catch(error => {
             dispatch({type: 'STOP_LOADING_MODAL'})
@@ -925,12 +927,13 @@ export function resetAnalytics() {
 }
 
 //app settings
-export function fetchAppSettings(appId, masterKey) {
+export function fetchAppSettings(appId, masterKey, from) {
     return function(dispatch) {
         dispatch({type: 'START_SECONDARY_LOADING'})
         let postObject = {}
         postObject.key = masterKey
-        xhrCBClient.post('/settings/' + appId, postObject).then(response => {
+        return xhrCBClient.post('/settings/' + appId, postObject).then(response => {
+
             if (response.data.length == 0) {
                 let putAllSettings = [
                     xhrCBClient.put('/settings/' + appId + '/general', {
@@ -960,9 +963,14 @@ export function fetchAppSettings(appId, masterKey) {
             } else {
                 dispatch({type: 'FETCH_APP_SETTINGS', payload: response.data})
                 dispatch({type: 'STOP_SECONDARY_LOADING'})
+                if (from === '/') 
+                    dispatch(fetchApps())
+                return Promise.resolve();
             }
-        }, err => {
+
+        }).catch(err => {
             showAlert('error', "Error fetching App settings.")
+            return Promise.reject()
         })
     }
 }

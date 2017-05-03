@@ -7,11 +7,12 @@
     resize: none;
     height: 85px;
 }
+
 .feedback-textarea:focus {
     outline: none !important;
 }
 
-.feedback-cancelbtn,.feedback-cancelbtn:focus,.feedback-cancelbtn:active,.feedback-cancelbtn:hover {
+.feedback-cancelbtn, .feedback-cancelbtn:focus, .feedback-cancelbtn:active, .feedback-cancelbtn:hover {
     float: left;
     margin-bottom: 10px;
     margin-left: 10px;
@@ -26,7 +27,7 @@
     margin-top: -12px;
 }
 
-.feedback-sendbtn,.feedback-sendbtn:focus,.feedback-sendbtn:active,.feedback-sendbtn:hover {
+.feedback-sendbtn, .feedback-sendbtn:focus, .feedback-sendbtn:active, .feedback-sendbtn:hover {
     float: right;
     margin-right: 10px;
     background-color: #6080ff;
@@ -48,6 +49,10 @@
 
 .feedbackSent {
     width: 256px;
+}
+
+.feedbackpopover {
+    border-radius: 7px!important
 }
 
 .thanks-text {

@@ -45,21 +45,21 @@ class Notifications extends React.Component {
         if (this.state.value) {
             // post to slack webhook , make chages here for updating webhook
             this.props.updateBeacon(this.props.beacons, 'dashboardFeedback');
-            // axios({
-            //     url: "https://hooks.slack.com/services/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",
-            //     method: 'post',
-            //     withCredentials: false,
-            //     headers: {
-            //         'Content-Type': 'application/x-www-form-urlencoded'
-            //     },
-            //     data: {
-            //         text: this.state.value
-            //     }
-            // }).then((res) => {
-            //     this.setState({value: ''});
-            // }, (err) => {
-            //     this.setState({value: ''});
-            // })
+            axios({
+                url: "https://hooks.slack.com/services/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",
+                method: 'post',
+                withCredentials: false,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                data: {
+                    text: this.state.value
+                }
+            }).then((res) => {
+                this.setState({value: ''});
+            }, (err) => {
+                this.setState({value: ''});
+            })
             this.setState({feedbackSent: true});
         }
     }
@@ -102,8 +102,10 @@ class Notifications extends React.Component {
                 }} targetOrigin={{
                     horizontal: 'right',
                     vertical: 'top'
-                }} onRequestClose={this.handleRequestClose} className="">
+                }} onRequestClose={this.handleRequestClose} className="feedbackpopover">
 
+                    <p className="headingpop">Feedback
+                    </p>
                     <textarea cols="30" rows="4" placeholder="Feedback about this page?" className={!this.state.feedbackSent
                         ? "feedback-textarea"
                         : 'hide'} onChange={this.handleChange.bind(this)} value={this.state.value}></textarea>

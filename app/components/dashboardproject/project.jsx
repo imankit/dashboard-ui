@@ -6,6 +6,8 @@ import Progressbar from './progressbar.jsx';
 import {Modal, Button} from 'react-bootstrap';
 import OptionsModal from './optionsModal';
 
+import Dropzone from 'react-dropzone';
+
 import IconDelete from 'material-ui/svg-icons/action/delete';
 import FileFileUpload from 'material-ui/svg-icons/file/file-upload';
 import Key from 'material-ui/svg-icons/communication/vpn-key';
@@ -64,10 +66,10 @@ const Project = React.createClass({
         this.setState({showExitModal: false});
     },
     open1() {
-        this.setState({showModal: true, selectedTab: "addDev", displayText: "Add Developers"});
+        this.setState({showModal: true, selectedTab: "addDev", displayText: "Add Developers", innertext: "Add Developers to contribute to your app."});
     },
     open2() {
-        this.setState({showModal: true, selectedTab: "keys", displayText: "App Keys", icon: "ion ion-key"});
+        this.setState({showModal: true, selectedTab: "keys", displayText: "App Keys", innertext: null});
     },
     open3() {
         this.setState({showUpgradeModal: true});
@@ -96,6 +98,17 @@ const Project = React.createClass({
         // this.props.onDeleteDev(this.props.appId)
         this.setState({showExitModal: true});
     },
+    onDrop(acceptedFiles, rejectedFiles) {
+
+        this.props.fetchAppSettings(this.props.appId, this.props.keys.master, acceptedFiles[0]);
+    },
+    setImgFallbackUrl(e) {
+        e.target.onError = null;
+        e.target.src = '/assets/images/default-app-icon.png';
+    },
+    onProjectClick() {
+        this.props.onProjectClick(this.props.appId, this.props.keys.master, this.props.name, '/')
+    },
 
     render: function() {
 
@@ -105,18 +118,20 @@ const Project = React.createClass({
             <div className="project" ref="project">
                 <div className="plan-status" onClick={this.open3}>{planName}</div>
                 <div className="app-info">
-                    <div className="app-icon">
-                        <Icon style={logoStyles} color={blue500}></Icon>
-                    </div>
-                    <ProjectName name={this.props.name} appId={this.props.appId}/>
-                    <Progressbar appId={this.props.appId} planId={this.props.planId}/>
+                    <Dropzone onDrop={this.onDrop} className="dropBody">
+                        <div className="app-icon">
+                            <img height="20px" className="app-selector-img" src={SERVER_URL + '/appfile/' + this.props.appId + '/icon'} onError={this.setImgFallbackUrl}></img>
+                        </div>
+                    </Dropzone>
+                    <ProjectName name={this.props.name} appId={this.props.appId} onProjectClick={this.onProjectClick}/>
+                    <Progressbar appId={this.props.appId} planId={this.props.planId} onProjectClick={this.onProjectClick}/>
                 </div>
                 <div className="project-option">
                     <div >
                         <span className={!this.props.beacons.tableDesignerLink
                             ? "gps_ring manage_app_beacon"
                             : 'hide'}></span>
-                        <ManageApp style={iconStyles} color={grey500} data-tip="Manage" onClick={() => this.props.onProjectClick(this.props.appId, this.props.keys.master, this.props.name, '/')}/> {this.isAppAdmin()
+                        <ManageApp style={iconStyles} color={grey500} data-tip="Manage" onClick={this.onProjectClick}/> {this.isAppAdmin()
                             ? <div style={{
                                     display: 'inline'
                                 }}>
@@ -145,7 +160,9 @@ const Project = React.createClass({
                         }}>
                             <Modal.Title>{this.state.displayText}
                                 <div className="modal-title-inner-text">
-                                    Use keys to initialize your app.
+                                    {this.state.innertext
+                                        ? this.state.innertext
+                                        : 'Use keys to initialize your app.'}
                                 </div>
                             </Modal.Title>
                             <div className="modalicon" style={{
@@ -159,13 +176,9 @@ const Project = React.createClass({
                                 <div className="flex-general-column-wrapper-center" style={{
                                     height: 56,
                                     width: 56
-                                }}>
-                                    <i className={this.state.icon
-                                        ? this.state.icon
-                                        : "ion-android-people"} style={{
-                                        fontSize: 30,
-                                        color: 'white'
-                                    }}/>
+                                }}>{this.state.selectedTab === 'addDev'
+                                        ? <PersonAdd color="white"/>
+                                        : <Key color="white"/>}
                                 </div>
                             </div>
                         </Modal.Header>
