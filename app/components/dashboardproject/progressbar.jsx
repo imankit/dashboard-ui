@@ -20,7 +20,7 @@ const Progressbar = (props) => (
             }}>
                 <b>{props.apiUsed}%</b>
                 &nbsp;used of&nbsp;
-                <b>{props.maxAPI}</b>
+ <b>{props.maxAPI}</b>
             </span>
         </p>
         <div className="apihead">
@@ -43,7 +43,7 @@ const Progressbar = (props) => (
             }}>
                 <b>{props.storageUsed}%</b>
                 &nbsp;used of&nbsp;
-                <b>{props.maxStorage}</b>
+<b>{props.maxStorage}</b>
             </span>
         </p>
         <div className="storagehead">

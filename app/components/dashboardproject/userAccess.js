@@ -43,7 +43,7 @@ class UserAccess extends Component {
     }
     componentWillUnmount() {
         //    this.props.fetchApps()
-    }
+}
     changeDevRole(userId, e) {
         this.props.changeDeveloperRole(this.props.appId, userId, e.target.value)
     }
@@ -72,6 +72,7 @@ class UserAccess extends Component {
                             <th>Status</th>
                             <th>Remove</th>
                         </tr>
+
                     </thead>{this.props.loading.loading
                         ? <RefreshIndicator size={30} left={3} top={3} status="loading" className="profileimageloader"/>
                         : <tbody>
@@ -102,7 +103,7 @@ class UserAccess extends Component {
                             </tr>)
 }
                         </tbody>}
-                </Table>
+</Table>
                 <FormGroup>
                     <InputGroup>
                         <InputGroup.Addon>
@@ -118,8 +119,7 @@ class UserAccess extends Component {
                         : <Button className="btn-primary create-btn" onClick={onSend}>
                             Invite
                         </Button>
-}
-                </FormGroup>
+}</FormGroup>
                 <Clearfix/>
             </div>
         );

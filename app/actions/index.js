@@ -966,6 +966,7 @@ export function fetchAppSettings(appId, masterKey, from) {
             } else {
                 dispatch({type: 'FETCH_APP_SETTINGS', payload: response.data})
                 dispatch({type: 'STOP_LOADING'})
+
                 return Promise.resolve();
             }
 
