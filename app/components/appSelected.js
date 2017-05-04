@@ -54,7 +54,7 @@ class AppSelected extends React.Component {
             <div className="manageappcontainer row">
                 <div className="sidenavbar col-md-3 col-sm-3 col-xs-2 col-lg-2">
                     <div className="affix sidebarcontainer">
-                        <button className={this.state.selected == "tables"
+                     <button className={this.state.selected == "tables"
                             ? "navbuttonselected navbutton"
                             : "navbutton"} onClick={this.redirectTo.bind(this, 'tables')}>
                             <i className={this.state.selected == "tables"
@@ -62,13 +62,27 @@ class AppSelected extends React.Component {
                                 : "buttonicon fa fa-bars red"} aria-hidden="true"></i>
                             Tables
                         </button>
-                        <button className={this.state.selected == "analytics"
+
+                        <button className="navbutton" onClick={this.openFiles.bind(this)}>
+                            <i className="buttonicon fa fa-file purple" aria-hidden="true"></i>
+                            Files
+                        </button>
+
+                        <button className={this.state.selected == "push"
                             ? "navbuttonselected navbutton"
-                            : "navbutton"} onClick={this.redirectTo.bind(this, 'analytics')}>
-                            <i className={this.state.selected == "analytics"
-                                ? "fa fa-bar-chart buttonicon"
-                                : "buttonicon fa fa-bar-chart blue"} aria-hidden="true"></i>
-                            Analytics
+                            : "navbutton"} onClick={this.redirectTo.bind(this, 'push')}>
+                            <i className={this.state.selected == "push"
+                                ? "fa fa-bell-o buttonicon"
+                                : "buttonicon fa fa-bell orange"} aria-hidden="true"></i>
+                            Push Notifications
+                        </button>
+                        <button className={this.state.selected == "email"
+                            ? "navbuttonselected navbutton"
+                            : "navbutton"} onClick={this.redirectTo.bind(this, 'email')}>
+                            <i className={this.state.selected == "email"
+                                ? "fa fa-envelope-o buttonicon"
+                                : "buttonicon fa fa-envelope blue"} aria-hidden="true"></i>
+                            Email Campaign
                         </button>
                         <button className={this.state.selected == "settings"
                             ? "navbuttonselected navbutton"
@@ -78,14 +92,6 @@ class AppSelected extends React.Component {
                                 : "buttonicon fa fa-cog green"} aria-hidden="true"></i>
                             Settings
                         </button>
-                        <button className={this.state.selected == "cache"
-                            ? "navbuttonselected navbutton"
-                            : "navbutton"} onClick={this.redirectTo.bind(this, 'cache')}>
-                            <i className={this.state.selected == "cache"
-                                ? "fa fa-bolt buttonicon"
-                                : "buttonicon fa fa-bolt purple"} aria-hidden="true"></i>
-                            Cache
-                        </button>
                         <button className={this.state.selected == "queue"
                             ? "navbuttonselected navbutton"
                             : "navbutton"} onClick={this.redirectTo.bind(this, 'queue')}>
@@ -94,27 +100,23 @@ class AppSelected extends React.Component {
                                 : "buttonicon fa fa-exchange blue"} aria-hidden="true"></i>
                             Queue
                         </button>
-                        <button className={this.state.selected == "push"
+                        <button className={this.state.selected == "cache"
                             ? "navbuttonselected navbutton"
-                            : "navbutton"} onClick={this.redirectTo.bind(this, 'push')}>
-                            <i className={this.state.selected == "push"
-                                ? "fa fa-bell-o buttonicon"
-                                : "buttonicon fa fa-bell-o orange"} aria-hidden="true"></i>
-                            Push Notifications
+                            : "navbutton"} onClick={this.redirectTo.bind(this, 'cache')}>
+                            <i className={this.state.selected == "cache"
+                                ? "fa fa-bolt buttonicon"
+                                : "buttonicon fa fa-bolt purple"} aria-hidden="true"></i>
+                            Cache
                         </button>
-                        <button className={this.state.selected == "email"
+                        <button className={this.state.selected == "analytics"
                             ? "navbuttonselected navbutton"
-                            : "navbutton"} onClick={this.redirectTo.bind(this, 'email')}>
-                            <i className={this.state.selected == "email"
-                                ? "fa fa-envelope-o buttonicon"
-                                : "buttonicon fa fa-envelope-o blue"} aria-hidden="true"></i>
-                            Email Campaign
+                            : "navbutton"} onClick={this.redirectTo.bind(this, 'analytics')}>
+                            <i className={this.state.selected == "analytics"
+                                ? "fa fa-bar-chart buttonicon"
+                                : "buttonicon fa fa-bar-chart blue"} aria-hidden="true"></i>
+                            Analytics
                         </button>
-                        <button className="navbutton" onClick={this.openFiles.bind(this)}>
-                            <i className="buttonicon fa fa-file-o purple" aria-hidden="true"></i>
-                            Files
-                        </button>
-                    </div>
+ </div>
                 </div>
                 <div className="manageappcontainermain col-md-9 col-sm-9 col-xs-10 col-lg-10">
                     {this.props.isAppActive

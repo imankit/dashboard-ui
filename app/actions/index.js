@@ -263,6 +263,7 @@ export const addUser = (name, email, password, isAdmin) => {
 
 export const sendInvitation = (appId, email) => {
     return function(dispatch) {
+        dispatch({type: 'START_LOADING_MODAL'})
         xhrDashBoardClient.post('/app/' + appId + '/invite', {"email": email}).then(response => {
             dispatch({
                 type: 'SAVE_INVITE',
@@ -271,9 +272,11 @@ export const sendInvitation = (appId, email) => {
                     email: email
                 }
             });
+            dispatch({type: 'STOP_LOADING_MODAL'})
         }).catch(error => {
             console.log('inside sendInvite error catch error: ');
             console.log(error);
+            dispatch({type: 'STOP_LOADING_MODAL'})
         });
     };
 };
@@ -285,7 +288,7 @@ export const deleteDev = (appId, userId) => {
                 type: 'DELETE_DEV',
                 payload: {
                     appId: appId,
-                    invited: response.data.developers
+                    developers: response.data.developers
                 }
             });
         }).catch(error => {
@@ -325,7 +328,7 @@ export const addDeveloper = (appId, email) => {
 export const changeDeveloperRole = (appId, userId, role) => {
     return function(dispatch) {
         xhrDashBoardClient.get('/app/' + appId + '/changerole/' + userId + '/' + role).then(response => {
-            dispatch(fetchApps())
+            //no need to fetchApps here
         }).catch(error => {
             showAlert('error', "Error Updating Developer role.")
             console.log('change role error : ');
@@ -401,7 +404,7 @@ export const deleteApp = (appId) => {
         }).catch(error => {
             console.log('inside delete app error catch error: ');
             console.log(error);
-            dispatch({type: 'STOP_LOADING'})
+            dispatch({type: 'STOP_LOADING_MODAL'})
         });
     };
 };
@@ -447,7 +450,7 @@ export function getAnalyticsData(appIdArray) {
         xhrDashBoardClient.post('/analytics/api-storage/bulk/count', {appIdArray: appIdArray}).then(response => {
             dispatch({type: 'RECEIVE_ANALYTICS', payload: response.data});
         }).catch(error => {
-            console.log(error);
+            //console.log(error);
         });
 
     };
@@ -929,7 +932,7 @@ export function resetAnalytics() {
 //app settings
 export function fetchAppSettings(appId, masterKey, from) {
     return function(dispatch) {
-        dispatch({type: 'START_SECONDARY_LOADING'})
+        dispatch({type: 'START_LOADING'})
         let postObject = {}
         postObject.key = masterKey
         return xhrCBClient.post('/settings/' + appId, postObject).then(response => {
@@ -957,14 +960,13 @@ export function fetchAppSettings(appId, masterKey, from) {
                     dispatch(fetchAppSettings(appId, masterKey))
                 }, (err) => {
                     showAlert('error', "Error fetching App settings.")
-                    dispatch({type: 'STOP_SECONDARY_LOADING'})
+                    dispatch({type: 'STOP_LOADING'})
                 })
 
             } else {
                 dispatch({type: 'FETCH_APP_SETTINGS', payload: response.data})
-                dispatch({type: 'STOP_SECONDARY_LOADING'})
-                if (from === '/') 
-                    dispatch(fetchApps())
+                dispatch({type: 'STOP_LOADING'})
+
                 return Promise.resolve();
             }
 

@@ -5,14 +5,20 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {updateBeacon} from '../../actions';
 
-import {DropDownMenu, MenuItem, IconButton, Popover, IconMenu} from 'material-ui'
+import {
+    DropDownMenu,
+    MenuItem,
+    IconButton,
+    Popover,
+    IconMenu,
+    Menu
+} from 'material-ui'
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 import {logOut} from '../../actions';
 import Storage from 'material-ui/svg-icons/device/storage';
 import Analytics from 'material-ui/svg-icons/editor/insert-chart';
 import Setting from 'material-ui/svg-icons/action/settings';
 import DownArrow from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
-import Book from 'material-ui/svg-icons/action/book';
 import Cache from 'material-ui/svg-icons/image/flash-on';
 import Queues from 'material-ui/svg-icons/action/compare-arrows';
 import Notifications from 'material-ui/svg-icons/alert/add-alert';
@@ -168,12 +174,21 @@ class ToolBar extends React.Component {
                                 horizontal: 'right',
                                 vertical: 'top'
                             }} onRequestClose={this.handleRequestClose} animated={true} className="optionpop">
-                                <a href="https://tutorials.cloudboost.io/">
-                                    <button className="optionBtn">Documentation</button>
-                                </a>
-                                <a href="https://slack.cloudboost.io/">
-                                    <button className="optionBtn">Support</button>
-                                </a>
+
+                                <Menu listStyle={{
+                                    paddingTop: '0px',
+                                    paddingBottom: '0px'
+                                }} menuItemStyle={{
+                                    minHeight: 'auto',
+                                    color: '#595959'
+                                }}>
+                                    <MenuItem primaryText="Documentation" innerDivStyle={{
+                                        height: '40px'
+                                    }} rightIcon={< i className = "ion ion-share" />}/>
+                                    <MenuItem primaryText="Support" innerDivStyle={{
+                                        height: '40px'
+                                    }} rightIcon={< i className = "ion ion-share" />}/>
+                                </Menu>
                             </Popover>
 
                             <NotificationsModal notifications={notifications}/> {this.props.isAdmin

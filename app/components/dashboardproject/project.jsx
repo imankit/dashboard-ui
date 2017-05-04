@@ -5,6 +5,8 @@ import ProjectName from './projectname.js';
 import Progressbar from './progressbar.jsx';
 import {Modal, Button} from 'react-bootstrap';
 import OptionsModal from './optionsModal';
+import {RefreshIndicator} from 'material-ui'
+import Dropzone from 'react-dropzone';
 
 import Dropzone from 'react-dropzone';
 
@@ -20,6 +22,8 @@ import DeleteApp from './deleteApp';
 import ExitApp from './exitApp';
 import Exit from 'material-ui/svg-icons/action/exit-to-app';
 import Upgrade from '../payment';
+import AddDeveloper from './addDeveloper';
+import ManageKeys from './manageKeys';
 
 import planList from '../../fakeAPI/plans'
 
@@ -43,6 +47,8 @@ const Project = React.createClass({
             showUpgradeModal: false,
             deleteButtonState: true,
             showExitModal: false,
+            showDeveloperModal: false,
+            showKeysModal: false,
             selectedTab: (typeof this.props.selectedTab !== 'undefined')
                 ? this.props.selectedTab
                 : "addDev"
@@ -65,12 +71,18 @@ const Project = React.createClass({
     closeExitModal() {
         this.setState({showExitModal: false});
     },
+    closeDeveloperModal() {
+        this.setState({showDeveloperModal: false})
+    },
+    closeKeyModal() {
+        this.setState({showKeysModal: false})
+    },
     open1() {
-        this.setState({showModal: true, selectedTab: "addDev", displayText: "Add Developers", innertext: "Add Developers to contribute to your app."});
+        this.setState({showDeveloperModal: true});
     },
     open2() {
-        this.setState({showModal: true, selectedTab: "keys", displayText: "App Keys", innertext: null});
-    },
+        this.setState({showKeysModal: true});
+},
     open3() {
         this.setState({showUpgradeModal: true});
     },
@@ -118,12 +130,14 @@ const Project = React.createClass({
             <div className="project" ref="project">
                 <div className="plan-status" onClick={this.open3}>{planName}</div>
                 <div className="app-info">
-                    <Dropzone onDrop={this.onDrop} className="dropBody">
-                        <div className="app-icon">
-                            <img height="20px" className="app-selector-img" src={SERVER_URL + '/appfile/' + this.props.appId + '/icon'} onError={this.setImgFallbackUrl}></img>
-                        </div>
-                    </Dropzone>
-                    <ProjectName name={this.props.name} appId={this.props.appId} onProjectClick={this.onProjectClick}/>
+                    {this.props.loading
+                        ? <RefreshIndicator size={30} left={3} top={3} status="loading" className="profileimageloader"/>
+                        : <Dropzone onDrop={this.onDrop} className="dropBody">
+                            <div className="app-icon">
+                                <img height="20px" className="app-selector-img" src={SERVER_URL + '/appfile/' + this.props.appId + '/icon'} onError={this.setImgFallbackUrl}></img>
+                            </div>
+                        </Dropzone>}
+<ProjectName name={this.props.name} appId={this.props.appId} onProjectClick={this.onProjectClick}/>
                     <Progressbar appId={this.props.appId} planId={this.props.planId} onProjectClick={this.onProjectClick}/>
                 </div>
                 <div className="project-option">
@@ -152,57 +166,25 @@ const Project = React.createClass({
 }
 
                         <ReactTooltip place="bottom" type="dark" delayShow={100}/>
-                    </div>
-
-                    <Modal show={this.state.showModal} dialogClassName='options-modal' onHide={this.close}>
-                        <Modal.Header style={{
-                            paddingTop: 10
-                        }}>
-                            <Modal.Title>{this.state.displayText}
-                                <div className="modal-title-inner-text">
-                                    {this.state.innertext
-                                        ? this.state.innertext
-                                        : 'Use keys to initialize your app.'}
-                                </div>
-                            </Modal.Title>
-                            <div className="modalicon" style={{
-                                paddingRight: 8,
-                                height: 56,
-                                width: 56,
-                                borderRadius: 50,
-                                backgroundColor: '#0F6DA6',
-                                marginTop: 2
-                            }}>
-                                <div className="flex-general-column-wrapper-center" style={{
-                                    height: 56,
-                                    width: 56
-                                }}>{this.state.selectedTab === 'addDev'
-                                        ? <PersonAdd color="white"/>
-                                        : <Key color="white"/>}
-                                </div>
-                            </div>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <OptionsModal id={this.props._id} appId={this.props.appId} masterKey={this.props.keys.master} clientKey={this.props.keys.js} planId={this.props.planId} developers={this.props.developers} invited={this.props.invited} selectedTab={this.state.selectedTab}/>
-                        </Modal.Body>
-                    </Modal>
-
-                    {/*MODAL for delete and upgrade*/}
-
-                    {// only render component when its needed dont pollute DOM
-                    this.state.showDeleteModal
+                    </div> {this.state.showDeleteModal
                         ? <DeleteApp showDeleteModal={this.state.showDeleteModal} closeDeleteModal={this.closeDeleteModal} handleChange={this.handleChange} deleteButtonState={this.state.deleteButtonState} appId={this.props.appId}/>
                         : ''
 }
-                    {// only render component when its needed dont pollute DOM
-                    this.state.showUpgradeModal
+                    {this.state.showUpgradeModal
                         ? <Upgrade appId={this.props.appId} planId={this.props.planId} show={this.state.showUpgradeModal} close={this.closeUpgradeModal}/>
                         : ''
 }
 
-                    {// only render component when its needed dont pollute DOM
-                    this.state.showExitModal
+                    {this.state.showExitModal
                         ? <ExitApp handleChange={this.handleChange} deleteButtonState={this.state.deleteButtonState} appId={this.props.appId} show={this.state.showExitModal} close={this.closeExitModal} onDeleteDev={this.props.onDeleteDev}/>
+                        : ''
+}
+                    {this.state.showDeveloperModal
+                        ? <AddDeveloper show={this.state.showDeveloperModal} close={this.closeDeveloperModal} id={this.props._id} appId={this.props.appId} masterKey={this.props.keys.master} clientKey={this.props.keys.js} planId={this.props.planId} developers={this.props.developers} invited={this.props.invited} selectedTab={"addDev"}/>
+                        : ''
+}
+                    {this.state.showKeysModal
+                        ? <ManageKeys loading={this.props.loading} show={this.state.showKeysModal} close={this.closeKeyModal} id={this.props._id} appId={this.props.appId} masterKey={this.props.keys.master} clientKey={this.props.keys.js} planId={this.props.planId} developers={this.props.developers} invited={this.props.invited} selectedTab={"keys"}/>
                         : ''
 }
                 </div>

@@ -106,8 +106,8 @@ class Notifications extends React.Component {
 
                     <p className="headingpop">Feedback
                     </p>
-                    <textarea cols="30" rows="4" placeholder="Feedback about this page?" className={!this.state.feedbackSent
-                        ? "feedback-textarea"
+                    <textarea cols="30" rows="4" placeholder="Your thoughts?" className={!this.state.feedbackSent
+? "feedback-textarea"
                         : 'hide'} onChange={this.handleChange.bind(this)} value={this.state.value}></textarea>
 
                     <br/>

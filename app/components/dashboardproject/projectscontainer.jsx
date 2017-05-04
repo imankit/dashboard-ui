@@ -64,17 +64,15 @@ class Projectscontainer extends React.Component {
         this.props.dispatch(manageApp(appId, masterKey, name, from))
     }
     fetchAppSettings(appId, masterKey, file) {
-        if (file.type.includes('/png')) {
+if (file.type.includes('image')) {
             this.props.dispatch(fetchAppSettings(appId, masterKey, '/')).then(() => {
                 if (this.props.generalSettings) {
-                    // this.setState({
-                    //     ...this.props.generalSettings.settings
-                    // })
+
                     this.props.dispatch(upsertAppSettingsFile(appId, masterKey, file, 'general', {
                         ...this.state
                     }))
 
-                }
+  }
             })
         } else {
             showAlert('error', 'Only .png type images are allowed.')
@@ -84,13 +82,13 @@ class Projectscontainer extends React.Component {
     render() {
         const content = (this.props.apps.length
             ? this.props.apps.map(app => <Col xs={8} sm={6} md={4} lg={4} key={app._id} className="project-grid">
-                <Project key={app._id} fetchAppSettings={this.fetchAppSettings.bind(this)} {...app} onProjectClick={this.onProjectClick.bind(this)} currentUser={this.props.currentUser} onDeleteDev={this.onDeleteDev.bind(this)} beacons={this.props.beacons} selectedPlan={app.planId}/>
-            </Col>)
+                <Project onProjectClick={this.onProjectClick.bind(this)} key={app._id} fetchAppSettings={this.fetchAppSettings.bind(this)} {...app} loading={this.props.loading.loading} currentUser={this.props.currentUser} onDeleteDev={this.onDeleteDev.bind(this)} beacons={this.props.beacons} selectedPlan={app.planId}/>
+ </Col>)
             : <form onSubmit={this.addApp.bind(this)}>
                 <div className="noappfound">
                     <p className="welcome">Welcome!</p>
                     <p className="subhead">Let's create your first app:</p>
-                    <input required type="text" placeholder="Name your app" value={this.state.value} onChange={this.changeHandler.bind(this)}/> {this.props.loading
+                    <input required type="text" placeholder="Name your app" value={this.state.value} onChange={this.changeHandler.bind(this)}/> {this.props.loading.modal_loading
                         ? <button className="btn btn-primary btnloading" type="submit">
                                 <RefreshIndicator loadingColor="#ececec" size={40} left={0} top={0} status="loading" style={styles.refresh}/>
                                 Create App</button>
@@ -122,10 +120,9 @@ const mapStateToProps = (state) => {
     return {
         apps: state.apps || [],
         currentUser: state.user,
-        loading: state.loader.modal_loading,
+        loading: state.loader,
         beacons: state.beacons,
         generalSettings: generalSettings
-
     };
 };
 

@@ -15,6 +15,7 @@ import {
     fetchApps
 } from '../../actions/index';
 import {FormGroup, InputGroup, FormControl, Button, Clearfix} from 'react-bootstrap';
+import {RefreshIndicator} from 'material-ui'
 
 const iconStyles = {
     marginLeft: 20,
@@ -24,6 +25,16 @@ const iconStylesDisabled = {
     marginLeft: 20,
     cursor: 'no-drop'
 }
+const style = {
+    refresh: {
+        display: 'inline-block',
+        position: 'relative',
+        background: 'none',
+        boxShadow: 'none',
+        float: 'right',
+        marginLeft: '40px'
+    }
+};
 
 class UserAccess extends Component {
 
@@ -31,8 +42,8 @@ class UserAccess extends Component {
         this.props.fetchDevDetails(this.props.devIdArray)
     }
     componentWillUnmount() {
-        this.props.fetchApps()
-    }
+        //    this.props.fetchApps()
+}
     changeDevRole(userId, e) {
         this.props.changeDeveloperRole(this.props.appId, userId, e.target.value)
     }
@@ -61,36 +72,38 @@ class UserAccess extends Component {
                             <th>Status</th>
                             <th>Remove</th>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {this.props.developerList.map((user) => <tr key={user._id}>
-                            <td>{user.email}</td>
-                            <td>
-                                <select className={this.props.currentUser.user._id == user._id
-                                    ? 'roleselectdevdisabled'
-                                    : 'roleselectdev'} defaultValue={user.role} disabled={this.props.currentUser.user._id == user._id} onChange={this.changeDevRole.bind(this, user._id)}>
-                                    <option value="Admin">Admin</option>
-                                    <option value="User">User</option>
-                                </select>
-                            </td>
-                            <td>Accepted</td>
-                            <td>
-                                {this.props.currentUser.user._id != user._id
-                                    ? <Close style={iconStyles} color={grey500} onClick={() => this.props.onDeleteDev(this.props.appId, user._id)}/>
-                                    : <Close style={iconStylesDisabled} color={grey300}/>
+
+                    </thead>{this.props.loading.loading
+                        ? <RefreshIndicator size={30} left={3} top={3} status="loading" className="profileimageloader"/>
+                        : <tbody>
+                            {this.props.developerList.map((user) => <tr key={user._id}>
+                                <td>{user.email}</td>
+                                <td>
+                                    <select className={this.props.currentUser.user._id == user._id
+                                        ? 'roleselectdevdisabled'
+                                        : 'roleselectdev'} defaultValue={user.role} disabled={this.props.currentUser.user._id == user._id} onChange={this.changeDevRole.bind(this, user._id)}>
+                                        <option value="Admin">Admin</option>
+                                        <option value="User">User</option>
+                                    </select>
+                                </td>
+                                <td>Accepted</td>
+                                <td>
+                                    {this.props.currentUser.user._id != user._id
+                                        ? <Close style={iconStyles} color={grey500} onClick={() => this.props.onDeleteDev(this.props.appId, user._id)}/>
+                                        : <Close style={iconStylesDisabled} color={grey300}/>
 }
-                            </td>
-                        </tr>)
+                                </td>
+                            </tr>)
 }
-                        {this.props.invited.map((user) => <tr key={user.email}>
-                            <td>{user.email}</td>
-                            <td>--</td>
-                            <td>Invited</td>
-                            <td><Close style={iconStyles} color={grey500} onClick={() => this.props.onDeleteInvite(this.props.appId, user.email)}/></td>
-                        </tr>)
+                            {this.props.invited.map((user) => <tr key={user.email}>
+                                <td>{user.email}</td>
+                                <td>--</td>
+                                <td>Invited</td>
+                                <td><Close style={iconStyles} color={grey500} onClick={() => this.props.onDeleteInvite(this.props.appId, user.email)}/></td>
+                            </tr>)
 }
-                    </tbody>
-                </Table>
+                        </tbody>}
+</Table>
                 <FormGroup>
                     <InputGroup>
                         <InputGroup.Addon>
@@ -98,8 +111,15 @@ class UserAccess extends Component {
                         </InputGroup.Addon>
                         <FormControl type="text" placeholder="example@example.com" value={this.state.email} onChange={handleChange}/>
                     </InputGroup>
-                    <Button bsStyle="primary" onClick={onSend}>Invite</Button>
-                </FormGroup>
+                    {this.props.loading.modal_loading
+                        ? <Button className="btnloadingg btn-primary create-btn " disabled>
+                                <RefreshIndicator loadingColor="#ececec" size={35} left={-10} top={0} status="loading" style={style.refresh}/>
+                                <span className="createAppLabel">Invite</span>
+                            </Button>
+                        : <Button className="btn-primary create-btn" onClick={onSend}>
+                            Invite
+                        </Button>
+}</FormGroup>
                 <Clearfix/>
             </div>
         );
@@ -122,7 +142,7 @@ const mapStateToProps = (state, selfProps) => {
             return devObj
         })
     }
-    return {developerList: developerList, devIdArray: devIdArray, currentUser: state.user};
+    return {developerList: developerList, devIdArray: devIdArray, currentUser: state.user, loading: state.loader};
 };
 
 const mapDispatchToProps = (dispatch) => {

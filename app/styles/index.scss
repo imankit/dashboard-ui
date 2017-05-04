@@ -319,9 +319,6 @@ button.delete-btn:hover {
     outline: none!important;
 }
 
-.copy-icon {
-    font-size: 20px;
-}
 
 .new-icon {
     font-size: 20px;
@@ -1190,6 +1187,15 @@ button.btnloadingg:hover {
     content: url("/assets/images/trash.png");
 }
 
+.key-modal-icon-style {
+    border-radius: 50%;
+    background: #2c5f9a;
+    font-size: 30px;
+    width: 60px;
+    padding: 15px;
+    content: url("/assets/images/key-icon.png");
+}
+
 .modal-title-inner-text {
     font-size: 14px;
     font-weight: normal;
@@ -1294,6 +1300,18 @@ button.btnloadingg:hover {
     @extend %modal-common;
 }
 
+.optionpop {
+    min-width: 220px !important;
+    min-height: 70px !important;
+    border-radius: 5px !important;
+    overflow: visible !important;
+    font-family: Roboto !important;
+}
+
+.optionpop > div {
+    overflow: visible !important;
+}
+
 .options-modal {
     @extend %modal-common;
 
@@ -1327,6 +1345,68 @@ button.btnloadingg:hover {
                 input[disabled] {
                     background-color: #fefefe;
                     height: 34px;
+                }
+            }
+
+            td {
+                align: center;
+            }
+        }
+    }
+}
+
+.developers-modal {
+    @extend %modal-common;
+
+    .modal-title {
+        float: none!important;
+    }
+
+    .modal-body {
+        padding: 0;
+
+        .tab-content {
+            padding: 20px;
+            font-size: 14px;
+            color: #252525;
+            font-weight: 500;
+            margin-top: 0;
+
+            .input-addon {}
+
+            .tab-pane {
+                padding: 20px;
+            }
+
+            #left-tabs-example-pane-third {
+                padding-top: 0;
+            }
+
+            .btn {
+                margin-top: 5px;
+                float: right;
+            }
+
+            button[disabled] {
+                height: 37px;
+                padding: 0 !important;
+                width: 100px;
+            }
+
+            .input-group {
+                margin: 10px 0 3px;
+
+                input[disabled] {
+                    background-color: #fefefe;
+                    height: 34px;
+                }
+
+                input {
+                    height: 40px;
+                }
+
+                .input-group-addon:hover {
+                    cursor: pointer;
                 }
             }
 
@@ -3226,7 +3306,13 @@ button.btnloadingg:hover {
 
         .fieldssmall {
             .labels {
-                flex: 2;
+                flex: 3;
+            }
+        }
+
+        .country {
+            .labels {
+                flex: 5;
             }
         }
     }
@@ -3517,13 +3603,23 @@ button.btnloadingg:hover {
     min-width: 220px !important;
     min-height: 100px !important;
     border-radius: 5px !important;
-    background-color: #f3faff !important;
     overflow: visible !important;
     font-family: Roboto !important;
 }
 
 .proheadingpopfilepop > div {
     overflow: visible !important;
+}
+
+.headingpop {
+    height: 40px;
+    padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    font-weight: 500;
+    margin-bottom: 0;
+    padding-left: 12px;
+    font-size: 11pt;
+    color: #2196f3;
 }
 
 .profilepoparrow {
@@ -3654,6 +3750,7 @@ button.btnloadingg:hover {
             margin-top: 2px;
             float: left;
             margin-left: 10px;
+            width: 16px;
         }
     }
 
