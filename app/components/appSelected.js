@@ -54,7 +54,7 @@ class AppSelected extends React.Component {
             <div className="manageappcontainer row">
                 <div className="sidenavbar col-md-3 col-sm-3 col-xs-2 col-lg-2">
                     <div className="affix sidebarcontainer">
-                     <button className={this.state.selected == "tables"
+                        <button className={this.state.selected == "tables"
                             ? "navbuttonselected navbutton"
                             : "navbutton"} onClick={this.redirectTo.bind(this, 'tables')}>
                             <i className={this.state.selected == "tables"
@@ -116,7 +116,8 @@ class AppSelected extends React.Component {
                                 : "buttonicon fa fa-bar-chart blue"} aria-hidden="true"></i>
                             Analytics
                         </button>
- </div>
+
+                    </div>
                 </div>
                 <div className="manageappcontainermain col-md-9 col-sm-9 col-xs-10 col-lg-10">
                     {this.props.isAppActive

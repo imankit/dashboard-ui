@@ -15,8 +15,8 @@
     float: left;
     width: 10%;
     font-size: 40px;
-
-    margin-top: 4px;   color: #4AA3DF;
+    margin-top: 4px;
+    color: #4aa3df;
 }
 
 .notificationdiv:hover {
@@ -25,7 +25,7 @@
 
 .nottextinv {
     color: #595959;
- word-break: break-word;
+    word-break: break-word;
     font-size: 10pt;
     width: 90%;
     float: left;
@@ -39,7 +39,7 @@
 
 .cancelbtnnotinv {
     float: right;
-margin-bottom: 10px;
+    margin-bottom: 10px;
     margin-left: 10px;
     width: 66px!important;
     background-color: white;

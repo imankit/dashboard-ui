@@ -29,7 +29,7 @@ import {grey500, grey700, grey300} from 'material-ui/styles/colors';
 
 import NotificationsModal from '../notifications/notification';
 import FeedbackModal from '../feedback/feedback';
-import Profile from '../profile/profile'
+import Profile from '../profile/modal'
 import _ from 'underscore'
 
 const toolbartitle = {

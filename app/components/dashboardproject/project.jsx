@@ -8,8 +8,6 @@ import OptionsModal from './optionsModal';
 import {RefreshIndicator} from 'material-ui'
 import Dropzone from 'react-dropzone';
 
-import Dropzone from 'react-dropzone';
-
 import IconDelete from 'material-ui/svg-icons/action/delete';
 import FileFileUpload from 'material-ui/svg-icons/file/file-upload';
 import Key from 'material-ui/svg-icons/communication/vpn-key';
@@ -82,7 +80,7 @@ const Project = React.createClass({
     },
     open2() {
         this.setState({showKeysModal: true});
-},
+    },
     open3() {
         this.setState({showUpgradeModal: true});
     },
@@ -111,7 +109,6 @@ const Project = React.createClass({
         this.setState({showExitModal: true});
     },
     onDrop(acceptedFiles, rejectedFiles) {
-
         this.props.fetchAppSettings(this.props.appId, this.props.keys.master, acceptedFiles[0]);
     },
     setImgFallbackUrl(e) {
@@ -137,7 +134,7 @@ const Project = React.createClass({
                                 <img height="20px" className="app-selector-img" src={SERVER_URL + '/appfile/' + this.props.appId + '/icon'} onError={this.setImgFallbackUrl}></img>
                             </div>
                         </Dropzone>}
-<ProjectName name={this.props.name} appId={this.props.appId} onProjectClick={this.onProjectClick}/>
+                    <ProjectName name={this.props.name} appId={this.props.appId} onProjectClick={this.onProjectClick}/>
                     <Progressbar appId={this.props.appId} planId={this.props.planId} onProjectClick={this.onProjectClick}/>
                 </div>
                 <div className="project-option">
@@ -166,7 +163,11 @@ const Project = React.createClass({
 }
 
                         <ReactTooltip place="bottom" type="dark" delayShow={100}/>
-                    </div> {this.state.showDeleteModal
+                    </div>
+
+                    {/*MODAL for project options*/}
+
+                    {this.state.showDeleteModal
                         ? <DeleteApp showDeleteModal={this.state.showDeleteModal} closeDeleteModal={this.closeDeleteModal} handleChange={this.handleChange} deleteButtonState={this.state.deleteButtonState} appId={this.props.appId}/>
                         : ''
 }
