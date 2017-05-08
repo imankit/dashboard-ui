@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import  {fetchTables, deleteTable} from '../../actions';
+import {fetchTables, deleteTable} from '../../actions';
 import {connect} from 'react-redux';
 import {Grid, Row, Col} from 'react-bootstrap';
 import PowerOn from 'material-ui/svg-icons/action/power-settings-new';
@@ -15,11 +15,9 @@ import RefreshIndicator from 'material-ui/RefreshIndicator';
 
 const iconStyles = {
     marginTop: 14,
-    marginRight: 12,
-    marginLeft: 12,
-    height: 40,
-    width: 40,
-    color:'white'
+    color: 'white',
+    fontSize: '36px',
+    paddingBottom: '9px'
 };
 const iconStyles2 = {
     marginTop: 10,
@@ -28,7 +26,7 @@ const iconStyles2 = {
     marginBottom: 5,
     height: 25,
     width: 25,
-    color:'white'
+    color: 'white'
 };
 const iconStyles3 = {
     marginTop: 33,
@@ -37,20 +35,20 @@ const iconStyles3 = {
     marginBottom: 5,
     height: 25,
     width: 25,
-    color:'white'
+    color: 'white'
 };
 
 const styles = {
     root: {
         display: 'flex',
-        justifyContent: 'space-around',
+        justifyContent: 'space-around'
     }
 };
 
 class TableContainer extends React.Component {
 
     componentWillMount() {
-        if(this.props.tables.length === 0){
+        if (this.props.tables.length === 0) {
             this.props.onLoad(this.props.activeAppId, this.props.masterKey);
         }
     }
@@ -58,49 +56,43 @@ class TableContainer extends React.Component {
     getIcon(tableType) {
         switch (tableType) {
             case 'role':
-                return <RoleIcon style={iconStyles} color={white}/>;
+                return <i className="ion ion-locked" style={iconStyles}/>;
             case 'user':
-                return <UserIcon style={iconStyles} color={white}/>;
+                return <i className="ion ion-ios-people" style={iconStyles}/>;
             case 'device':
-                return <DeviceIcon style={iconStyles} color={white}/>;
+                return <i className="ion ion-iphone" style={iconStyles}/>;
+                return;
             default:
-                return <TableIcon style={iconStyles} color={white}/>;
+                return <i className="ion ion-android-list" style={iconStyles}/>;
         }
     }
-    redirectToTables(tableName){
-        window.location.href= DATABROWSER_URL + '/' + this.props.activeAppId + '/' + tableName
+    redirectToTables(tableName) {
+        window.location.href = DATABROWSER_URL + '/' + this.props.activeAppId + '/' + tableName
     }
-
 
     render() {
         return (
             <div style={styles.root}>
                 <Grid className="tables-container">
                     <Row className="show-grid">
-                        {
-                            this.props.loading ?
-                                <RefreshIndicator
-                                    size={50}
-                                    left={70}
-                                    top={0}
-                                    status="loading"
-                                    className="loadermain"
-                                />
-                                :
-                                this.props.tables.map((table) => (
-                                    <Col sm={12} md={6} lg={4} key={table.id}>
-                                        <div className="table" onClick={ this.redirectToTables.bind(this,table.name) }>
-                                            { this.getIcon(table.type)}
-                                            <p style={{color: white}}>{table.name}</p>
-                                            {
-                                                (table.type !== 'custom') ?
-                                                    (<div className="overlay">
-                                                        <PowerOn style={iconStyles3} color={white}/>
-                                                    </div>)
-                                                    :
-                                                    (<div className="overlay">
-                                                        <PowerOn style={iconStyles3} color={white}/>
-                                                        {/*<div className="bordertop"></div>
+                        {this.props.loading
+                            ? <RefreshIndicator size={50} left={70} top={0} status="loading" className="loadermain"/>
+                            : this.props.tables.map((table) => (
+                                <Col xs={12} sm={6} md={4} lg={3} key={table.id}>
+                                    <div className="table" onClick={this.redirectToTables.bind(this, table.name)}>
+                                        {this.getIcon(table.type)}
+                                        <p style={{
+                                            color: white
+                                        }}>{table.name}</p>
+                                        {(table.type !== 'custom')
+                                            ? (
+                                                <div className="overlay">
+                                                    <PowerOn style={iconStyles3} color={white}/>
+                                                </div>
+                                            )
+                                            : (
+                                                <div className="overlay">
+                                                    <PowerOn style={iconStyles3} color={white}/> {/*<div className="bordertop"></div>
                                                         <IconDelete style={iconStyles2}
                                                                     color={white}
                                                                     onClick={
@@ -110,11 +102,13 @@ class TableContainer extends React.Component {
                                                                             table.name)
                                                                     }
                                                         />*/}
-                                                    </div>)
-                                            }
-                                        </div>
-                                    </Col>))
-                        }
+                                                </div>
+                                            )
+}
+                                    </div>
+                                </Col>
+                            ))
+}
                     </Row>
                 </Grid>
             </div>
@@ -128,7 +122,11 @@ const mapStateToProps = (state) => {
         activeAppId: state.manageApp.appId,
         loading: state.loader.secondary_loading,
         masterKey: state.manageApp.masterKey,
-        tables: tables ? tables.filter(t => t.name.toLowerCase().search(state.manageApp.tableFilter ? state.manageApp.tableFilter : '') >= 0) : []
+        tables: tables
+            ? tables.filter(t => t.name.toLowerCase().search(state.manageApp.tableFilter
+                ? state.manageApp.tableFilter
+                : '') >= 0)
+            : []
     };
 };
 

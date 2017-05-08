@@ -240,7 +240,7 @@ class PushCampaign extends React.Component {
                                     <div className="solo-vertical-center" style={{
                                         height: '100%'
                                     }}>
-                                        <RaisedButton label="Send campaign" labelPosition="before" primary={true} icon={< Notifications />} className="emailcampbtn" disabled={this.state.progress} onClick={this.sendPushCampaign.bind(this)}/>
+                                        <RaisedButton label="Send campaign" labelPosition="before" primary={true} className="emailcampbtn" disabled={this.state.progress} onClick={this.sendPushCampaign.bind(this)}/>
                                     </div>
                                 </div>
                             </div>

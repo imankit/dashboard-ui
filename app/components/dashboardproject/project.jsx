@@ -36,6 +36,11 @@ const logoStyles = {
     marginTop: 8
 };
 
+const styles = {
+    beacon: {
+        marginTop: -33
+    }
+}
 const Project = React.createClass({
 
     getInitialState() {
@@ -131,6 +136,9 @@ const Project = React.createClass({
                         ? <RefreshIndicator size={30} left={3} top={3} status="loading" className="profileimageloader"/>
                         : <Dropzone onDrop={this.onDrop} className="dropBody">
                             <div className="app-icon">
+                                <div className="app-icon-overlay ">
+                                    <i className="ion ion-edit overlay-icon"></i>
+                                </div>
                                 <img height="20px" className="app-selector-img" src={SERVER_URL + '/appfile/' + this.props.appId + '/icon'} onError={this.setImgFallbackUrl}></img>
                             </div>
                         </Dropzone>}
@@ -138,10 +146,16 @@ const Project = React.createClass({
                     <Progressbar appId={this.props.appId} planId={this.props.planId} onProjectClick={this.onProjectClick}/>
                 </div>
                 <div className="project-option">
-                    <div >
-                        <span className={!this.props.beacons.tableDesignerLink
-                            ? "gps_ring manage_app_beacon"
-                            : 'hide'}></span>
+                    <span className={!this.props.beacons.tableDesignerLink
+                        ? "joyride-beacon manage_app_beacon"
+                        : "hide"} onClick={this.onProjectClick}>
+                        <span className="joyride-beacon__inner"></span>
+                        <span className="joyride-beacon__outer"></span>
+                    </span>
+                    <div style={!this.props.beacons.tableDesignerLink
+                        ? styles.beacon
+                        : {}}>
+
                         <ManageApp style={iconStyles} color={grey500} data-tip="Manage" onClick={this.onProjectClick}/> {this.isAppAdmin()
                             ? <div style={{
                                     display: 'inline'

@@ -170,6 +170,72 @@ input.field.cardnumber {
     background-origin: content-box!important;
 }
 
+.settingtabs {
+    width: 100%;
+}
+
+.joyride-beacon {
+    display: inline-block;
+    height: 26px;
+    position: relative;
+    width: 26px;
+}
+
+.joyride-beacon__inner {
+    animation: joyride-beacon-inner 1.2s infinite ease-in-out;
+    background-color: #43BDFF;
+    border-radius: 50%;
+    display: block;
+    height: 50%;
+    left: 50%;
+    opacity: 0.7;
+    position: relative;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 50%;
+}
+
+.joyride-beacon__outer {
+    animation: joyride-beacon-outer 1.2s infinite ease-in-out;
+    background-color: rgba(67,189,255,.2);
+    border: 1.44px solid #43BDFF;
+    border-radius: 50%;
+    display: block;
+    box-sizing: border-box;
+    height: 100%;
+    left: 0;
+    opacity: 0.9;
+    position: absolute;
+    top: 0;
+    transform: translateY(-50%);
+    transform-origin: center;
+    width: 100%;
+}
+@keyframes joyride-beacon-outer {
+    0% {
+        transform: scale(1);
+    }
+
+    45% {
+        opacity: 0.7;
+        transform: scale(.75);
+    }
+
+    100% {
+        opacity: 0.9;
+        transform: scale(1);
+    }
+}
+@keyframes joyride-beacon-inner {
+    20% {
+        opacity: 0.9;
+    }
+
+    90% {
+        opacity: 0.7;
+    }
+}
+
 .delete-modal-icon-style {
     border-radius: 50%;
     background: #9b0601;
@@ -372,6 +438,26 @@ button.delete-btn:hover {
             color: #FFF;
             background-color: #4dd87b;
             display: block;
+
+            .joyride-beacon__inner {
+                background-color: #eff1f5;
+            }
+
+            .joyride-beacon__outer {
+                background-color: rgba(239, 241, 245, 0.2);
+                border: 1.44px solid rgb(239, 241, 245);
+            }
+        }
+
+        .newAppBtn {
+            height: 46px;
+            width: 105px;
+
+            .newAppLabel {
+                position: relative;
+                top: -10px;
+                left: -23px;
+            }
         }
     }
 
@@ -502,6 +588,31 @@ button.delete-btn:hover {
 
                     .app-selector-img {
                         height: 70px;
+                        position: relative;
+                        top: -70px;
+                    }
+
+                    .app-icon-overlay {
+                        position: relative;
+                        height: 70px;
+                        z-index: 1;
+                        background-color: rgba(239, 241, 245, 0.0);
+
+                        .overlay-icon {
+                            font-size: 20px;
+                            position: relative;
+                            top: 23px;
+                            left: 1px;
+                            color: rgba(255, 255, 255, 0);
+                        }
+                    }
+
+                    .app-icon-overlay:hover {
+                        background-color: rgba(239, 241, 245, 0.37);
+
+                        .overlay-icon {
+                            color: rgba(0, 0, 0, 0.72);
+                        }
                     }
                 }
 
@@ -819,25 +930,6 @@ button.delete-btn:hover {
     }
 }
 
-.new_app_beacon {
-    margin-left: -4px;
-}
-
-.create_app_beacon {
-    margin-left: -3px;
-    border: 6px solid #eff1f5;
-}
-
-.manage_app_beacon {
-    margin-left: 16px;
-    margin-top: 3px;
-}
-
-.new_table_beacon {
-    margin-left: -5px;
-    margin-top: 1px;
-}
-
 #apiChart {
     background: white;
 }
@@ -1103,17 +1195,19 @@ button.btnloadingg:hover {
 }
 
 .new_app_beacon {
-    margin-left: -4px;
+    position: relative;
+    left: -6px;
+    top: -2px;
 }
 
 .create_app_beacon {
-    margin-left: -3px;
-    border: 6px solid #eff1f5;
+    position: relative;
+    top: -3px;
+    left: -6px;
 }
 
 .manage_app_beacon {
-    margin-left: 16px;
-    margin-top: 3px;
+    left: -97px;
 }
 
 .new_table_beacon {
@@ -1205,6 +1299,26 @@ button.btnloadingg:hover {
 
 .create-btn {
     background: #4f9cf5;
+}
+
+.createBtnBeacon {
+    height: 34px;
+    width: 92px;
+
+    .createAppBtnLabel {
+        position: relative;
+        top: -12px;
+        left: -24px;
+    }
+
+    .joyride-beacon__outer {
+        background-color: rgba(255, 255, 255, 0.2);
+        border: 1.44px solid #ffffff;
+    }
+
+    .joyride-beacon__inner {
+        background-color: #ffffff;
+    }
 }
 
 .create-btn:hover {
@@ -1938,7 +2052,7 @@ button.btnloadingg:hover {
 }
 
 .cache {
-    padding: 75px 0;
+    padding: 50px 0;
     font-family: 'Open Sans', sans-serif;
     color: #555;
     display: flex;
@@ -2521,6 +2635,7 @@ button.btnloadingg:hover {
 
     .contentsubdiv {
         width: 800px;
+        margin: 18px auto auto;
     }
 
     .smallp {
@@ -3039,6 +3154,7 @@ button.btnloadingg:hover {
 
         .cardimage {
             height: 50px;
+            width: 50px;
             flex: 1;
         }
 
@@ -3149,7 +3265,7 @@ button.btnloadingg:hover {
         border-radius: 5px;
 
         .cardimage {
-            height: 50px;
+            width: 50px;
             flex: 1;
             padding: 5px;
         }
@@ -3291,7 +3407,7 @@ button.btnloadingg:hover {
 
     .selectedcard {
         border: 1px solid #bbbbbb;
-        background-color: gainsboro;
+        background-color: #f8f8f8;
         transform: scale(1.01, 1.05);
     }
 
@@ -3401,7 +3517,7 @@ button.btnloadingg:hover {
     }
 
     .cardimage {
-        height: 50px;
+        width: 50px;
         flex: 1;
     }
 
@@ -3552,7 +3668,7 @@ button.btnloadingg:hover {
 
 .selectedcard {
     border: 1px solid #bbbbbb;
-    background-color: gainsboro;
+    background-color: #f8f8f8;
     transform: scale(1.05, 1.05);
 }
 
@@ -3587,6 +3703,7 @@ button.btnloadingg:hover {
 
 .plannamepop:hover {
     background-color: #0484e0;
+    color: white;
 }
 
 .loadermodal {
