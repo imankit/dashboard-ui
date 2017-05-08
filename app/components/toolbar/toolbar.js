@@ -159,7 +159,7 @@ class ToolBar extends React.Component {
 
                         <ToolbarGroup>
 
-                            <FeedbackModal beacons={this.props.beacons} updateBeacon={this.props.updateBeacon}/>
+                            <FeedbackModal beacons={this.props.beacons} updateBeacon={this.props.updateBeacon} user={this.props.currentUser}/>
 
                             <IconButton touch={true} onClick={this.handleTouchTap.bind(this, 'options')}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 -4 26 26">

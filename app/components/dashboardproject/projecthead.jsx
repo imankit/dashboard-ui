@@ -52,12 +52,20 @@ class Projecthead extends React.Component {
                 <h1 className="dashboard-title pull-left" style={{
                     fontSize: '30px'
                 }}>Your Apps</h1>
-                <div className="btn" onClick={this.open}>
-                    <div className={!this.props.beacons.firstApp
-                        ? "gps_ring create_app_beacon"
-                        : 'hide'}></div>
+                <div className={!this.props.beacons.firstApp
+                    ? "btn newAppBtn"
+                    : "btn"} onClick={this.open}>
+                    <span className={!this.props.beacons.firstApp
+                        ? "joyride-beacon new_app_beacon"
+                        : "hide"}>
+                        <span className="joyride-beacon__inner"></span>
+                        <span className="joyride-beacon__outer"></span>
+                    </span>
 
-                    + New App</div>
+                    <span className={!this.props.beacons.firstApp
+                        ? "newAppLabel"
+                        : ""}>+ New App</span>
+                </div>
                 <Modal show={this.state.showModal} onHide={this.close}>
                     <Modal.Header className="modal-header-style">
                         <Modal.Title>
@@ -76,15 +84,23 @@ class Projecthead extends React.Component {
                     </Modal.Body>
                     <Modal.Footer>
                         {this.props.loading
-                            ? <Button className="btnloadingg btn-primary create-btn " onClick={this.createApp}>
+                            ? <Button className="btnloadingg btn-primary create-btn " disabled>
                                     <RefreshIndicator loadingColor="#ececec" size={35} left={-10} top={0} status="loading" style={style.refresh}/>
                                     <span className="createAppLabel">Create App</span>
                                 </Button>
-                            : <Button className="btn-primary create-btn" onClick={this.createApp}>
-                                <div className={!this.props.beacons.firstApp
-                                    ? "gps_ring create_app_beacon"
-                                    : 'hide'}></div>
-                                Create App
+                            : <Button className={!this.props.beacons.firstApp
+                                ? "btn-primary create-btn createBtnBeacon"
+                                : "btn-primary create-btn"} onClick={this.createApp}>
+                                <span className={!this.props.beacons.firstApp
+                                    ? "joyride-beacon new_app_beacon"
+                                    : "hide"}>
+                                    <span className="joyride-beacon__inner"></span>
+                                    <span className="joyride-beacon__outer"></span>
+                                </span>
+
+                                <span className={!this.props.beacons.firstApp
+                                    ? "createAppBtnLabel"
+                                    : ""}>Create App</span>
                             </Button>
 }
                     </Modal.Footer>

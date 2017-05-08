@@ -128,7 +128,7 @@ export const addApp = (name) => {
             showAlert('error', "Something went wrong, try again later.")
             console.log('inside fetch Apps error catch error: ');
             console.log(error);
-            return Promise.reject()
+            return Promise.reject(error)
         });
     };
 };
@@ -542,8 +542,8 @@ export function fetchTables(appId, masterKey) {
 
 export function createTable(appId, masterKey, tableName) {
     return function(dispatch) {
-        dispatch({type: 'START_SECONDARY_LOADING'})
-        xhrCBClient.put('/app/' + appId + '/' + tableName, {
+        dispatch({type: 'START_LOADING_MODAL'})
+        return xhrCBClient.put('/app/' + appId + '/' + tableName, {
             key: masterKey,
             "data": {
                 "name": tableName,
@@ -624,12 +624,14 @@ export function createTable(appId, masterKey, tableName) {
                         newTable: response.data
                     }
                 });
+            dispatch({type: 'STOP_LOADING_MODAL'})
+            return Promise.resolve();
 
-            dispatch({type: 'STOP_SECONDARY_LOADING'})
         }).catch(error => {
             console.log('inside add table error catch error: ');
             console.log(error);
-            dispatch({type: 'STOP_SECONDARY_LOADING'})
+            dispatch({type: 'STOP_LOADING_MODAL'})
+            return Promise.reject(errorf);
         });
 
     };
@@ -669,10 +671,14 @@ export const setTableSearchFilter = (filter) => {
 // cache actions
 export function fetchCache() {
     return function(dispatch) {
+        dispatch({type: 'START_LOADING_MODAL'})
         CB.CloudCache.getAll().then((data) => {
             dispatch({type: 'FETCH_CACHE', payload: data});
+            dispatch({type: 'STOP_LOADING_MODAL'})
         }, (err) => {
             console.log("cache fetch error ", err);
+            dispatch({type: 'STOP_LOADING_MODAL'})
+
         })
 
     };
@@ -680,6 +686,7 @@ export function fetchCache() {
 
 export function createCache(cacheName) {
     return function(dispatch) {
+        dispatch({type: 'START_LOADING_MODAL'})
         let cache = new CB.CloudCache(cacheName);
         cache.create().then(() => {
             dispatch(fetchCache())
@@ -755,15 +762,20 @@ export function resetCacheState() {
 // queue actions
 export function fetchQueue() {
     return function(dispatch) {
+        dispatch({type: 'START_LOADING_MODAL'});
         CB.CloudQueue.getAll({
             success: function(list) {
                 dispatch({
                     type: 'FETCH_QUEUE',
                     payload: list || []
                 });
+                dispatch({type: 'STOP_LOADING_MODAL'})
+                return Promise.resolve();
             },
             error: function(error) {
                 console.log("queue fetch error ", error);
+                dispatch({type: 'STOP_LOADING_MODAL'})
+                return Promise.reject(error);
             }
         })
     };
@@ -771,6 +783,8 @@ export function fetchQueue() {
 
 export function createQueue(queueName) {
     return function(dispatch) {
+
+        dispatch({type: 'START_LOADING_MODAL'})
         let queue = new CB.CloudQueue(queueName);
         queue.create({
             success: function(queueObject) {
@@ -780,6 +794,7 @@ export function createQueue(queueName) {
                 console.log("queue add error ", error)
             }
         })
+
     }
 }
 
@@ -971,7 +986,7 @@ export function fetchAppSettings(appId, masterKey, from) {
 
         }).catch(err => {
             showAlert('error', "Error fetching App settings.")
-            return Promise.reject()
+            return Promise.reject(err)
         })
     }
 }

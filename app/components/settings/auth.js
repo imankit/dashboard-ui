@@ -57,6 +57,9 @@ class AuthSettings extends React.Component {
     }
     render() {
         let loginPageUR = cloudBoostAPI + "/page/" + this.props.appData.appId + "/authentication"
+        if(!this.props.renderComponent)
+        return <br/>
+        else{
         return (
             <div className="contentsubdiv" style={{fontFamily: 'Signika'}}>
                 <div style={{width: '100%'}} className="solo-horizontal-center">
@@ -74,7 +77,7 @@ class AuthSettings extends React.Component {
                     isgithubEnabled = { this.state.github.enabled }
                     istwitterEnabled = { this.state.twitter.enabled }
                     islinkedInEnabled = { this.state.linkedIn.enabled }
-                
+
                 />
 
                 <Custom
@@ -85,7 +88,7 @@ class AuthSettings extends React.Component {
                          } }
                     appData={ this.props.appData }
                     updateSettingsFromChildComps={this.updateSettingsFromChildComps.bind(this)  }
-                
+
                 />
 
                 <div className="push-box" style={{marginTop: 15}}>
@@ -123,10 +126,10 @@ class AuthSettings extends React.Component {
                          } }
                     appData={ this.props.appData }
                     updateSettingsFromChildComps={this.updateSettingsFromChildComps.bind(this)  }
-                
+
                 />
 
-                <div style={{width: '100%', height: 50, marginTop: 15, marginBottom: 40}}> 
+                <div style={{width: '100%', height: 50, marginTop: 15, marginBottom: 40}}>
                     <div style={{width: '100%', height: '100%'}} className="flex-general-column-wrapper-center">
                     <div className="solo-vertical-center" style={{height: '100%'}}>
                         <RaisedButton
@@ -140,14 +143,15 @@ class AuthSettings extends React.Component {
                     </div>
                 </div>
             </div>
-        );
+        );}
     }
 
 }
 
 const mapStateToProps = (state) => {
     let authSettings = null
-    let generalSettings = null
+    let generalSettings = {}
+    generalSettings.settings=null
     if(state.settings.length){
         authSettings = state.settings.filter(x => x.category == 'auth')[0]
     }

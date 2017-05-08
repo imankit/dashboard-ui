@@ -27,6 +27,8 @@ class Notifications extends React.Component {
     handleTouchTap = (event) => {
         event.preventDefault();
         this.setState({open: true, anchorEl: event.currentTarget, feedbackSent: false})
+        this.props.updateBeacon(this.props.beacons, 'dashboardFeedback');
+
     }
 
     handleRequestClose = () => {
@@ -42,25 +44,27 @@ class Notifications extends React.Component {
 
     }
     sendFeedback() {
+        console.log(this.props.user);
         if (this.state.value) {
-            // post to slack webhook , make chages here for updating webhook
-            this.props.updateBeacon(this.props.beacons, 'dashboardFeedback');
-            // axios({
-            //     url: "https://hooks.slack.com/services/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",
-            //     method: 'post',
-            //     withCredentials: false,
-            //     headers: {
-            //         'Content-Type': 'application/x-www-form-urlencoded'
-            //     },
-            //     data: {
-            //         text: this.state.value
-            //     }
-            // }).then((res) => {
-            //     this.setState({value: ''});
-            // }, (err) => {
-            //     this.setState({value: ''});
-            // })
-            this.setState({feedbackSent: true});
+            // post to slack webhook,  make chages here for updating webhook
+            axios({
+                url: "https://hooks.slack.com/services/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",
+                method: 'post',
+                withCredentials: false,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                data: {
+                    name: this.props.user.user.name,
+                    email: this.props.user.user.email,
+                    text: this.state.value
+                }
+            }).then((res) => {
+                this.setState({value: ''});
+            }, (err) => {
+                this.setState({value: ''});
+            })
+            this.setState({feedbackSent: true, value: ''});
         }
     }
 
@@ -88,7 +92,7 @@ class Notifications extends React.Component {
         return (
             <div >
 
-                <IconButton touch={true} onClick={this.handleTouchTap.bind(this)}>
+                <IconButton onClick={this.handleTouchTap.bind(this)}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 -4 26 26">
                         <g fill="none" fillRule="evenodd"><path fill="#9e9e9e" d="M2.666 11.995a304.44 304.44 0 0 1-1.841-.776s-.41-.14-.558-.638c-.148-.498-.187-1.058 0-1.627.187-.57.558-.735.558-.735s9.626-4.07 13.64-5.43c.53-.179 1.18-.156 1.18-.156C17.607 2.702 19 6.034 19 9.9c0 3.866-1.62 6.808-3.354 6.84 0 0-.484.1-1.18-.135-2.189-.733-5.283-1.946-7.971-3.035-.114-.045-.31-.13-.338.177v.589c0 .56-.413.833-.923.627l-1.405-.566c-.51-.206-.923-.822-.923-1.378v-.63c.018-.29-.162-.362-.24-.394zM15.25 15.15c1.367 0 2.475-2.462 2.475-5.5s-1.108-5.5-2.475-5.5-2.475 2.462-2.475 5.5 1.108 5.5 2.475 5.5z"/></g>
                     </svg>
@@ -115,7 +119,6 @@ class Notifications extends React.Component {
                     <div className={!this.state.feedbackSent
                         ? ''
                         : 'hide'}>
-                        <button className="feedback-cancelbtn" onTouchTap={this.handleRequestClose}>Cancel</button>
                         <button className="feedback-sendbtn" onTouchTap={this.sendFeedback.bind(this)} disabled={this.state.disableSendBtn}>Send Feedback</button>
                     </div>
 
