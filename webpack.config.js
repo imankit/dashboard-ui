@@ -19,6 +19,12 @@ var config = {
         ? true
         : false,
     //  devtool: isHosted === 'false' || !isHosted ? "#eval-source-map" : false,
+    resolve: {
+        root: [
+            path.resolve(__dirname, './app')
+        ],
+        extensions: ['', '.js', '.jsx']
+    },
     module: {
         loaders: [
             {
