@@ -79,7 +79,7 @@ class Notifications extends React.Component {
         return (
             <div>
                 <IconButton touch={true} onTouchTap={this.handleTouchTap}>
-                    {notifications
+                    {pendingTasks
                         ? <div className="red-dot"></div>
                         : ''}
                     <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 -3 26 26">
@@ -97,7 +97,9 @@ class Notifications extends React.Component {
                     <div className="profilepoparrow"></div>
 
                     <p className="headingpop">Notifications
-                        <button className="clearnotbtn" onClick={this.clearNotifications.bind(this)}>Clear</button>
+                        <button className={pendingTasks
+                            ? "clearnotbtn"
+                            : "hide"} onClick={this.clearNotifications.bind(this)}>Clear</button>
                     </p>
                     {!pendingTasks
                         ? <div style={{
