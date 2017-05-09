@@ -608,10 +608,10 @@ button.delete-btn:hover {
                     }
 
                     .app-icon-overlay:hover {
-                        background-color: rgba(239, 241, 245, 0.37);
+                        background-color: rgba(128, 128, 128, 0.46);
 
                         .overlay-icon {
-                            color: rgba(0, 0, 0, 0.72);
+                            color: rgba(255,255,255,1);
                         }
                     }
                 }
@@ -3809,7 +3809,9 @@ button.btnloadingg:hover {
 
         .sidebarcontainer {
             width: inherit;
-            display: inline-grid;
+            height: 100vh;
+            background-color: white;
+            top: 60px;
         }
 
         .red {

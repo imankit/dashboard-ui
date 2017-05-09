@@ -91,7 +91,7 @@ class TableList extends React.Component {
                                     </span>
                                     <i className="fa fa-table modal-icon-style pull-right"></i>
                                     <div className="modal-title-inner-text">
-                                        Create a new app.
+                                        Create a new table.
                                     </div>
                                 </Modal.Title>
 
