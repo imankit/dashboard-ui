@@ -20,12 +20,19 @@ class Notifications extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            open: false
+            open: false,
+            notifications: []
         }
+    }
+    componentWillMount() {
+        this.setState({notifications: this.props.notifications})
     }
     handleTouchTap = (event) => {
         event.preventDefault()
         this.setState({open: true, anchorEl: event.currentTarget})
+    }
+    clearNotifications() {
+        this.setState({notifications: []})
     }
 
     handleRequestClose = () => {
@@ -39,10 +46,9 @@ class Notifications extends React.Component {
             window.open(url, '_blank');
         }
     render() {
-        let {notifications} = this.props
+        let {notifications} = this.state
 
-        let pendingTasks = notifications.length || 4;
-        let notificationsUnSeen = notifications.filter((x) => !x.seen).length;
+        let pendingTasks = notifications.length;
         let notificationDiv = notifications.map((x, i) => {
             let cancelButton = x.meta.cancelButton;
             let acceptButton = x.meta.acceptButton;
@@ -56,14 +62,16 @@ class Notifications extends React.Component {
                     <p className="nottextinv" dangerouslySetInnerHTML={{
                         __html: x.text
                     }}></p>
+
                     {acceptButton
                         ? <div className="noteinvbtncontainer">
+                                <span className="nottimestamp">4th Apr</span>
+                                <button className="acceptbtnnotinv" onClick={this.callAction.bind(this, acceptButton)}>{acceptButton.text}</button>
                                 {cancelButton
                                     ? <button className="cancelbtnnotinv" onClick={this.callAction.bind(this, cancelButton)}>{cancelButton.text}</button>
                                     : ''}
-                                <button className="acceptbtnnotinv" onClick={this.callAction.bind(this, acceptButton)}>{acceptButton.text}</button>
                             </div>
-                        : ''}
+                        : <span className="nottimestamp">4th Apr</span>}
                 </div>
             )
         })
@@ -71,7 +79,7 @@ class Notifications extends React.Component {
         return (
             <div>
                 <IconButton touch={true} onTouchTap={this.handleTouchTap}>
-                    {notificationsUnSeen
+                    {pendingTasks
                         ? <div className="red-dot"></div>
                         : ''}
                     <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 -3 26 26">
@@ -88,9 +96,11 @@ class Notifications extends React.Component {
                 }} onRequestClose={this.handleRequestClose} className="popovernotifications">
                     <div className="profilepoparrow"></div>
 
-                    <p className="headingpop">NOTIFICATIONS {pendingTasks
-                            ? (' - ' + pendingTasks + ' Pending')
-                            : ''}</p>
+                    <p className="headingpop">Notifications
+                        <button className={pendingTasks
+                            ? "clearnotbtn"
+                            : "hide"} onClick={this.clearNotifications.bind(this)}>Clear</button>
+                    </p>
                     {!pendingTasks
                         ? <div style={{
                                 textAlign: 'center'
@@ -98,10 +108,8 @@ class Notifications extends React.Component {
                                 <i className="ion-ios-bell notificationemptybell"></i>
                                 <p className="notificationemptymessage">We'll let you know when we've got something new for you!</p>
                             </div>
-                        : ''
-}
-                    <div className="notification-wrap">
-                        {notificationDiv}</div>
+                        : <div className="notification-wrap">
+                            {notificationDiv}</div>}
                 </Popover>
             </div>
         )

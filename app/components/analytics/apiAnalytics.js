@@ -2,20 +2,22 @@
  * Created by Darkstar on 11/29/2016.
  */
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
+import Chart from 'chart.js'
 
 class APIAnalytics extends React.Component {
 
     constructor(props) {
         super(props)
-        this.state = {
-
-        }
+        this.state = {}
     }
     componentDidMount() {
 
         let APIdata = this.props.analyticsApi.usage.map((x) => {
-            return [new Date(x.timeStamp).toDateString(), x.dayApiCount]
+            return [
+                new Date(x.timeStamp).toDateString(),
+                x.dayApiCount
+            ]
         }).reverse().filter((x, i) => i < 7)
 
         this.buildGraphs(APIdata)
@@ -24,56 +26,91 @@ class APIAnalytics extends React.Component {
 
     componentWillReceiveProps(props) {
         let APIdata = props.analyticsApi.usage.map((x) => {
-            return [new Date(x.timeStamp).toDateString(), x.dayApiCount]
+            return [
+                new Date(x.timeStamp).toDateString(),
+                x.dayApiCount
+            ]
         }).reverse().filter((x, i) => i < 7)
 
         this.buildGraphs(APIdata)
     }
 
     buildGraphs(APIdata) {
-
-        setTimeout(() => {
-            google.charts.load('current', { 'packages': ['corechart'] });
-            google.charts.setOnLoadCallback(drawChart);
-
-            function drawChart() {
-                let data = google.visualization.arrayToDataTable([
-                    ['Date', 'API Count'],
-                    ['0', 0],
-                    ...APIdata
-                ])
-
-                let options = {
-                    title: 'API Analytics',
-                    hAxis: { title: 'Date', titleTextStyle: { color: '#333' } },
-                    vAxis: { minValue: 0, title: 'API Count', titleTextStyle: { color: '#333' } },
-                    backgroundColor: "#fff",
-                    animation: {
-                        duration: 1000,
-                        startup: true
-                    },
-                    crosshair: { trigger: 'both' },
-                    explorer: {}
-                }
-                let chartDiv = document.getElementsByClassName('chart_div_api')
-                if (chartDiv.length) {
-                    let chart_bar = new google.visualization.BarChart(chartDiv[0])
-                    let chart_area = new google.visualization.AreaChart(chartDiv[1])
-                    chart_bar.draw(data, options)
-                    chart_area.draw(data, options)
-                }
+        var ctx = document.getElementById("apiChart").getContext("2d");
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [
+                    "1st Apr",
+                    "5th Apr",
+                    "19th Apr",
+                    "22nd Apr",
+                    "29th Apr",
+                    "2nd May"
+                ],
+                datasets: [
+                    {
+                        label: 'API count ',
+                        data: [
+                            12,
+                            19,
+                            3,
+                            5,
+                            2,
+                            3
+                        ],
+                        backgroundColor: [
+                            'rgba(255, 255, 255, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(33,150,243,1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1,
+                        lineTension: 0,
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    yAxes: [
+                        {
+                            ticks: {
+                                beginAtZero: true
+                            },
+                            gridLines: {
+                                display: false
+                            }
+                        }
+                    ],
+                    xAxes: [
+                        {
+                            gridLines: {
+                                display: false
+                            }
+                        }
+                    ]
+                },
+                responsive: true,
+                maintainAspectRatio: false
             }
-            window.addEventListener('resize', function (event) {
-                drawChart()
-            })
-        }, 100)
+        });
     }
-    
+
     render() {
         return (
             <div>
-                <div className="chart_div_api"></div>
-                <div className="chart_div_api"></div>
+                <canvas id="apiChart" width="400" height="400"></canvas>
             </div>
         );
     }
@@ -81,15 +118,11 @@ class APIAnalytics extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return {
-
-    }
+    return {}
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-
-    }
+    return {}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(APIAnalytics);

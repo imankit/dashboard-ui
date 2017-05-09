@@ -5,7 +5,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Toolbar from '../toolbar/toolbar.js';
 import Footer from '../footer/footer.jsx';
-import {fetchAppSettings,resetAppSettings} from '../../actions';
+import {fetchAppSettings, resetAppSettings} from '../../actions';
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 
 // icons and mui comps
@@ -17,6 +17,11 @@ import AuthIcon from 'material-ui/svg-icons/social/person';
 import ImportIcon from 'material-ui/svg-icons/communication/import-export';
 import DBIcon from 'material-ui/svg-icons/device/storage';
 import RaisedButton from 'material-ui/RaisedButton';
+import {grey500, blue500, grey300} from 'material-ui/styles/colors';
+
+import {Tabs, Tab} from 'material-ui/Tabs';
+import {FontIcon} from 'material-ui';
+import ActionFlightTakeoff from 'material-ui/svg-icons/action/flight-takeoff';
 
 // sub comps
 import General from './general'
@@ -27,8 +32,8 @@ import MongoAccess from './mongo'
 import Auth from './auth'
 
 const navStyles = {
-    backgroundColor:'white',
-    boxSizing: 'border-box', 
+    backgroundColor: 'white',
+    boxSizing: 'border-box',
     boxShadow: '0px 1px 3px rgba(0, 0, 0, 0.2)',
     maxWidth: '300px',
     minWidth: '250px'
@@ -36,46 +41,57 @@ const navStyles = {
 
 class Settings extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
-            selected:'general'
+            selected: 'general',
+            renderComponent: false
         }
     }
     static get contextTypes() {
-        return {
-            router: React.PropTypes.object.isRequired,
-        }
+        return {router: React.PropTypes.object.isRequired}
     }
-    componentWillMount(){
+    componentWillMount() {
         // load settings if not already found
-        if(!this.props.settingsLoaded){
-            this.props.onLoad(this.props.appData.appId,this.props.appData.masterKey)
+        if (!this.props.settingsLoaded) {
+            this.props.onLoad(this.props.appData.appId, this.props.appData.masterKey)
         }
     }
-    componentWillUnmount(){
+    componentWillUnmount() {
         this.props.resetAppSettings()
     }
-    selectTab(whichTab){
-        this.setState({selected:whichTab})
+    selectTab(whichTab) {
+        this.setState({selected: whichTab})
     }
-    getCompToRender(){
-        switch(this.state.selected){
-            case 'general' : return <General/>
-            case 'email' : return <Email/>
-            case 'push' : return <Push/>
-            case 'auth' : return <Auth/>
-            case 'import' : return <ImportExport/>
-            case 'mongo' : return <MongoAccess/>
+    getCompToRender(tab) {
+        switch (tab) {
+            case 'general':
+                return <General/>
+            case 'email':
+                return <Email/>
+            case 'push':
+                return <Push/>
+            case 'auth':
+                return <Auth/>
+            case 'import':
+                return <ImportExport/>
+            case 'mongo':
+                return <MongoAccess/>
         }
     }
+    handleActive(tab) {
+        this.setState({renderComponent: true});
+    }
     render() {
+        const settingsIcon = <SettingIcon color="red"/>;
 
         return (
-            <div id= "" style={{backgroundColor: '#FFF'}}>
+            <div id="" style={{
+                backgroundColor: '#FFF'
+            }}>
                 <div className="settings tables campaign cache">
-                    <div className="leftnav">
-                    
+                    {/* <div className="leftnav">
+
                         <List style={ navStyles }>
                             <ListItem className={ this.state.selected == 'general' ? "sidenavselected" : "" } onClick={ this.selectTab.bind(this,'general') } primaryText="General" leftIcon={<SettingIcon />} />
                             <ListItem className={ this.state.selected == 'email' ? "sidenavselected" : "" } onClick={ this.selectTab.bind(this,'email') } primaryText="Email" leftIcon={<EmailIcon />} />
@@ -84,20 +100,34 @@ class Settings extends React.Component {
                             <ListItem className={ this.state.selected == 'import' ? "sidenavselected" : "" } onClick={ this.selectTab.bind(this,'import') } primaryText="Import / Export Data" leftIcon={<ImportIcon />} />
                             <ListItem className={ this.state.selected == 'mongo' ? "sidenavselected" : "" } onClick={ this.selectTab.bind(this,'mongo') } primaryText="MongoDB Access" leftIcon={<DBIcon />} />
                         </List>
-                        
-                    </div>
-                    <div className="content">
-                        { 
-                            this.props.loading ?
-                                <RefreshIndicator
-                                    size={50}
-                                    left={70}
-                                    top={0}
-                                    status="loading"
-                                    className="loadermain"
-                                /> : this.getCompToRender() 
-                        }
-                    </div>
+
+                    </div> */}
+                    <Tabs className="settingtabs" tabItemContainerStyle={{
+                        color: 'red'
+                    }} inkBarStyle={{
+                        color: 'red'
+                    }} tabTemplateStyle={{
+                        color: 'yellow'
+                    }} contentContainerStyle={{
+                        color: 'red'
+                    }}>
+                        <Tab className="tabbbb" icon={settingsIcon} children={< General />}></Tab>
+                        <Tab icon={< EmailIcon />} children={< Email color = {
+                            grey300
+                        } />}></Tab>
+                        <Tab icon={< NotificationsIcon />} children={< Push />}></Tab>
+                        <Tab icon={< AuthIcon />} onActive={this.handleActive.bind(this, 'auth')} children={< Auth renderComponent = {
+                            this.state.renderComponent
+                        } />}></Tab>
+                        <Tab icon={< ImportIcon />} children={< ImportExport />}></Tab>
+                        <Tab icon={< DBIcon />} children={< MongoAccess />}></Tab>
+                    </Tabs>
+                    {/* <div className="content">
+                        {this.props.loading
+                            ? <RefreshIndicator size={50} left={70} top={0} status="loading" className="loadermain"/>
+                            : this.getCompToRender()
+}
+                    </div> */}
                 </div>
             </div>
         );
@@ -106,17 +136,13 @@ class Settings extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return {
-        appData: state.manageApp,
-        loading: state.loader.secondary_loading,
-        settingsLoaded: state.settings.length
-    }
+    return {appData: state.manageApp, loading: state.loader.secondary_loading, settingsLoaded: state.settings.length}
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onLoad: (appId,masterKey) => dispatch(fetchAppSettings(appId,masterKey)),
-        resetAppSettings: () => dispatch(resetAppSettings()),
+        onLoad: (appId, masterKey) => dispatch(fetchAppSettings(appId, masterKey)),
+        resetAppSettings: () => dispatch(resetAppSettings())
     }
 };
 

@@ -6,7 +6,7 @@ export default[
         id : 1,
         label : "Free Plan",
         price : 0,
-        priceDescription : "Forever",
+        priceDescription : "FOREVER",
         usage : [
             {
                 category: "DATABASE",
@@ -61,7 +61,7 @@ export default[
         id : 2,
         label : "Launch Plan",
         price : 49,
-        priceDescription : "per month",
+        priceDescription : "PER MONTH",
         usage : [
             {
                 category: "DATABASE",
@@ -115,8 +115,8 @@ export default[
     }, {
         id : 3,
         label : "Scale Plan",
-        price : '99 +',
-        priceDescription : "per month",
+        price : '99+',
+        priceDescription : "PER MONTH",
         usage : [
             {
                 category: "DATABASE",
