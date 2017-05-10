@@ -68,7 +68,6 @@ class TableList extends React.Component {
             <div className="tables">
                 <div className="container">
                     <div className="tables-head">
-                        <p>{this.props.name}</p>
                         <FormGroup>
                             <div className="btn" onClick={this.open.bind(this)}>
                                 <span className={!this.props.beacons.firstTable

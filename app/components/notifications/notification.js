@@ -55,23 +55,28 @@ class Notifications extends React.Component {
 
             return (
                 <div className="notificationdiv" key={i}>
-                    {x.icon
-                        ? <img src={x.icon} className="notinvicon"></img>
-                        : <i className="ion ion-ios-bell notinvicon"></i>
-}
-                    <p className="nottextinv" dangerouslySetInnerHTML={{
-                        __html: x.text
-                    }}></p>
+                    <div className="notimgcontainer">
+                        {x.icon
+                            ? <img src={x.icon} className="notinvicon"></img>
+                            : <i className="ion ion-ios-bell notinvicon"></i>
+}</div>
+                    <div className="notdatacontainer">
+                        <p className="nottextinv" dangerouslySetInnerHTML={{
+                            __html: x.text
+                        }}></p>
 
-                    {acceptButton
-                        ? <div className="noteinvbtncontainer">
-                                <span className="nottimestamp">4th Apr</span>
-                                <button className="acceptbtnnotinv" onClick={this.callAction.bind(this, acceptButton)}>{acceptButton.text}</button>
-                                {cancelButton
-                                    ? <button className="cancelbtnnotinv" onClick={this.callAction.bind(this, cancelButton)}>{cancelButton.text}</button>
-                                    : ''}
-                            </div>
-                        : <span className="nottimestamp">4th Apr</span>}
+                        {acceptButton
+                            ? <div className="noteinvbtncontainer">
+                                    <span className="nottimestamp">4th Apr</span>
+                                    <button className="acceptbtnnotinv" onClick={this.callAction.bind(this, acceptButton)}>{acceptButton.text}</button>
+                                    {cancelButton
+                                        ? <button className="cancelbtnnotinv" onClick={this.callAction.bind(this, cancelButton)}>{cancelButton.text}</button>
+                                        : ''}
+                                </div>
+                            : <span className="nottimestamp" style={{
+                                marginLeft: '3%'
+                            }}>4th Apr</span>}</div>
+
                 </div>
             )
         })

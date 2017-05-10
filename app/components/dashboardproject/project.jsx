@@ -1,6 +1,7 @@
 'use strict';
 
 import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
 import ProjectName from './projectname.js';
 import Progressbar from './progressbar.jsx';
 import {Modal, Button} from 'react-bootstrap';
@@ -132,16 +133,14 @@ const Project = React.createClass({
             <div className="project" ref="project">
                 <div className="plan-status" onClick={this.open3}>{planName}</div>
                 <div className="app-info">
-                    {this.props.loading
-                        ? <RefreshIndicator size={30} left={3} top={3} status="loading" className="profileimageloader"/>
-                        : <Dropzone onDrop={this.onDrop} className="dropBody">
-                            <div className="app-icon">
-                                <div className="app-icon-overlay ">
-                                    <i className="ion ion-edit overlay-icon"></i>
-                                </div>
-                                <img height="20px" className="app-selector-img" src={SERVER_URL + '/appfile/' + this.props.appId + '/icon'} onError={this.setImgFallbackUrl}></img>
+                    <Dropzone onDrop={this.onDrop} className="dropBody">
+                        <div className="app-icon">
+                            <div className="app-icon-overlay ">
+                                <i className="ion ion-edit overlay-icon"></i>
                             </div>
-                        </Dropzone>}
+                            <img height="20px" className="app-selector-img" src={SERVER_URL + '/appfile/' + this.props.appId + '/icon'} onError={this.setImgFallbackUrl}></img>
+                        </div>
+                    </Dropzone>
                     <ProjectName name={this.props.name} appId={this.props.appId} onProjectClick={this.onProjectClick}/>
                     <Progressbar appId={this.props.appId} planId={this.props.planId} onProjectClick={this.onProjectClick}/>
                 </div>
@@ -207,5 +206,9 @@ const Project = React.createClass({
         );
     }
 });
+const mapStateToProps = (state) => {
 
-export default Project;
+    return {loading: state.loader.loading};
+};
+
+export default connect(mapStateToProps, null)(Project);
