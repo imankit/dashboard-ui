@@ -203,7 +203,7 @@ class ToolBar extends React.Component {
                                 vertical: 'top'
                             }} onRequestClose={this.handleRequestClose} animated={true} className="profilepop">
                                 <p className="headingpop">{this.props.currentUser.user
-                                        ? this.props.currentUser.user.name.toUpperCase()
+                                        ? this.props.currentUser.user.name.toLowerCase()
                                         : ''}</p>
                                 <button className="coloptbtn" onClick={this.handleTouchTap.bind(this, 'profileModal')}>My Profile</button>
                                 <button className="coloptbtn">Billing</button>

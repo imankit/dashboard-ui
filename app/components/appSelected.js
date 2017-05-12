@@ -53,7 +53,7 @@ class AppSelected extends React.Component {
         return (
             <div className="manageappcontainer row">
                 <div className="sidenavbar col-md-3 col-sm-3 col-xs-2 col-lg-2">
-                    <div className="affix sidebarcontainer">
+                    <div className="affix sidebarcontainer col-md-3 col-sm-3 col-xs-2 col-lg-2">
                         <button className={this.state.selected == "tables"
                             ? "navbuttonselected navbutton"
                             : "navbutton"} onClick={this.redirectTo.bind(this, 'tables')}>
@@ -81,7 +81,7 @@ class AppSelected extends React.Component {
                             : "navbutton"} onClick={this.redirectTo.bind(this, 'email')}>
                             <i className={this.state.selected == "email"
                                 ? "fa fa-envelope-o buttonicon"
-                                : "buttonicon fa fa-envelope blue"} aria-hidden="true"></i>
+                                : "buttonicon fa fa-envelope pink"} aria-hidden="true"></i>
                             Email Campaign
                         </button>
                         <button className={this.state.selected == "settings"
@@ -113,7 +113,7 @@ class AppSelected extends React.Component {
                             : "navbutton"} onClick={this.redirectTo.bind(this, 'analytics')}>
                             <i className={this.state.selected == "analytics"
                                 ? "fa fa-bar-chart buttonicon"
-                                : "buttonicon fa fa-bar-chart blue"} aria-hidden="true"></i>
+                                : "buttonicon fa fa-bar-chart orange2"} aria-hidden="true"></i>
                             Analytics
                         </button>
 

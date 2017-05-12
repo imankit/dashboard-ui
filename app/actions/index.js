@@ -264,6 +264,7 @@ export const addUser = (name, email, password, isAdmin) => {
 export const sendInvitation = (appId, email) => {
     return function(dispatch) {
         dispatch({type: 'START_LOADING_MODAL'})
+
         xhrDashBoardClient.post('/app/' + appId + '/invite', {"email": email}).then(response => {
             dispatch({
                 type: 'SAVE_INVITE',
@@ -273,10 +274,13 @@ export const sendInvitation = (appId, email) => {
                 }
             });
             dispatch({type: 'STOP_LOADING_MODAL'})
+
         }).catch(error => {
             console.log('inside sendInvite error catch error: ');
             console.log(error);
             dispatch({type: 'STOP_LOADING_MODAL'})
+            dispatch({type: 'STOP_LOADING'})
+
         });
     };
 };

@@ -11,9 +11,22 @@
     border-bottom: 1px solid #eff1f5;
 }
 
-.notinvicon {
+.notimgcontainer {
     float: left;
     width: 10%;
+    min-height: 60px;
+}
+
+.notdatacontainer {
+    float: right;
+    display: inline-block;
+    width: 90%;
+    min-height: 60px;
+}
+
+.notinvicon {
+    float: left;
+    width: 100%;
     font-size: 40px;
     margin-top: 4px;
     color: #4aa3df;
@@ -175,7 +188,8 @@
 
 .nottimestamp {
     margin-top: 24px;
-    margin-left: 10%;
+    margin-left: 0px;
+    margin-bottom: 10px;
     font-size: 10px;
     color: #b4b4b4;
     float: left;

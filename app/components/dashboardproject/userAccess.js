@@ -42,17 +42,25 @@ class UserAccess extends Component {
         this.props.fetchDevDetails(this.props.devIdArray)
     }
     componentWillUnmount() {
-        //    this.props.fetchApps()
+        console.log(this.props.loading);
     }
     changeDevRole(userId, e) {
         this.props.changeDeveloperRole(this.props.appId, userId, e.target.value)
     }
-
+    componentWillUpdate() {
+        console.log(this.props.loading);
+    }
     constructor(props) {
         super(props);
         this.state = {
             email: ""
         };
+    }
+    handleKeyChange(e) {
+        if (e.keyCode === 13) {
+            this.setState({email: ""});
+            return this.props.invite(this.props.appId, this.state.email);
+        }
     }
 
     render() {
@@ -72,8 +80,15 @@ class UserAccess extends Component {
                             <th>Status</th>
                             <th>Remove</th>
                         </tr>
-                    </thead>{this.props.loading.loading
-                        ? <RefreshIndicator size={30} left={3} top={3} status="loading" className="profileimageloader"/>
+                    </thead>{this.props.loading.modal_loading
+                        ? <tbody>
+                                <tr>
+                                    <td colSpan="3"><RefreshIndicator size={30} left={3} top={3} status="loading" style={{
+                                marginLeft: '60%',
+                                position: 'relative'
+                            }} className="profileimageloader"/></td>
+                                </tr>
+                            </tbody>
                         : <tbody>
                             {this.props.developerList.map((user) => <tr key={user._id}>
                                 <td>{user.email}</td>
@@ -108,7 +123,7 @@ class UserAccess extends Component {
                         <InputGroup.Addon>
                             <i className="ion ion-ios-email email-icon"></i>
                         </InputGroup.Addon>
-                        <FormControl type="text" placeholder="example@example.com" value={this.state.email} onChange={handleChange}/>
+                        <FormControl type="text" placeholder="example@example.com" value={this.state.email} onChange={handleChange} onKeyUp={this.handleKeyChange.bind(this)}/>
                     </InputGroup>
                     {this.props.loading.modal_loading
                         ? <Button className="btnloadingg btn-primary create-btn " disabled>
