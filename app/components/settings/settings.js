@@ -90,44 +90,22 @@ class Settings extends React.Component {
                 backgroundColor: '#FFF'
             }}>
                 <div className="settings tables campaign cache">
-                    {/* <div className="leftnav">
 
-                        <List style={ navStyles }>
-                            <ListItem className={ this.state.selected == 'general' ? "sidenavselected" : "" } onClick={ this.selectTab.bind(this,'general') } primaryText="General" leftIcon={<SettingIcon />} />
-                            <ListItem className={ this.state.selected == 'email' ? "sidenavselected" : "" } onClick={ this.selectTab.bind(this,'email') } primaryText="Email" leftIcon={<EmailIcon />} />
-                            <ListItem className={ this.state.selected == 'push' ? "sidenavselected" : "" } onClick={ this.selectTab.bind(this,'push') } primaryText="Push Notifications" leftIcon={<NotificationsIcon />} />
-                            <ListItem className={ this.state.selected == 'auth' ? "sidenavselected" : "" } onClick={ this.selectTab.bind(this,'auth') } primaryText="Authenication" leftIcon={<AuthIcon />} />
-                            <ListItem className={ this.state.selected == 'import' ? "sidenavselected" : "" } onClick={ this.selectTab.bind(this,'import') } primaryText="Import / Export Data" leftIcon={<ImportIcon />} />
-                            <ListItem className={ this.state.selected == 'mongo' ? "sidenavselected" : "" } onClick={ this.selectTab.bind(this,'mongo') } primaryText="MongoDB Access" leftIcon={<DBIcon />} />
-                        </List>
-
-                    </div> */}
                     <Tabs className="settingtabs" tabItemContainerStyle={{
-                        color: 'red'
-                    }} inkBarStyle={{
-                        color: 'red'
-                    }} tabTemplateStyle={{
-                        color: 'yellow'
-                    }} contentContainerStyle={{
-                        color: 'red'
+                        background: 'white'
                     }}>
-                        <Tab className="tabbbb" icon={settingsIcon} children={< General />}></Tab>
-                        <Tab icon={< EmailIcon />} children={< Email color = {
+                        <Tab className="tabbbb" icon={< i className = "ion ion-android-settings tabicon" > </i>} children={< General />}></Tab>
+                        <Tab icon={< i className = "ion ion-email tabicon" />} children={< Email color = {
                             grey300
                         } />}></Tab>
-                        <Tab icon={< NotificationsIcon />} children={< Push />}></Tab>
-                        <Tab icon={< AuthIcon />} onActive={this.handleActive.bind(this, 'auth')} children={< Auth renderComponent = {
+                        <Tab icon={< i className = "ion ion-ios-bell tabicon" />} children={< Push />}></Tab>
+                        <Tab icon={< i className = "ion ion-android-person tabicon" />} onActive={this.handleActive.bind(this, 'auth')} children={< Auth renderComponent = {
                             this.state.renderComponent
                         } />}></Tab>
-                        <Tab icon={< ImportIcon />} children={< ImportExport />}></Tab>
-                        <Tab icon={< DBIcon />} children={< MongoAccess />}></Tab>
+                        <Tab icon={< i className = "ion ion-arrow-swap tabicon" />} children={< ImportExport />}></Tab>
+                        <Tab icon={< i className = "ion ion-android-list tabicon" />} children={< MongoAccess />}></Tab>
                     </Tabs>
-                    {/* <div className="content">
-                        {this.props.loading
-                            ? <RefreshIndicator size={50} left={70} top={0} status="loading" className="loadermain"/>
-                            : this.getCompToRender()
-}
-                    </div> */}
+
                 </div>
             </div>
         );

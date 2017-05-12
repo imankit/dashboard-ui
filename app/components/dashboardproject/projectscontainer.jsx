@@ -65,6 +65,7 @@ class Projectscontainer extends React.Component {
     }
     fetchAppSettings(appId, masterKey, file) {
         if (file.type.includes('image')) {
+            this.props.dispatch({type: 'START_LOADING'})
             this.props.dispatch(fetchAppSettings(appId, masterKey, '/')).then(() => {
                 if (this.props.generalSettings) {
 
@@ -82,7 +83,7 @@ class Projectscontainer extends React.Component {
     render() {
         const content = (this.props.apps.length
             ? this.props.apps.map(app => <Col xs={8} sm={6} md={4} lg={4} key={app._id} className="project-grid">
-                <Project onProjectClick={this.onProjectClick.bind(this)} key={app._id} fetchAppSettings={this.fetchAppSettings.bind(this)} {...app} loading={this.props.loading.loading} currentUser={this.props.currentUser} onDeleteDev={this.onDeleteDev.bind(this)} beacons={this.props.beacons} selectedPlan={app.planId}/>
+                <Project onProjectClick={this.onProjectClick.bind(this)} key={app._id} fetchAppSettings={this.fetchAppSettings.bind(this)} {...app} currentUser={this.props.currentUser} onDeleteDev={this.onDeleteDev.bind(this)} beacons={this.props.beacons} selectedPlan={app.planId}/>
             </Col>)
             : <form onSubmit={this.addApp.bind(this)}>
                 <div className="noappfound">

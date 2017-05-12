@@ -54,7 +54,7 @@ class EmailCampaign extends React.Component {
                 backgroundColor: '#FFF'
             }}>
                 <div className="cache campaign">
-                    <div className="">
+                    <div className="full-width">
                         <div className="flex-general-column-wrapper-center" style={{
                             width: '100%',
                             marginTop: 20

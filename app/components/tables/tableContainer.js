@@ -4,7 +4,7 @@ import React from 'react';
 import {fetchTables, deleteTable} from '../../actions';
 import {connect} from 'react-redux';
 import {Grid, Row, Col} from 'react-bootstrap';
-import PowerOn from 'material-ui/svg-icons/action/power-settings-new';
+import ExitIcon from 'material-ui/svg-icons/action/exit-to-app';
 import TableIcon from 'material-ui/svg-icons/device/storage';
 import {grey500, grey50, white} from 'material-ui/styles/colors';
 import IconDelete from 'material-ui/svg-icons/action/delete';
@@ -33,8 +33,7 @@ const iconStyles3 = {
     marginRight: 12,
     marginLeft: 12,
     marginBottom: 5,
-    height: 25,
-    width: 25,
+    fontSize: 25,
     color: 'white'
 };
 
@@ -84,27 +83,9 @@ class TableContainer extends React.Component {
                                         <p style={{
                                             color: white
                                         }}>{table.name}</p>
-                                        {(table.type !== 'custom')
-                                            ? (
-                                                <div className="overlay">
-                                                    <PowerOn style={iconStyles3} color={white}/>
-                                                </div>
-                                            )
-                                            : (
-                                                <div className="overlay">
-                                                    <PowerOn style={iconStyles3} color={white}/> {/*<div className="bordertop"></div>
-                                                        <IconDelete style={iconStyles2}
-                                                                    color={white}
-                                                                    onClick={
-                                                                        () => this.props.deleteTable(
-                                                                            this.props.activeAppId,
-                                                                            this.props.masterKey,
-                                                                            table.name)
-                                                                    }
-                                                        />*/}
-                                                </div>
-                                            )
-}
+                                        <div className="overlay">
+                                            <i className='ion ion-log-in' style={iconStyles3}/>
+                                        </div>
                                     </div>
                                 </Col>
                             ))

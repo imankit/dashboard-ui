@@ -42,8 +42,6 @@ class Analytics extends React.Component {
                 <div className="cache">
                     <div className="chartcontainer">
                         <APIAnalytics analyticsApi={this.props.analyticsApi}/>
-                        <APIAnalytics analyticsApi={this.props.analyticsApi}/>
-                        <APIAnalytics analyticsApi={this.props.analyticsApi}/>
                         <StorageAnalytics analyticsStorage={this.props.analyticsStorage}/>
                     </div>
                 </div>
