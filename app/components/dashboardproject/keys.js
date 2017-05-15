@@ -19,7 +19,7 @@ const iconStyles = {
     width: 15
 };
 
-class Keys extends React.Component {
+export class Keys extends React.Component {
     constructor(props) {
         super(props);
         this.state = {

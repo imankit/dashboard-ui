@@ -17,7 +17,7 @@ const iconStyles = {
     marginBottom: -3
 };
 
-class ProjectName extends React.Component {
+export class ProjectName extends React.Component {
     constructor(props) {
         super(props);
         this.state = {

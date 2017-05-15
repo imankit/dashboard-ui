@@ -10,7 +10,7 @@ import CacheCRUD from './cacheCRUD.js'
 import {fetchCache,resetCacheState} from '../../actions';
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 
-class Cache extends React.Component {
+export class Cache extends React.Component {
 
     constructor(props){
         super(props)

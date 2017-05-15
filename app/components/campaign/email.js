@@ -9,7 +9,7 @@ import {sendEmailCampaign, showAlert} from '../../actions';
 import RaisedButton from 'material-ui/RaisedButton';
 import EmailIcon from 'material-ui/svg-icons/communication/email';
 
-class EmailCampaign extends React.Component {
+export class EmailCampaign extends React.Component {
 
     constructor(props) {
         super(props)

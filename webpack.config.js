@@ -11,6 +11,10 @@ var config = {
         path: './public',
         filename: '/client.min.js'
     },
+   externals:{
+        'react/lib/ExecutionEnvironment': true,
+        'react/lib/ReactContext': true,
+   },
     debug: isHosted === 'false' || !isHosted
         ? true
         : false,

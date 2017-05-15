@@ -10,7 +10,7 @@ import Footer from './../footer/footer.jsx';
 import Dashboardproject from '../dashboardproject/dashboardproject.jsx';
 import TableList from './tableList';
 
-class App extends React.Component {
+export class App extends React.Component {
     constructor(){
         super()
     }

@@ -36,7 +36,7 @@ const style = {
     }
 };
 
-class UserAccess extends Component {
+export class UserAccess extends Component {
 
     componentWillMount() {
         this.props.fetchDevDetails(this.props.devIdArray)

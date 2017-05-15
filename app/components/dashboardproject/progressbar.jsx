@@ -3,7 +3,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import plans from '../../fakeAPI/plans'
 
-const Progressbar = (props) => (
+export const Progressbar = (props) => (
     <div className="progress_bar" onClick={() => props.onProjectClick()}>
         <p style={{
             display: 'flex'

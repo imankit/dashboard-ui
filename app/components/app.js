@@ -10,7 +10,7 @@ import Footer from './footer/footer.jsx';
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 import {manageApp, fetchApps} from '../actions';
 
-class App extends React.Component {
+export class App extends React.Component {
     constructor(props) {
         super(props)
         this.state = {}

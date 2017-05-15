@@ -5,7 +5,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Chart from 'chart.js'
 
-class APIAnalytics extends React.Component {
+export class APIAnalytics extends React.Component {
 
     constructor(props) {
         super(props)

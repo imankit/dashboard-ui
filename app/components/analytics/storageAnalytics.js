@@ -5,7 +5,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Chart from 'chart.js'
 
-class StorageAnalytics extends React.Component {
+export class StorageAnalytics extends React.Component {
 
     constructor(props) {
         super(props)

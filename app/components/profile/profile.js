@@ -46,7 +46,7 @@ const profileStyle = {
     }
 }
 
-class Profile extends React.Component {
+export class Profile extends React.Component {
 
     constructor(props) {
         super(props)

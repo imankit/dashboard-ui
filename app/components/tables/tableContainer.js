@@ -44,7 +44,7 @@ const styles = {
     }
 };
 
-class TableContainer extends React.Component {
+export class TableContainer extends React.Component {
 
     componentWillMount() {
         if (this.props.tables.length === 0) {
@@ -60,7 +60,6 @@ class TableContainer extends React.Component {
                 return <i className="ion ion-ios-people" style={iconStyles}/>;
             case 'device':
                 return <i className="ion ion-iphone" style={iconStyles}/>;
-                return;
             default:
                 return <i className="ion ion-android-list" style={iconStyles}/>;
         }

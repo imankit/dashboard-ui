@@ -11,7 +11,7 @@ import Notifications from 'material-ui/svg-icons/alert/add-alert';
 import FilterIcon from 'material-ui/svg-icons/content/filter-list';
 import SelectAudience from './selectAudience'
 
-class PushCampaign extends React.Component {
+export class PushCampaign extends React.Component {
 
     constructor(props) {
         super(props)
