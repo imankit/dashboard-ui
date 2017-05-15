@@ -1,8 +1,9 @@
 import React from 'react';
 import {Modal, Button, FormControl} from 'react-bootstrap';
-import {addApp, updateBeacon} from '../../actions';
+import {addApp, updateBeacon, showAlert} from '../../actions';
 import {connect} from 'react-redux';
 import {RefreshIndicator, IconButton} from 'material-ui';
+import _ from 'underscore'
 
 const style = {
     refresh: {
@@ -36,13 +37,22 @@ class Projecthead extends React.Component {
         }
 
     createApp = () => {
-        if (this.state.value) {
-            this.props.dispatch(addApp(this.state.value)).then(() => {
-                this.setState({showModal: false, value: ''});
-                this.props.dispatch(updateBeacon(this.props.beacons, 'firstApp'))
-            }, (err) => {
-                this.setState({showModal: false, value: ''});
-            })
+        let {value} = this.state
+        if (value) {
+            let sameAppName = _.filter(this.props.apps, function(app) {
+                return app.name.toLowerCase() === value.toLowerCase();
+            });
+            if (sameAppName.length === 0) {
+                this.props.dispatch(addApp(this.state.value)).then(() => {
+                    this.setState({showModal: false, value: ''});
+                    this.props.dispatch(updateBeacon(this.props.beacons, 'firstApp'))
+                }, (err) => {
+                    this.setState({showModal: false, value: ''});
+                })
+            } else {
+                (showAlert('error', 'App Name already exists.'));
+
+            }
         }
     }
 
@@ -52,19 +62,19 @@ class Projecthead extends React.Component {
                 <h1 className="dashboard-title pull-left" style={{
                     fontSize: '30px'
                 }}>Your Apps</h1>
-                <div className={!this.props.beacons.firstApp
-                    ? "btn newAppBtn"
-                    : "btn"} onClick={this.open}>
-                    <span className={!this.props.beacons.firstApp
-                        ? "joyride-beacon new_app_beacon"
-                        : "hide"}>
+                <div className={this.props.beacons.firstApp
+                    ? "btn"
+                    : "btn newAppBtn"} onClick={this.open}>
+                    <span className={this.props.beacons.firstApp
+                        ? "hide"
+                        : "joyride-beacon new_app_beacon"}>
                         <span className="joyride-beacon__inner"></span>
                         <span className="joyride-beacon__outer"></span>
                     </span>
 
-                    <span className={!this.props.beacons.firstApp
-                        ? "newAppLabel"
-                        : ""}>+ New App</span>
+                    <span className={this.props.beacons.firstApp
+                        ? ""
+                        : "newAppLabel"}>+ New App</span>
                 </div>
                 <Modal show={this.state.showModal} onHide={this.close}>
                     <Modal.Header className="modal-header-style">
@@ -88,19 +98,19 @@ class Projecthead extends React.Component {
                                     <RefreshIndicator loadingColor="#ececec" size={35} left={-10} top={0} status="loading" style={style.refresh}/>
                                     <span className="createAppLabel">Create App</span>
                                 </Button>
-                            : <Button className={!this.props.beacons.firstApp
-                                ? "btn-primary create-btn createBtnBeacon"
-                                : "btn-primary create-btn"} onClick={this.createApp}>
-                                <span className={!this.props.beacons.firstApp
-                                    ? "joyride-beacon new_app_beacon"
-                                    : "hide"}>
+                            : <Button className={this.props.beacons.firstApp
+                                ? "btn-primary create-btn "
+                                : "btn-primary create-btn createBtnBeacon"} onClick={this.createApp}>
+                                <span className={this.props.beacons.firstApp
+                                    ? "hide"
+                                    : "joyride-beacon new_app_beacon"}>
                                     <span className="joyride-beacon__inner"></span>
                                     <span className="joyride-beacon__outer"></span>
                                 </span>
 
-                                <span className={!this.props.beacons.firstApp
-                                    ? "createAppBtnLabel"
-                                    : ""}>Create App</span>
+                                <span className={this.props.beacons.firstApp
+                                    ? ""
+                                    : "createAppBtnLabel"}>Create App</span>
                             </Button>
 }
                     </Modal.Footer>
@@ -112,7 +122,11 @@ class Projecthead extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return {loading: state.loader.modal_loading, beacons: state.beacons};
+    return {
+        loading: state.loader.modal_loading,
+        beacons: state.beacons,
+        apps: state.apps || []
+    };
 };
 
 export default connect(mapStateToProps, null)(Projecthead);

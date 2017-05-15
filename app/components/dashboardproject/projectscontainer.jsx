@@ -76,7 +76,7 @@ class Projectscontainer extends React.Component {
                 }
             })
         } else {
-            showAlert('error', 'Only .png type images are allowed.')
+            showAlert('error', 'Only images are allowed.')
         }
 
     }
@@ -94,9 +94,9 @@ class Projectscontainer extends React.Component {
                                 <RefreshIndicator loadingColor="#ececec" size={40} left={0} top={0} status="loading" style={styles.refresh}/>
                                 Create App</button>
                         : <button className="btn btn-primary" type="submit">
-                            <span className={!this.props.beacons.firstApp
-                                ? "gps_ring create_app_beacon"
-                                : 'hide'}></span>
+                            <span className={this.props.beacons.firstApp
+                                ? 'hide'
+                                : "gps_ring create_app_beacon"}></span>
                             Create App</button>
 }
                 </div>

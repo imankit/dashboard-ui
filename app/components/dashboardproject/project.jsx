@@ -133,27 +133,30 @@ const Project = React.createClass({
             <div className="project" ref="project">
                 <div className="plan-status" onClick={this.open3}>{planName}</div>
                 <div className="app-info">
-                    <Dropzone onDrop={this.onDrop} className="dropBody">
-                        <div className="app-icon">
+                    <Dropzone accept="image/*" onDrop={this.onDrop} className="dropBody">
+                        <div className="app-icon" style={{
+                            background: 'url(' + SERVER_URL + '/appfile/' + this.props.appId + '/icon' + ') , url(/assets/images/default-app-icon.jpg)',
+                            backgroundSize: 'contain'
+                        }}>
                             <div className="app-icon-overlay ">
                                 <i className="ion ion-edit overlay-icon"></i>
                             </div>
-                            <img height="20px" className="app-selector-img" src={SERVER_URL + '/appfile/' + this.props.appId + '/icon'} onError={this.setImgFallbackUrl}></img>
+                            {/* <img height="20px" className="app-selector-img" src={SERVER_URL + '/appfile/' + this.props.appId + '/icon'} onError={this.setImgFallbackUrl}></img> */}
                         </div>
                     </Dropzone>
                     <ProjectName name={this.props.name} appId={this.props.appId} onProjectClick={this.onProjectClick}/>
                     <Progressbar appId={this.props.appId} planId={this.props.planId} onProjectClick={this.onProjectClick}/>
                 </div>
                 <div className="project-option">
-                    <span className={!this.props.beacons.tableDesignerLink
-                        ? "joyride-beacon manage_app_beacon"
-                        : "hide"} onClick={this.onProjectClick}>
+                    <span className={this.props.beacons.tableDesignerLink
+                        ? "hide"
+                        : "joyride-beacon manage_app_beacon"} onClick={this.onProjectClick}>
                         <span className="joyride-beacon__inner"></span>
                         <span className="joyride-beacon__outer"></span>
                     </span>
-                    <div style={!this.props.beacons.tableDesignerLink
-                        ? styles.beacon
-                        : {}}>
+                    <div style={this.props.beacons.tableDesignerLink
+                        ? {}
+                        : styles.beacon}>
 
                         <ManageApp style={iconStyles} color={grey500} data-tip="Manage" onClick={this.onProjectClick}/> {this.isAppAdmin()
                             ? <div style={{
