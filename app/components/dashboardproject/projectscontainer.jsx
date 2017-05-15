@@ -31,7 +31,7 @@ const styles = {
     }
 };
 
-class Projectscontainer extends React.Component {
+export class Projectscontainer extends React.Component {
 
     constructor(props) {
         super(props)

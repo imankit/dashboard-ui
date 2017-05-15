@@ -42,7 +42,7 @@ const styles = {
         marginTop: -33
     }
 }
-const Project = React.createClass({
+export const Project = React.createClass({
 
     getInitialState() {
         return {

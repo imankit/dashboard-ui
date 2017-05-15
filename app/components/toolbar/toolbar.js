@@ -42,7 +42,7 @@ const iconStyles = {
     cursor: "pointer"
 };
 
-class ToolBar extends React.Component {
+export class ToolBar extends React.Component {
     constructor(props) {
         super(props)
         this.state = {

@@ -15,7 +15,7 @@ const style = {
     }
 };
 
-class Projecthead extends React.Component {
+export class Projecthead extends React.Component {
 
     constructor(props) {
         super(props);

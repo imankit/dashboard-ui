@@ -8,7 +8,7 @@ import IconButton from 'material-ui/IconButton';
 import Popover from 'material-ui/Popover';
 import Chip from 'material-ui/Chip';
 
-class SelectAudience extends React.Component {
+export class SelectAudience extends React.Component {
 
     constructor(props) {
         super(props);

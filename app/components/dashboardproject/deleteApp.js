@@ -36,7 +36,7 @@ const style = {
     }
 };
 
-class DeleteApp extends React.Component {
+export class DeleteApp extends React.Component {
 
     constructor(props) {
         super(props);

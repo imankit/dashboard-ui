@@ -5,7 +5,7 @@ import OptionsModal from './optionsModal';
 import PersonAdd from 'material-ui/svg-icons/social/person-add';
 import {Modal, Button} from 'react-bootstrap';
 
-class DeleteApp extends React.Component {
+export class DeleteApp extends React.Component {
 
     constructor(props) {
         super(props);

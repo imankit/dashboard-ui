@@ -15,7 +15,7 @@ const style = {
         marginLeft: '40px'
     }
 };
-class CreateCache extends React.Component {
+export class CreateCache extends React.Component {
 
     constructor(props) {
         super(props);
@@ -38,7 +38,7 @@ class CreateCache extends React.Component {
     handleKeyChange(e) {
         if (e.keyCode === 13)
             this.createCache();
-        }
+    }
 
     render() {
         return (

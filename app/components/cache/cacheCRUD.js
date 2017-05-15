@@ -18,7 +18,7 @@ const iconStyles = {
     marginLeft: 10
 };
 
-class CacheCRUD extends React.Component {
+export class CacheCRUD extends React.Component {
 
     constructor(props){
         super(props)

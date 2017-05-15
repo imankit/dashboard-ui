@@ -13,7 +13,7 @@ import APIAnalytics from './apiAnalytics'
 import StorageAnalytics from './storageAnalytics'
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 
-class Analytics extends React.Component {
+export class Analytics extends React.Component {
 
     constructor(props) {
         super(props)

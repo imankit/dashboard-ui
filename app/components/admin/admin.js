@@ -10,7 +10,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Toggle from 'material-ui/Toggle';
 import TextField from 'material-ui/TextField';
 
-class Admin extends React.Component {
+export class Admin extends React.Component {
 
     constructor(props){
         super(props)

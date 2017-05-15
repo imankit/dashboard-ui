@@ -11,7 +11,7 @@ import {manageApp, fetchApps} from '../actions';
 const ReactRouter = require('react-router');
 const browserHistory = ReactRouter.browserHistory;
 
-class AppSelected extends React.Component {
+export class AppSelected extends React.Component {
     constructor(props) {
         super(props)
         this.state = {

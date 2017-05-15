@@ -27,7 +27,7 @@ const style = {
     }
 };
 
-class TableList extends React.Component {
+export class TableList extends React.Component {
 
     constructor(props) {
         super(props);
