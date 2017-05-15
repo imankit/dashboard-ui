@@ -8,9 +8,10 @@ import Search from 'material-ui/svg-icons/action/search';
 import {grey500} from 'material-ui/styles/colors';
 import {FormControl, FormGroup, InputGroup, Modal, Button} from 'react-bootstrap';
 import TablesContainer from './tableContainer';
-import {createTable, setTableSearchFilter, updateBeacon} from '../../actions';
+import {createTable, setTableSearchFilter, updateBeacon, showAlert} from '../../actions';
 import {connect} from 'react-redux';
 import {RefreshIndicator} from 'material-ui'
+import _ from 'underscore'
 
 const iconStyles = {
     marginRight: 12,
@@ -50,12 +51,20 @@ class TableList extends React.Component {
     }
 
     onCreateTable() {
-        if (this.state.value) {
-            this.props.updateBeacon(this.props.beacons, 'firstTable');
-            this.props.dispatch(createTable(this.props.activeAppId, this.props.masterKey, this.state.value)).then(() => {
-                this.setState({showModal: false, value: ''})
-            }, (err) => this.setState({showModal: false, value: ''}));
+        let {value} = this.state
+        if (value) {
 
+            let sameTableName = _.filter(this.props.tables, function(table) {
+                return table.name.toLowerCase() === value.toLowerCase();
+            });
+            if (sameTableName.length === 0) {
+                this.props.updateBeacon(this.props.beacons, 'firstTable');
+                this.props.dispatch(createTable(this.props.activeAppId, this.props.masterKey, this.state.value)).then(() => {
+                    this.setState({showModal: false, value: ''})
+                }, (err) => this.setState({showModal: false, value: ''}));
+            } else {
+                this.props.showAlert('error', 'Table Name already exists.');
+            }
         }
     }
     handleKeyChange(e) {
@@ -70,9 +79,9 @@ class TableList extends React.Component {
                     <div className="tables-head">
                         <FormGroup>
                             <div className="btn" onClick={this.open.bind(this)}>
-                                <span className={!this.props.beacons.firstTable
-                                    ? "gps_ring new_table_beacon"
-                                    : 'hide'}></span>+ New Table</div>
+                                <span className={this.props.beacons.firstTable
+                                    ? "hide"
+                                    : 'gps_ring new_table_beacon'}></span>+ New Table</div>
                             <InputGroup className="search">
                                 <InputGroup.Addon>
                                     <Search style={iconStyles} color={grey500}/>
@@ -96,28 +105,20 @@ class TableList extends React.Component {
 
                             </Modal.Header>
                             <Modal.Body>
-                                {/* <FormControl type="text" value={this.state.value} placeholder="Pick a good name" onChange={this.handleChange.bind(this)} required={true} style={{
-                                    border: 'none',
-                                    boxShadow: 'none',
-                                    textAlign: 'center'
-                                }}/> */}
                                 <input value={this.state.value} id="createApp" placeholder="Pick a good name" onChange={this.handleChange.bind(this)} onKeyUp={this.handleKeyChange.bind(this)} required={true}/>
 
                             </Modal.Body>
                             <Modal.Footer>
-                                {/* <Button bsStyle="primary" onClick={this.onCreateTable.bind(this)}>
-                                    <span className={!this.props.beacons.firstTable
-                                        ? "gps_ring create_app_beacon"
-                                        : 'hide'}></span>Create Table</Button> */}
+
                                 {this.props.loading
                                     ? <Button className="btnloadingg btn-primary create-btn " disabled>
                                             <RefreshIndicator loadingColor="#ececec" size={35} left={-10} top={0} status="loading" style={style.refresh}/>
                                             <span className="createAppLabel">Create Table</span>
                                         </Button>
                                     : <Button className="btn-primary create-btn" onClick={this.onCreateTable.bind(this)}>
-                                        <div className={!this.props.beacons.firstTable
-                                            ? "gps_ring create_app_beacon"
-                                            : 'hide'}></div>
+                                        <div className={this.props.beacons.firstTable
+                                            ? 'hide'
+                                            : "gps_ring create_app_beacon"}></div>
                                         Create Table
                                     </Button>
 }
@@ -133,7 +134,20 @@ class TableList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return {activeAppId: state.manageApp.appId, masterKey: state.manageApp.masterKey, name: state.manageApp.name, beacons: state.beacons, loading: state.loader.modal_loading};
+    let tables = state.apps.filter(app => (app.appId === state.manageApp.appId))[0].tables;
+
+    return {
+        activeAppId: state.manageApp.appId,
+        masterKey: state.manageApp.masterKey,
+        name: state.manageApp.name,
+        beacons: state.beacons,
+        loading: state.loader.modal_loading,
+        tables: tables
+            ? tables.filter(t => t.name.toLowerCase().search(state.manageApp.tableFilter
+                ? state.manageApp.tableFilter
+                : '') >= 0)
+            : []
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -141,6 +155,7 @@ const mapDispatchToProps = (dispatch) => {
         createTable: (activeAppId, masterKey, name) => dispatch(createTable(activeAppId, masterKey, name)),
         setTableSearchFilter: (filter) => dispatch(setTableSearchFilter(filter)),
         updateBeacon: (beacons, field) => dispatch(updateBeacon(beacons, field)),
+        showAlert,
         dispatch
     };
 };
