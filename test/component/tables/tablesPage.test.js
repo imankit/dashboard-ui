@@ -1,10 +1,13 @@
 import React from 'react';
-import App from '../../../app/components/tables/tablesPage.js';
+import { App } from '../../../app/components/tables/tablesPage.js';
 
 describe('<App />', () => {
   let wrapper;
   before(() => {
-    wrapper = shallow(<App />);
+    const props = {
+      showOthers: true
+    };
+    wrapper = shallow(<App {...props}/>, themeContext);
   }); 
 
   it('Component is rendering', () => {
