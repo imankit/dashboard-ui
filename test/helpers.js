@@ -77,3 +77,4 @@ global.themeContext = {
 }
 
 global.CB = CB;
+CB.CloudApp.init(SERVER_URL, util.makeString, util.generateRandomString);
